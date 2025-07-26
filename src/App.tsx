@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
 import "./App.css";
+import { config } from "./config/env";
 
 function App() {
   const [shipments, setShipments] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:3001/shipments")
+    fetch(`${config.apiUrl}/shipments`)
       .then((res) => res.json())
       .then((data) => setShipments(data.shipments));
   }, []);
