@@ -6,7 +6,12 @@ function App() {
   const [shipments, setShipments] = useState([]);
 
   useEffect(() => {
-    fetch(`${config.apiUrl}/shipments`)
+    fetch(`${config.apiUrl}/api/v1/shipments`, {
+      headers: {
+        'x-api-key': config.apiKey,
+        'Content-Type': 'application/json',
+      },
+    })
       .then((res) => res.json())
       .then((data) => setShipments(data.shipments));
   }, []);
