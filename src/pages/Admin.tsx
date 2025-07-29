@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { config } from "../config/env";
 
 function Admin() {
-  const [shipments, setShipments] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -22,7 +21,6 @@ function Admin() {
 
       const data = await response.json();
       console.log({ data });
-      setShipments(data.shipments);
       setError(null);
     } catch (err) {
       setError(err instanceof Error ? err.message : "An error occurred");
@@ -34,6 +32,14 @@ function Admin() {
   useEffect(() => {
     fetchShipments();
   }, []);
+
+  if (loading) {
+    return <div className="p-5 max-w-4xl mx-auto">Loading...</div>;
+  }
+
+  if (error) {
+    return <div className="p-5 max-w-4xl mx-auto">Error: {error}</div>;
+  }
 
   return <div className="p-5 max-w-4xl mx-auto">admin</div>;
 }
