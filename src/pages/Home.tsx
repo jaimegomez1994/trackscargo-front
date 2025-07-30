@@ -1,7 +1,7 @@
 import { useState } from "react";
 import TrackingForm from "../components/TrackingForm";
 import TrackingResults from "../components/TrackingResults";
-import { mockShipments } from "../data/mockShipments";
+import { config } from "../config/env";
 import type { Shipment } from "../types/shipment";
 
 function Home() {
@@ -9,22 +9,28 @@ function Home() {
     null
   );
   const [searchError, setSearchError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleTrack = (trackingNumber: string) => {
-    // Find shipment in mock data
-    const foundShipment = mockShipments.find(
-      (shipment) =>
-        shipment.trackingNumber.toLowerCase() === trackingNumber.toLowerCase()
-    );
+  const handleTrack = async (trackingNumber: string) => {
+    setIsLoading(true);
+    setSearchError(null);
+    setSearchedShipment(null);
 
-    if (foundShipment) {
-      setSearchedShipment(foundShipment);
-      setSearchError(null);
-    } else {
-      setSearchedShipment(null);
-      setSearchError(
-        `No shipment found with tracking number: ${trackingNumber}`
-      );
+    try {
+      const response = await fetch(`${config.apiUrl}/api/v1/track/${encodeURIComponent(trackingNumber)}`);
+      
+      if (response.ok) {
+        const shipment = await response.json();
+        setSearchedShipment(shipment);
+      } else {
+        const errorData = await response.json();
+        setSearchError(errorData.error || `No shipment found with tracking number: ${trackingNumber}`);
+      }
+    } catch (error) {
+      console.error("Tracking error:", error);
+      setSearchError("Unable to connect to tracking service. Please try again later.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -35,6 +41,16 @@ function Home() {
           <div className="mb-8">
             <TrackingForm onTrack={handleTrack} />
           </div>
+
+          {/* Loading State */}
+          {isLoading && (
+            <div className="mb-6 p-4 bg-blue-50 border border-blue-200 text-blue-700 rounded-lg text-center">
+              <div className="flex items-center justify-center gap-2">
+                <div className="animate-spin rounded-full h-4 w-4 border-2 border-blue-600 border-t-transparent"></div>
+                Tracking your shipment...
+              </div>
+            </div>
+          )}
 
           {/* Search Error */}
           {searchError && (

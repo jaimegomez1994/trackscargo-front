@@ -68,7 +68,7 @@ function Admin() {
 
       const data = await response.json();
       if (data.shipments && data.shipments.length > 0) {
-        // setShipments(data.shipments);
+        setShipments(data.shipments);
       }
       setError(null);
     } catch (err) {
@@ -80,9 +80,7 @@ function Admin() {
   };
 
   useEffect(() => {
-    // Disable API call for now to use mock data
     fetchShipments();
-    setLoading(false);
   }, []);
 
   const displayShipments = shipments.length > 0 ? shipments : mockShipments;
@@ -95,19 +93,51 @@ function Admin() {
     }));
   };
 
-  const handleCreateSubmit = (e: React.FormEvent) => {
+  const handleCreateSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Creating shipment:", createForm);
-    // Here you would typically send the data to your API
-    // Reset form after successful submission
-    setCreateForm({
-      trackingNumber: "",
-      weight: "",
-      totalPieces: "",
-      origin: "",
-      destination: "",
-      company: "",
-    });
+    
+    try {
+      const response = await fetch(`${config.apiUrl}/api/v1/shipments`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-api-key": config.apiKey,
+        },
+        body: JSON.stringify({
+          trackingNumber: createForm.trackingNumber,
+          origin: createForm.origin,
+          destination: createForm.destination,
+          weight: createForm.weight,
+          pieces: createForm.totalPieces,
+          status: "Picked up",
+          company: createForm.company,
+        }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || "Failed to create shipment");
+      }
+
+      // Reset form after successful submission
+      setCreateForm({
+        trackingNumber: "",
+        weight: "",
+        totalPieces: "",
+        origin: "",
+        destination: "",
+        company: "",
+      });
+
+      // Refresh shipments list
+      fetchShipments();
+      
+      // Optionally show success message
+      console.log("Shipment created successfully!");
+    } catch (error) {
+      console.error("Error creating shipment:", error);
+      setError(error instanceof Error ? error.message : "Failed to create shipment");
+    }
   };
 
   const handleStatusFormChange = (field: string, value: string) => {
@@ -117,17 +147,53 @@ function Admin() {
     }));
   };
 
-  const handleStatusSubmit = (e: React.FormEvent) => {
+  const handleStatusSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Adding status update:", statusForm);
-    // Here you would typically send the data to your API
-    // Reset form after successful submission
-    setStatusForm({
-      selectedShipment: "",
-      status: "",
-      location: "",
-      description: "",
-    });
+    
+    try {
+      // Determine event type based on status
+      let eventType = "in-transit";
+      if (statusForm.status.toLowerCase() === "delivered") {
+        eventType = "delivered";
+      } else if (statusForm.status.toLowerCase() === "picked up") {
+        eventType = "picked-up";
+      }
+
+      const response = await fetch(`${config.apiUrl}/api/v1/shipments/${statusForm.selectedShipment}/events`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-api-key": config.apiKey,
+        },
+        body: JSON.stringify({
+          status: statusForm.status,
+          location: statusForm.location,
+          description: statusForm.description,
+          eventType: eventType,
+        }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || "Failed to add status update");
+      }
+
+      // Reset form after successful submission
+      setStatusForm({
+        selectedShipment: "",
+        status: "",
+        location: "",
+        description: "",
+      });
+
+      // Refresh shipments list
+      fetchShipments();
+      
+      console.log("Status update added successfully!");
+    } catch (error) {
+      console.error("Error adding status update:", error);
+      setError(error instanceof Error ? error.message : "Failed to add status update");
+    }
   };
 
   const renderTabContent = () => {
