@@ -7,8 +7,7 @@ import type { CreateTravelEventFormData } from '../../../lib/validation';
 import { useAddTravelEvent } from '../../../api/shipmentApi';
 import type { Shipment } from '../../../types/api';
 import DrawerHeader from './DrawerHeader';
-import EventForm from './EventForm';
-import ErrorDisplay from '../CreateShipmentDrawer/ErrorDisplay';
+import TabbedContent from './TabbedContent';
 import DrawerFooter from './DrawerFooter';
 
 interface AddTrackingEventDrawerProps {
@@ -96,15 +95,12 @@ function AddTrackingEventDrawer({ isOpen, onClose, shipment }: AddTrackingEventD
                   <form onSubmit={handleSubmit(onSubmit)} className="flex h-full flex-col bg-white shadow-xl">
                     <DrawerHeader onClose={handleClose} shipment={shipment} />
 
-                    {/* Form Content */}
-                    <div className="flex-1 overflow-y-auto">
-                      <div className="px-4 py-6 sm:px-6">
-                        <EventForm form={form} />
-                        <div className="mt-6">
-                          <ErrorDisplay error={addTravelEventMutation.error} />
-                        </div>
-                      </div>
-                    </div>
+                    {/* Tabbed Content */}
+                    <TabbedContent 
+                      form={form} 
+                      shipment={shipment} 
+                      error={addTravelEventMutation.error} 
+                    />
 
                     <DrawerFooter isSubmitting={addTravelEventMutation.isPending} />
                   </form>
