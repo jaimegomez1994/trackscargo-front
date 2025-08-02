@@ -82,7 +82,7 @@ function CreateShipmentDrawer({ isOpen, onClose }: CreateShipmentDrawerProps) {
 
         <div className="fixed inset-0 overflow-hidden">
           <div className="absolute inset-0 overflow-hidden">
-            <div className="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10 sm:pl-16">
+            <div className="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-0 sm:pl-10 sm:pl-16">
               <Transition.Child
                 as={Fragment}
                 enter="transform transition ease-in-out duration-300"
@@ -92,7 +92,7 @@ function CreateShipmentDrawer({ isOpen, onClose }: CreateShipmentDrawerProps) {
                 leaveFrom="translate-x-0"
                 leaveTo="translate-x-full"
               >
-                <Dialog.Panel className="pointer-events-auto w-screen max-w-[65vw]">
+                <Dialog.Panel className="pointer-events-auto w-screen sm:max-w-[65vw]">
                   <form onSubmit={handleSubmit(onSubmit)} className="flex h-full flex-col bg-white shadow-xl">
                     <DrawerHeader onClose={handleClose} />
 
