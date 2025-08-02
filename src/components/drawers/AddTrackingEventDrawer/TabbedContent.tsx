@@ -9,10 +9,16 @@ interface TabbedContentProps {
   form: UseFormReturn<CreateTravelEventFormData>;
   shipment: Shipment;
   error?: any;
+  onTabChange?: (tab: 'add-status' | 'travel-history') => void;
 }
 
-function TabbedContent({ form, shipment, error }: TabbedContentProps) {
+function TabbedContent({ form, shipment, error, onTabChange }: TabbedContentProps) {
   const [activeTab, setActiveTab] = useState<'add-status' | 'travel-history'>('add-status');
+
+  const handleTabChange = (tab: 'add-status' | 'travel-history') => {
+    setActiveTab(tab);
+    onTabChange?.(tab);
+  };
 
   const tabs = [
     { 
@@ -44,7 +50,7 @@ function TabbedContent({ form, shipment, error }: TabbedContentProps) {
             <button
               key={tab.id}
               type="button"
-              onClick={() => setActiveTab(tab.id as 'add-status' | 'travel-history')}
+              onClick={() => handleTabChange(tab.id as 'add-status' | 'travel-history')}
               className={`${
                 activeTab === tab.id
                   ? 'border-primary text-primary'

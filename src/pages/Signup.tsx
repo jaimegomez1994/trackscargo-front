@@ -135,7 +135,7 @@ function Signup() {
                   required
                   value={formData.organizationName}
                   onChange={handleChange('organizationName')}
-                  disabled={isLoading || signupMutation.isLoading}
+                  disabled={signupMutation.isPending}
                   className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm disabled:bg-gray-50"
                   placeholder="Acme Logistics Inc."
                 />
@@ -158,7 +158,7 @@ function Signup() {
                   required
                   value={formData.displayName}
                   onChange={handleChange('displayName')}
-                  disabled={isLoading || signupMutation.isLoading}
+                  disabled={signupMutation.isPending}
                   className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm disabled:bg-gray-50"
                   placeholder="John Smith"
                 />
@@ -179,7 +179,7 @@ function Signup() {
                   required
                   value={formData.email}
                   onChange={handleChange('email')}
-                  disabled={isLoading || signupMutation.isLoading}
+                  disabled={signupMutation.isPending}
                   className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm disabled:bg-gray-50"
                   placeholder="john@acmelogistics.com"
                 />
@@ -203,7 +203,7 @@ function Signup() {
                   required
                   value={formData.password}
                   onChange={handleChange('password')}
-                  disabled={isLoading || signupMutation.isLoading}
+                  disabled={signupMutation.isPending}
                   className="appearance-none block w-full px-3 py-2 pr-10 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm disabled:bg-gray-50"
                   placeholder="Enter a secure password"
                 />
@@ -211,7 +211,7 @@ function Signup() {
                   type="button"
                   className="absolute inset-y-0 right-0 pr-3 flex items-center"
                   onClick={() => setShowPassword(!showPassword)}
-                  disabled={isLoading || signupMutation.isLoading}
+                  disabled={signupMutation.isPending}
                 >
                   {showPassword ? (
                     <svg className="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -244,7 +244,7 @@ function Signup() {
                   required
                   value={formData.confirmPassword}
                   onChange={handleChange('confirmPassword')}
-                  disabled={isLoading || signupMutation.isLoading}
+                  disabled={signupMutation.isPending}
                   className={`appearance-none block w-full px-3 py-2 pr-10 border rounded-md placeholder-gray-400 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm disabled:bg-gray-50 ${
                     showPasswordMismatch 
                       ? 'border-red-300 text-red-900 placeholder-red-300 focus:ring-red-500 focus:border-red-500' 
@@ -256,7 +256,7 @@ function Signup() {
                   type="button"
                   className="absolute inset-y-0 right-0 pr-3 flex items-center"
                   onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                  disabled={isLoading || signupMutation.isLoading}
+                  disabled={signupMutation.isPending}
                 >
                   {showConfirmPassword ? (
                     <svg className="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -289,14 +289,7 @@ function Signup() {
                 className="h-4 w-4 text-primary focus:ring-primary border-gray-300 rounded disabled:opacity-50"
               />
               <label htmlFor="acceptedTerms" className="ml-2 block text-sm text-gray-900">
-                I agree to the{' '}
-                <Link to="/terms" className="text-primary hover:text-primary-dark no-underline">
-                  Terms of Service
-                </Link>{' '}
-                and{' '}
-                <Link to="/privacy" className="text-primary hover:text-primary-dark no-underline">
-                  Privacy Policy
-                </Link>
+                I agree to the Terms of Service and Privacy Policy
               </label>
             </div>
 
@@ -304,10 +297,10 @@ function Signup() {
             <div>
               <button
                 type="submit"
-                disabled={isLoading || signupMutation.isLoading || !acceptedTerms || showPasswordMismatch}
+                disabled={signupMutation.isPending || !acceptedTerms || showPasswordMismatch}
                 className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
               >
-                {isLoading || signupMutation.isLoading ? (
+                {signupMutation.isPending ? (
                   <div className="flex items-center">
                     <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                       <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>

@@ -1,4 +1,4 @@
-import { Fragment } from 'react';
+import { Fragment, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -18,6 +18,7 @@ interface AddTrackingEventDrawerProps {
 
 function AddTrackingEventDrawer({ isOpen, onClose, shipment }: AddTrackingEventDrawerProps) {
   const addTravelEventMutation = useAddTravelEvent();
+  const [currentTab, setCurrentTab] = useState<'add-status' | 'travel-history'>('add-status');
 
   const form = useForm<CreateTravelEventFormData>({
     resolver: zodResolver(createTravelEventSchema),
@@ -55,6 +56,7 @@ function AddTrackingEventDrawer({ isOpen, onClose, shipment }: AddTrackingEventD
 
   const handleClose = () => {
     reset();
+    setCurrentTab('add-status'); // Reset to Add Status tab
     onClose();
   };
 
@@ -99,10 +101,14 @@ function AddTrackingEventDrawer({ isOpen, onClose, shipment }: AddTrackingEventD
                     <TabbedContent 
                       form={form} 
                       shipment={shipment} 
-                      error={addTravelEventMutation.error} 
+                      error={addTravelEventMutation.error}
+                      onTabChange={setCurrentTab}
                     />
 
-                    <DrawerFooter isSubmitting={addTravelEventMutation.isPending} />
+                    {/* Footer - Only show on Add Status tab */}
+                    {currentTab === 'add-status' && (
+                      <DrawerFooter isSubmitting={addTravelEventMutation.isPending} />
+                    )}
                   </form>
                 </Dialog.Panel>
               </Transition.Child>

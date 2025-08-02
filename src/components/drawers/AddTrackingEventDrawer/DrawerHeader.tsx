@@ -11,7 +11,7 @@ function DrawerHeader({ onClose, shipment }: DrawerHeaderProps) {
   const [copied, setCopied] = useState(false);
 
   const handleCopyLink = async () => {
-    const trackingUrl = `${window.location.origin}/track/${shipment.trackingNumber}`;
+    const trackingUrl = `${window.location.origin}/?trackid=${shipment.trackingNumber}`;
     
     try {
       await navigator.clipboard.writeText(trackingUrl);
