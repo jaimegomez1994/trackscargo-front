@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
 import type { Shipment } from '../../types/api';
 import LoadingSpinner from '../LoadingSpinner';
 

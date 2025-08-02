@@ -180,10 +180,11 @@ export const createTravelEventSchema = z.object({
   
   description: z
     .string()
-    .max(255, 'Description is too long')
     .optional()
-    .or(z.literal(''))
-    .transform(val => val || undefined),
+    .transform(val => val === '' || val === undefined ? undefined : val)
+    .refine(val => val === undefined || val.length <= 255, {
+      message: 'Description is too long'
+    }),
 });
 
 export type CreateTravelEventFormData = z.infer<typeof createTravelEventSchema>;
