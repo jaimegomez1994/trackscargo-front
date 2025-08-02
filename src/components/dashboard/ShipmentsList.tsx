@@ -8,9 +8,10 @@ interface ShipmentsListProps {
   isLoading: boolean;
   error?: string | null;
   onCreateShipment: () => void;
+  onAddTrackingEvent: (shipment: Shipment) => void;
 }
 
-function ShipmentsList({ shipments, isLoading, error, onCreateShipment }: ShipmentsListProps) {
+function ShipmentsList({ shipments, isLoading, error, onCreateShipment, onAddTrackingEvent }: ShipmentsListProps) {
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
 
@@ -190,7 +191,11 @@ function ShipmentsList({ shipments, isLoading, error, onCreateShipment }: Shipme
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
                 {filteredShipments.map((shipment) => (
-                  <tr key={shipment.id} className="hover:bg-gray-50">
+                  <tr 
+                    key={shipment.id} 
+                    onClick={() => onAddTrackingEvent(shipment)}
+                    className="hover:bg-gray-50 cursor-pointer"
+                  >
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                       {shipment.trackingNumber}
                     </td>
@@ -215,8 +220,17 @@ function ShipmentsList({ shipments, isLoading, error, onCreateShipment }: Shipme
                       }
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                      <button className="text-primary hover:text-primary-dark">
-                        View Details
+                      <button 
+                        onClick={(e) => {
+                          e.stopPropagation(); // Prevent row click when button is clicked
+                          onAddTrackingEvent(shipment);
+                        }}
+                        className="inline-flex items-center px-3 py-1.5 border border-transparent shadow-sm text-xs font-medium rounded text-white bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
+                      >
+                        <svg className="-ml-0.5 mr-1 h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        Add Event
                       </button>
                     </td>
                   </tr>

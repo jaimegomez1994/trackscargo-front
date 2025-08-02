@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import TrackingForm from "../components/TrackingForm";
 import TrackingResults from "../components/TrackingResults";
 import { config } from "../config/env";
@@ -10,6 +10,7 @@ function Home() {
   );
   const [searchError, setSearchError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [initialTrackingId, setInitialTrackingId] = useState<string>("");
 
   const handleTrack = async (trackingNumber: string) => {
     setIsLoading(true);
@@ -34,12 +35,25 @@ function Home() {
     }
   };
 
+  // Auto-populate and track shipment from URL parameter
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const trackingId = urlParams.get('trackid');
+    
+    if (trackingId) {
+      // Set the initial tracking ID for the form
+      setInitialTrackingId(trackingId);
+      // Automatically search for the tracking ID
+      handleTrack(trackingId);
+    }
+  }, []); // Run only once on component mount
+
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="pt-16 pb-20">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-8">
-            <TrackingForm onTrack={handleTrack} />
+            <TrackingForm onTrack={handleTrack} initialValue={initialTrackingId} />
           </div>
 
           {/* Loading State */}

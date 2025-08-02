@@ -166,3 +166,24 @@ export const shipmentStatuses = [
   { value: 'exception', label: 'Exception', description: 'Delivery issue occurred' },
   { value: 'returned', label: 'Returned', description: 'Package returned to sender' },
 ];
+
+// Travel event creation form schema
+export const createTravelEventSchema = z.object({
+  status: z
+    .string()
+    .min(1, 'Status is required'),
+  
+  location: z
+    .string()
+    .min(2, 'Location is required')
+    .max(100, 'Location is too long'),
+  
+  description: z
+    .string()
+    .max(255, 'Description is too long')
+    .optional()
+    .or(z.literal(''))
+    .transform(val => val || undefined),
+});
+
+export type CreateTravelEventFormData = z.infer<typeof createTravelEventSchema>;

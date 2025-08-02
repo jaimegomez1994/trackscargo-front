@@ -1,16 +1,53 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useAppSelector } from '../store/hooks';
 import { selectAuth } from '../store/slices/authSlice';
 import { useShipments } from '../api/shipmentApi';
 import ShipmentsList from '../components/dashboard/ShipmentsList';
 import CreateShipmentDrawer from '../components/drawers/CreateShipmentDrawer';
+import AddTrackingEventDrawer from '../components/drawers/AddTrackingEventDrawer';
+import type { Shipment } from '../types/api';
 
 function Dashboard() {
   const { user, organization } = useAppSelector(selectAuth);
   const { data: shipmentsResponse, isLoading, error } = useShipments();
   const [isCreateDrawerOpen, setIsCreateDrawerOpen] = useState(false);
+  const [isAddEventDrawerOpen, setIsAddEventDrawerOpen] = useState(false);
+  const [selectedShipment, setSelectedShipment] = useState<Shipment | null>(null);
   
   const shipments = shipmentsResponse?.shipments || [];
+
+  const handleAddTrackingEvent = (shipment: Shipment) => {
+    setSelectedShipment(shipment);
+    setIsAddEventDrawerOpen(true);
+  };
+
+  const handleCloseAddEventDrawer = () => {
+    setIsAddEventDrawerOpen(false);
+    setSelectedShipment(null);
+  };
+
+  // Auto-populate tracking ID from URL parameter
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const trackingId = urlParams.get('trackid');
+    
+    if (trackingId && shipments.length > 0) {
+      // Find shipment by tracking number
+      const foundShipment = shipments.find(
+        shipment => shipment.trackingNumber.toLowerCase() === trackingId.toLowerCase()
+      );
+      
+      if (foundShipment) {
+        // Auto-open the tracking event drawer with the found shipment
+        handleAddTrackingEvent(foundShipment);
+        
+        // Clean up URL parameter to prevent reopening on refresh
+        const newUrl = new URL(window.location.href);
+        newUrl.searchParams.delete('trackid');
+        window.history.replaceState({}, '', newUrl.pathname + newUrl.search);
+      }
+    }
+  }, [shipments]); // Depend on shipments so it runs when data loads
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -57,6 +94,7 @@ function Dashboard() {
             isLoading={isLoading} 
             error={error?.message || null}
             onCreateShipment={() => setIsCreateDrawerOpen(true)}
+            onAddTrackingEvent={handleAddTrackingEvent}
           />
         </div>
       </div>
@@ -65,6 +103,13 @@ function Dashboard() {
       <CreateShipmentDrawer 
         isOpen={isCreateDrawerOpen}
         onClose={() => setIsCreateDrawerOpen(false)}
+      />
+
+      {/* Add Tracking Event Drawer */}
+      <AddTrackingEventDrawer 
+        isOpen={isAddEventDrawerOpen}
+        onClose={handleCloseAddEventDrawer}
+        shipment={selectedShipment}
       />
     </div>
   );

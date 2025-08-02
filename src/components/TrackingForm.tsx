@@ -1,11 +1,19 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 type TrackingFormProps = {
   onTrack: (trackingNumber: string) => void;
+  initialValue?: string;
 };
 
-export default function TrackingForm({ onTrack }: TrackingFormProps) {
-  const [trackingNumber, setTrackingNumber] = useState("");
+export default function TrackingForm({ onTrack, initialValue }: TrackingFormProps) {
+  const [trackingNumber, setTrackingNumber] = useState(initialValue || "");
+
+  // Update input when initialValue changes
+  useEffect(() => {
+    if (initialValue) {
+      setTrackingNumber(initialValue);
+    }
+  }, [initialValue]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
