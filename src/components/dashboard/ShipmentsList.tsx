@@ -1,0 +1,233 @@
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
+import type { Shipment } from '../../types/api';
+import LoadingSpinner from '../LoadingSpinner';
+
+interface ShipmentsListProps {
+  shipments: Shipment[];
+  isLoading: boolean;
+  error?: string | null;
+  onCreateShipment: () => void;
+}
+
+function ShipmentsList({ shipments, isLoading, error, onCreateShipment }: ShipmentsListProps) {
+  const [searchTerm, setSearchTerm] = useState('');
+  const [statusFilter, setStatusFilter] = useState('all');
+
+  // Filter shipments
+  const filteredShipments = shipments.filter(shipment => {
+    const matchesSearch = 
+      shipment.trackingNumber.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      shipment.origin.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      shipment.destination.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (shipment.company?.toLowerCase().includes(searchTerm.toLowerCase()));
+
+    const matchesStatus = statusFilter === 'all' || 
+      shipment.status.toLowerCase().includes(statusFilter.toLowerCase());
+
+    return matchesSearch && matchesStatus;
+  });
+
+  const getStatusBadge = (status: string) => {
+    const normalizedStatus = status.toLowerCase();
+    
+    if (normalizedStatus.includes('delivered')) {
+      return 'bg-green-100 text-green-800';
+    } else if (normalizedStatus.includes('transit') || normalizedStatus.includes('shipped')) {
+      return 'bg-blue-100 text-blue-800';
+    } else if (normalizedStatus.includes('picked') || normalizedStatus.includes('pending')) {
+      return 'bg-yellow-100 text-yellow-800';
+    } else if (normalizedStatus.includes('exception') || normalizedStatus.includes('failed')) {
+      return 'bg-red-100 text-red-800';
+    } else {
+      return 'bg-gray-100 text-gray-800';
+    }
+  };
+
+  const formatDate = (dateString: string) => {
+    try {
+      return new Date(dateString).toLocaleDateString();
+    } catch {
+      return 'N/A';
+    }
+  };
+
+  if (error) {
+    return (
+      <div className="bg-white shadow rounded-lg">
+        <div className="px-4 py-5 sm:p-6">
+          <div className="text-center">
+            <svg className="mx-auto h-12 w-12 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.962-.833-2.732 0L3.082 16.5c-.77.833.192 2.5 1.732 2.5z" />
+            </svg>
+            <h3 className="mt-2 text-sm font-medium text-gray-900">Error loading shipments</h3>
+            <p className="mt-1 text-sm text-gray-500">{error}</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="bg-white shadow rounded-lg">
+      <div className="px-4 py-5 sm:p-6">
+        {/* Header with Search and Filter */}
+        <div className="sm:flex sm:items-center sm:justify-between mb-6">
+          <div>
+            <h3 className="text-lg leading-6 font-medium text-gray-900">
+              Recent Shipments
+            </h3>
+            <p className="mt-1 text-sm text-gray-500">
+              Manage and track your organization's shipments
+            </p>
+          </div>
+        </div>
+
+        {/* Search and Filter Bar */}
+        <div className="mb-6 flex flex-col sm:flex-row gap-4">
+          <div className="flex-1">
+            <label htmlFor="search" className="sr-only">Search shipments</label>
+            <div className="relative">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <svg className="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+              </div>
+              <input
+                id="search"
+                name="search"
+                className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-primary focus:border-primary sm:text-sm"
+                placeholder="Search by tracking number, origin, destination..."
+                type="search"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+            </div>
+          </div>
+
+          <div className="sm:w-48">
+            <label htmlFor="status-filter" className="sr-only">Filter by status</label>
+            <select
+              id="status-filter"
+              name="status-filter"
+              className="block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm rounded-md"
+              value={statusFilter}
+              onChange={(e) => setStatusFilter(e.target.value)}
+            >
+              <option value="all">All Status</option>
+              <option value="picked">Picked Up</option>
+              <option value="transit">In Transit</option>
+              <option value="delivered">Delivered</option>
+              <option value="exception">Exception</option>
+            </select>
+          </div>
+        </div>
+
+        {/* Loading State */}
+        {isLoading && (
+          <div className="text-center py-8">
+            <LoadingSpinner size="lg" />
+            <p className="mt-4 text-gray-600">Loading shipments...</p>
+          </div>
+        )}
+
+        {/* Empty State */}
+        {!isLoading && filteredShipments.length === 0 && (
+          <div className="text-center py-8">
+            <svg className="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+            </svg>
+            <h3 className="mt-2 text-sm font-medium text-gray-900">
+              {searchTerm || statusFilter !== 'all' ? 'No shipments found' : 'No shipments yet'}
+            </h3>
+            <p className="mt-1 text-sm text-gray-500">
+              {searchTerm || statusFilter !== 'all' 
+                ? 'Try adjusting your search or filter criteria'
+                : 'Get started by creating your first shipment.'
+              }
+            </p>
+            {(!searchTerm && statusFilter === 'all') && (
+              <div className="mt-6">
+                <button
+                  onClick={onCreateShipment}
+                  className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
+                >
+                  <svg className="-ml-1 mr-2 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                  </svg>
+                  Create Shipment
+                </button>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Shipments Table */}
+        {!isLoading && filteredShipments.length > 0 && (
+          <div className="overflow-x-auto">
+            <table className="min-w-full divide-y divide-gray-200">
+              <thead className="bg-gray-50">
+                <tr>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Tracking Number
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Route
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Status
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Company
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Last Update
+                  </th>
+                  <th className="relative px-6 py-3">
+                    <span className="sr-only">Actions</span>
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="bg-white divide-y divide-gray-200">
+                {filteredShipments.map((shipment) => (
+                  <tr key={shipment.id} className="hover:bg-gray-50">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                      {shipment.trackingNumber}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                      <div>
+                        <div className="font-medium">{shipment.origin}</div>
+                        <div className="text-gray-400">→ {shipment.destination}</div>
+                      </div>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${getStatusBadge(shipment.status)}`}>
+                        {shipment.status}
+                      </span>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                      {shipment.company || 'N/A'}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                      {shipment.travelHistory.length > 0 
+                        ? formatDate(shipment.travelHistory[0].timestamp)
+                        : 'N/A'
+                      }
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                      <button className="text-primary hover:text-primary-dark">
+                        View Details
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+export default ShipmentsList;
