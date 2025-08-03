@@ -1,4 +1,5 @@
-import { useState, FormEvent } from 'react';
+import { useState } from 'react';
+import type { FormEvent } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useLogin } from '../api/authApi';
 import { useAppSelector } from '../store/hooks';
@@ -7,7 +8,7 @@ import { selectAuth } from '../store/slices/authSlice';
 function Login() {
   const navigate = useNavigate();
   const location = useLocation();
-  const { isLoading, error } = useAppSelector(selectAuth);
+  const { error } = useAppSelector(selectAuth);
   const loginMutation = useLogin();
 
   const [formData, setFormData] = useState({
@@ -116,7 +117,7 @@ function Login() {
                   required
                   value={formData.email}
                   onChange={handleChange('email')}
-                  disabled={isLoading || loginMutation.isLoading}
+                  disabled={loginMutation.isPending}
                   className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm disabled:bg-gray-50 disabled:text-gray-500"
                   placeholder="Enter your email"
                 />
@@ -137,7 +138,7 @@ function Login() {
                   required
                   value={formData.password}
                   onChange={handleChange('password')}
-                  disabled={isLoading || loginMutation.isLoading}
+                  disabled={loginMutation.isPending}
                   className="appearance-none block w-full px-3 py-2 pr-10 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm disabled:bg-gray-50 disabled:text-gray-500"
                   placeholder="Enter your password"
                 />
@@ -145,7 +146,7 @@ function Login() {
                   type="button"
                   className="absolute inset-y-0 right-0 pr-3 flex items-center"
                   onClick={() => setShowPassword(!showPassword)}
-                  disabled={isLoading || loginMutation.isLoading}
+                  disabled={loginMutation.isPending}
                 >
                   {showPassword ? (
                     <svg className="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -165,10 +166,10 @@ function Login() {
             <div>
               <button
                 type="submit"
-                disabled={isLoading || loginMutation.isLoading}
+                disabled={loginMutation.isPending}
                 className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
               >
-                {isLoading || loginMutation.isLoading ? (
+                {loginMutation.isPending ? (
                   <div className="flex items-center">
                     <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                       <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>

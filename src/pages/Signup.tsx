@@ -1,4 +1,5 @@
-import { useState, FormEvent } from 'react';
+import { useState } from 'react';
+import type { FormEvent } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useSignup } from '../api/authApi';
 import { useAppSelector } from '../store/hooks';
@@ -6,7 +7,7 @@ import { selectAuth } from '../store/slices/authSlice';
 
 function Signup() {
   const navigate = useNavigate();
-  const { isLoading, error } = useAppSelector(selectAuth);
+  const { error } = useAppSelector(selectAuth);
   const signupMutation = useSignup();
 
   const [formData, setFormData] = useState({
@@ -56,7 +57,7 @@ function Signup() {
   };
 
   const passwordsMatch = formData.password === formData.confirmPassword;
-  const showPasswordMismatch = formData.confirmPassword && !passwordsMatch;
+  const showPasswordMismatch = Boolean(formData.confirmPassword && !passwordsMatch);
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
@@ -285,7 +286,7 @@ function Signup() {
                 type="checkbox"
                 checked={acceptedTerms}
                 onChange={(e) => setAcceptedTerms(e.target.checked)}
-                disabled={isLoading || signupMutation.isLoading}
+                disabled={signupMutation.isPending}
                 className="h-4 w-4 text-primary focus:ring-primary border-gray-300 rounded disabled:opacity-50"
               />
               <label htmlFor="acceptedTerms" className="ml-2 block text-sm text-gray-900">

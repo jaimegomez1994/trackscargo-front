@@ -19,7 +19,7 @@ function CreateShipmentDrawer({ isOpen, onClose }: CreateShipmentDrawerProps) {
   const createShipmentMutation = useCreateShipment();
 
   const form = useForm<CreateShipmentFormData>({
-    resolver: zodResolver(createShipmentSchema),
+    resolver: zodResolver(createShipmentSchema) as any,
     defaultValues: {
       trackingNumber: '',
       company: '',

@@ -21,7 +21,7 @@ function AddTrackingEventDrawer({ isOpen, onClose, shipment }: AddTrackingEventD
   const [currentTab, setCurrentTab] = useState<'add-status' | 'travel-history'>('add-status');
 
   const form = useForm<CreateTravelEventFormData>({
-    resolver: zodResolver(createTravelEventSchema),
+    resolver: zodResolver(createTravelEventSchema) as any,
     defaultValues: {
       status: '',
       location: '',

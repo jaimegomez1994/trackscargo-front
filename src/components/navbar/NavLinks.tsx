@@ -85,10 +85,10 @@ function NavLinks({ isMobile = false, onLinkClick }: NavLinksProps) {
               
               <button
                 onClick={handleMobileLogout}
-                disabled={logoutMutation.isLoading}
+                disabled={logoutMutation.isPending}
                 className="block text-left text-white hover:opacity-80 transition-opacity font-medium py-2 disabled:opacity-50"
               >
-                {logoutMutation.isLoading ? 'Signing out...' : 'Sign Out'}
+                {logoutMutation.isPending ? 'Signing out...' : 'Sign Out'}
               </button>
             </>
           )}

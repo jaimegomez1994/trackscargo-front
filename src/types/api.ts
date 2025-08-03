@@ -28,6 +28,7 @@ export interface CreateShipmentRequest {
   pieces: number;
   status: string;
   company?: string;
+  description?: string;
 }
 
 export interface CreateTravelEventRequest {
