@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import locationsData from '../data/locations.json';
 
 // Shipment creation form schema
 export const createShipmentSchema = z.object({
@@ -53,82 +54,11 @@ export const createShipmentSchema = z.object({
 
 export type CreateShipmentFormData = z.infer<typeof createShipmentSchema>;
 
-// Common locations for auto-complete
+// Common locations for auto-complete (combined from JSON data)
 export const commonLocations = [
-  // Major US Cities
-  'New York, NY',
-  'Los Angeles, CA',
-  'Chicago, IL',
-  'Houston, TX',
-  'Phoenix, AZ',
-  'Philadelphia, PA',
-  'San Antonio, TX',
-  'San Diego, CA',
-  'Dallas, TX',
-  'San Jose, CA',
-  'Austin, TX',
-  'Jacksonville, FL',
-  'Fort Worth, TX',
-  'Columbus, OH',
-  'Charlotte, NC',
-  'San Francisco, CA',
-  'Indianapolis, IN',
-  'Seattle, WA',
-  'Denver, CO',
-  'Washington, DC',
-  'Boston, MA',
-  'El Paso, TX',
-  'Nashville, TN',
-  'Detroit, MI',
-  'Oklahoma City, OK',
-  'Portland, OR',
-  'Las Vegas, NV',
-  'Memphis, TN',
-  'Louisville, KY',
-  'Baltimore, MD',
-  'Milwaukee, WI',
-  'Albuquerque, NM',
-  'Tucson, AZ',
-  'Fresno, CA',
-  'Sacramento, CA',
-  'Mesa, AZ',
-  'Kansas City, MO',
-  'Atlanta, GA',
-  'Long Beach, CA',
-  'Colorado Springs, CO',
-  'Raleigh, NC',
-  'Miami, FL',
-  'Virginia Beach, VA',
-  'Omaha, NE',
-  'Oakland, CA',
-  'Minneapolis, MN',
-  'Tulsa, OK',
-  'Arlington, TX',
-  'Tampa, FL',
-  'New Orleans, LA',
-  
-  // Major International Cities
-  'Toronto, ON, Canada',
-  'Vancouver, BC, Canada',
-  'Montreal, QC, Canada',
-  'London, UK',
-  'Paris, France',
-  'Berlin, Germany',
-  'Amsterdam, Netherlands',
-  'Brussels, Belgium',
-  'Madrid, Spain',
-  'Rome, Italy',
-  'Tokyo, Japan',
-  'Seoul, South Korea',
-  'Hong Kong',
-  'Singapore',
-  'Sydney, Australia',
-  'Melbourne, Australia',
-  'Mexico City, Mexico',
-  'Guadalajara, Mexico',
-  'São Paulo, Brazil',
-  'Buenos Aires, Argentina',
-];
+  ...locationsData.usa.map(location => location.name),
+  ...locationsData.mexico.map(location => location.name),
+].sort();
 
 // Common carriers/companies
 export const commonCarriers = [

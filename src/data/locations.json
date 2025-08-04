@@ -1,0 +1,1906 @@
+{
+  "mexico": [
+    {
+      "name": "Aguascalientes, AGS",
+      "state": "Aguascalientes",
+      "category": "major_city"
+    },
+    {
+      "name": "Tijuana, BC",
+      "state": "Baja California",
+      "category": "border_city"
+    },
+    {
+      "name": "Mexicali, BC",
+      "state": "Baja California",
+      "category": "border_city"
+    },
+    {
+      "name": "Ensenada, BC",
+      "state": "Baja California",
+      "category": "major_city"
+    },
+    {
+      "name": "La Paz, BCS",
+      "state": "Baja California Sur",
+      "category": "major_city"
+    },
+    {
+      "name": "Los Cabos, BCS",
+      "state": "Baja California Sur",
+      "category": "major_city"
+    },
+    {
+      "name": "Campeche, CAM",
+      "state": "Campeche",
+      "category": "major_city"
+    },
+    {
+      "name": "Ciudad del Carmen, CAM",
+      "state": "Campeche",
+      "category": "major_city"
+    },
+    {
+      "name": "Saltillo, COAH",
+      "state": "Coahuila",
+      "category": "major_city"
+    },
+    {
+      "name": "Torreón, COAH",
+      "state": "Coahuila",
+      "category": "major_city"
+    },
+    {
+      "name": "Piedras Negras, COAH",
+      "state": "Coahuila",
+      "category": "border_city"
+    },
+    {
+      "name": "Acuña, COAH",
+      "state": "Coahuila",
+      "category": "border_city"
+    },
+    {
+      "name": "Colima, COL",
+      "state": "Colima",
+      "category": "major_city"
+    },
+    {
+      "name": "Manzanillo, COL",
+      "state": "Colima",
+      "category": "port_city"
+    },
+    {
+      "name": "Chihuahua, CHIH",
+      "state": "Chihuahua",
+      "category": "major_city"
+    },
+    {
+      "name": "Ciudad Juárez, CHIH",
+      "state": "Chihuahua",
+      "category": "border_city"
+    },
+    {
+      "name": "Delicias, CHIH",
+      "state": "Chihuahua",
+      "category": "major_city"
+    },
+    {
+      "name": "Parral, CHIH",
+      "state": "Chihuahua",
+      "category": "major_city"
+    },
+    {
+      "name": "Tuxtla Gutiérrez, CHIS",
+      "state": "Chiapas",
+      "category": "major_city"
+    },
+    {
+      "name": "San Cristóbal de las Casas, CHIS",
+      "state": "Chiapas",
+      "category": "major_city"
+    },
+    {
+      "name": "Tapachula, CHIS",
+      "state": "Chiapas",
+      "category": "border_city"
+    },
+    {
+      "name": "Mexico City, CDMX",
+      "state": "Ciudad de México",
+      "category": "capital"
+    },
+    {
+      "name": "Durango, DGO",
+      "state": "Durango",
+      "category": "major_city"
+    },
+    {
+      "name": "Gómez Palacio, DGO",
+      "state": "Durango",
+      "category": "major_city"
+    },
+    {
+      "name": "Guanajuato, GTO",
+      "state": "Guanajuato",
+      "category": "major_city"
+    },
+    {
+      "name": "León, GTO",
+      "state": "Guanajuato",
+      "category": "major_city"
+    },
+    {
+      "name": "Celaya, GTO",
+      "state": "Guanajuato",
+      "category": "major_city"
+    },
+    {
+      "name": "Irapuato, GTO",
+      "state": "Guanajuato",
+      "category": "major_city"
+    },
+    {
+      "name": "Salamanca, GTO",
+      "state": "Guanajuato",
+      "category": "major_city"
+    },
+    {
+      "name": "Chilpancingo, GRO",
+      "state": "Guerrero",
+      "category": "major_city"
+    },
+    {
+      "name": "Acapulco, GRO",
+      "state": "Guerrero",
+      "category": "port_city"
+    },
+    {
+      "name": "Iguala, GRO",
+      "state": "Guerrero",
+      "category": "major_city"
+    },
+    {
+      "name": "Pachuca, HGO",
+      "state": "Hidalgo",
+      "category": "major_city"
+    },
+    {
+      "name": "Tulancingo, HGO",
+      "state": "Hidalgo",
+      "category": "major_city"
+    },
+    {
+      "name": "Guadalajara, JAL",
+      "state": "Jalisco",
+      "category": "major_city"
+    },
+    {
+      "name": "Zapopan, JAL",
+      "state": "Jalisco",
+      "category": "major_city"
+    },
+    {
+      "name": "Tlaquepaque, JAL",
+      "state": "Jalisco",
+      "category": "major_city"
+    },
+    {
+      "name": "Puerto Vallarta, JAL",
+      "state": "Jalisco",
+      "category": "port_city"
+    },
+    {
+      "name": "Toluca, MEX",
+      "state": "Estado de México",
+      "category": "major_city"
+    },
+    {
+      "name": "Ecatepec, MEX",
+      "state": "Estado de México",
+      "category": "major_city"
+    },
+    {
+      "name": "Naucalpan, MEX",
+      "state": "Estado de México",
+      "category": "major_city"
+    },
+    {
+      "name": "Tlalnepantla, MEX",
+      "state": "Estado de México",
+      "category": "major_city"
+    },
+    {
+      "name": "Morelia, MICH",
+      "state": "Michoacán",
+      "category": "major_city"
+    },
+    {
+      "name": "Uruapan, MICH",
+      "state": "Michoacán",
+      "category": "major_city"
+    },
+    {
+      "name": "Lázaro Cárdenas, MICH",
+      "state": "Michoacán",
+      "category": "port_city"
+    },
+    {
+      "name": "Cuernavaca, MOR",
+      "state": "Morelos",
+      "category": "major_city"
+    },
+    {
+      "name": "Jiutepec, MOR",
+      "state": "Morelos",
+      "category": "major_city"
+    },
+    {
+      "name": "Tepic, NAY",
+      "state": "Nayarit",
+      "category": "major_city"
+    },
+    {
+      "name": "Bahía de Banderas, NAY",
+      "state": "Nayarit",
+      "category": "major_city"
+    },
+    {
+      "name": "Monterrey, NL",
+      "state": "Nuevo León",
+      "category": "major_city"
+    },
+    {
+      "name": "Guadalupe, NL",
+      "state": "Nuevo León",
+      "category": "major_city"
+    },
+    {
+      "name": "San Nicolás de los Garza, NL",
+      "state": "Nuevo León",
+      "category": "major_city"
+    },
+    {
+      "name": "Apodaca, NL",
+      "state": "Nuevo León",
+      "category": "major_city"
+    },
+    {
+      "name": "Oaxaca, OAX",
+      "state": "Oaxaca",
+      "category": "major_city"
+    },
+    {
+      "name": "Salina Cruz, OAX",
+      "state": "Oaxaca",
+      "category": "port_city"
+    },
+    {
+      "name": "Puebla, PUE",
+      "state": "Puebla",
+      "category": "major_city"
+    },
+    {
+      "name": "Tehuacán, PUE",
+      "state": "Puebla",
+      "category": "major_city"
+    },
+    {
+      "name": "Atlixco, PUE",
+      "state": "Puebla",
+      "category": "major_city"
+    },
+    {
+      "name": "Querétaro, QRO",
+      "state": "Querétaro",
+      "category": "major_city"
+    },
+    {
+      "name": "San Juan del Río, QRO",
+      "state": "Querétaro",
+      "category": "major_city"
+    },
+    {
+      "name": "Chetumal, QROO",
+      "state": "Quintana Roo",
+      "category": "border_city"
+    },
+    {
+      "name": "Cancún, QROO",
+      "state": "Quintana Roo",
+      "category": "major_city"
+    },
+    {
+      "name": "Playa del Carmen, QROO",
+      "state": "Quintana Roo",
+      "category": "major_city"
+    },
+    {
+      "name": "Cozumel, QROO",
+      "state": "Quintana Roo",
+      "category": "port_city"
+    },
+    {
+      "name": "San Luis Potosí, SLP",
+      "state": "San Luis Potosí",
+      "category": "major_city"
+    },
+    {
+      "name": "Soledad de Graciano Sánchez, SLP",
+      "state": "San Luis Potosí",
+      "category": "major_city"
+    },
+    {
+      "name": "Ciudad Valles, SLP",
+      "state": "San Luis Potosí",
+      "category": "major_city"
+    },
+    {
+      "name": "Culiacán, SIN",
+      "state": "Sinaloa",
+      "category": "major_city"
+    },
+    {
+      "name": "Mazatlán, SIN",
+      "state": "Sinaloa",
+      "category": "port_city"
+    },
+    {
+      "name": "Los Mochis, SIN",
+      "state": "Sinaloa",
+      "category": "major_city"
+    },
+    {
+      "name": "Hermosillo, SON",
+      "state": "Sonora",
+      "category": "major_city"
+    },
+    {
+      "name": "Ciudad Obregón, SON",
+      "state": "Sonora",
+      "category": "major_city"
+    },
+    {
+      "name": "Nogales, SON",
+      "state": "Sonora",
+      "category": "border_city"
+    },
+    {
+      "name": "Agua Prieta, SON",
+      "state": "Sonora",
+      "category": "border_city"
+    },
+    {
+      "name": "Guaymas, SON",
+      "state": "Sonora",
+      "category": "port_city"
+    },
+    {
+      "name": "Villahermosa, TAB",
+      "state": "Tabasco",
+      "category": "major_city"
+    },
+    {
+      "name": "Cárdenas, TAB",
+      "state": "Tabasco",
+      "category": "major_city"
+    },
+    {
+      "name": "Ciudad Victoria, TAMS",
+      "state": "Tamaulipas",
+      "category": "major_city"
+    },
+    {
+      "name": "Reynosa, TAMS",
+      "state": "Tamaulipas",
+      "category": "border_city"
+    },
+    {
+      "name": "Matamoros, TAMS",
+      "state": "Tamaulipas",
+      "category": "border_city"
+    },
+    {
+      "name": "Nuevo Laredo, TAMS",
+      "state": "Tamaulipas",
+      "category": "border_city"
+    },
+    {
+      "name": "Tampico, TAMS",
+      "state": "Tamaulipas",
+      "category": "port_city"
+    },
+    {
+      "name": "Altamira, TAMS",
+      "state": "Tamaulipas",
+      "category": "port_city"
+    },
+    {
+      "name": "Tlaxcala, TLAX",
+      "state": "Tlaxcala",
+      "category": "major_city"
+    },
+    {
+      "name": "Apizaco, TLAX",
+      "state": "Tlaxcala",
+      "category": "major_city"
+    },
+    {
+      "name": "Xalapa, VER",
+      "state": "Veracruz",
+      "category": "major_city"
+    },
+    {
+      "name": "Veracruz, VER",
+      "state": "Veracruz",
+      "category": "port_city"
+    },
+    {
+      "name": "Coatzacoalcos, VER",
+      "state": "Veracruz",
+      "category": "port_city"
+    },
+    {
+      "name": "Poza Rica, VER",
+      "state": "Veracruz",
+      "category": "major_city"
+    },
+    {
+      "name": "Córdoba, VER",
+      "state": "Veracruz",
+      "category": "major_city"
+    },
+    {
+      "name": "Mérida, YUC",
+      "state": "Yucatán",
+      "category": "major_city"
+    },
+    {
+      "name": "Kanasín, YUC",
+      "state": "Yucatán",
+      "category": "major_city"
+    },
+    {
+      "name": "Progreso, YUC",
+      "state": "Yucatán",
+      "category": "port_city"
+    },
+    {
+      "name": "Zacatecas, ZAC",
+      "state": "Zacatecas",
+      "category": "major_city"
+    },
+    {
+      "name": "Fresnillo, ZAC",
+      "state": "Zacatecas",
+      "category": "major_city"
+    }
+  ],
+  "usa": [
+    {
+      "name": "Birmingham, AL",
+      "state": "Alabama",
+      "category": "major_city"
+    },
+    {
+      "name": "Montgomery, AL",
+      "state": "Alabama",
+      "category": "major_city"
+    },
+    {
+      "name": "Mobile, AL",
+      "state": "Alabama",
+      "category": "port_city"
+    },
+    {
+      "name": "Anchorage, AK",
+      "state": "Alaska",
+      "category": "major_city"
+    },
+    {
+      "name": "Fairbanks, AK",
+      "state": "Alaska",
+      "category": "major_city"
+    },
+    {
+      "name": "Phoenix, AZ",
+      "state": "Arizona",
+      "category": "major_city"
+    },
+    {
+      "name": "Tucson, AZ",
+      "state": "Arizona",
+      "category": "major_city"
+    },
+    {
+      "name": "Mesa, AZ",
+      "state": "Arizona",
+      "category": "major_city"
+    },
+    {
+      "name": "Flagstaff, AZ",
+      "state": "Arizona",
+      "category": "major_city"
+    },
+    {
+      "name": "Nogales, AZ",
+      "state": "Arizona",
+      "category": "border_city"
+    },
+    {
+      "name": "Little Rock, AR",
+      "state": "Arkansas",
+      "category": "major_city"
+    },
+    {
+      "name": "Fort Smith, AR",
+      "state": "Arkansas",
+      "category": "major_city"
+    },
+    {
+      "name": "Los Angeles, CA",
+      "state": "California",
+      "category": "major_city"
+    },
+    {
+      "name": "San Francisco, CA",
+      "state": "California",
+      "category": "major_city"
+    },
+    {
+      "name": "San Diego, CA",
+      "state": "California",
+      "category": "border_city"
+    },
+    {
+      "name": "San Jose, CA",
+      "state": "California",
+      "category": "major_city"
+    },
+    {
+      "name": "Fresno, CA",
+      "state": "California",
+      "category": "major_city"
+    },
+    {
+      "name": "Sacramento, CA",
+      "state": "California",
+      "category": "major_city"
+    },
+    {
+      "name": "Long Beach, CA",
+      "state": "California",
+      "category": "port_city"
+    },
+    {
+      "name": "Oakland, CA",
+      "state": "California",
+      "category": "port_city"
+    },
+    {
+      "name": "Bakersfield, CA",
+      "state": "California",
+      "category": "major_city"
+    },
+    {
+      "name": "Riverside, CA",
+      "state": "California",
+      "category": "major_city"
+    },
+    {
+      "name": "Stockton, CA",
+      "state": "California",
+      "category": "major_city"
+    },
+    {
+      "name": "Calexico, CA",
+      "state": "California",
+      "category": "border_city"
+    },
+    {
+      "name": "Denver, CO",
+      "state": "Colorado",
+      "category": "major_city"
+    },
+    {
+      "name": "Colorado Springs, CO",
+      "state": "Colorado",
+      "category": "major_city"
+    },
+    {
+      "name": "Aurora, CO",
+      "state": "Colorado",
+      "category": "major_city"
+    },
+    {
+      "name": "Fort Collins, CO",
+      "state": "Colorado",
+      "category": "major_city"
+    },
+    {
+      "name": "Hartford, CT",
+      "state": "Connecticut",
+      "category": "major_city"
+    },
+    {
+      "name": "Bridgeport, CT",
+      "state": "Connecticut",
+      "category": "major_city"
+    },
+    {
+      "name": "New Haven, CT",
+      "state": "Connecticut",
+      "category": "major_city"
+    },
+    {
+      "name": "Wilmington, DE",
+      "state": "Delaware",
+      "category": "major_city"
+    },
+    {
+      "name": "Dover, DE",
+      "state": "Delaware",
+      "category": "major_city"
+    },
+    {
+      "name": "Miami, FL",
+      "state": "Florida",
+      "category": "port_city"
+    },
+    {
+      "name": "Jacksonville, FL",
+      "state": "Florida",
+      "category": "port_city"
+    },
+    {
+      "name": "Tampa, FL",
+      "state": "Florida",
+      "category": "port_city"
+    },
+    {
+      "name": "Orlando, FL",
+      "state": "Florida",
+      "category": "major_city"
+    },
+    {
+      "name": "St. Petersburg, FL",
+      "state": "Florida",
+      "category": "major_city"
+    },
+    {
+      "name": "Fort Lauderdale, FL",
+      "state": "Florida",
+      "category": "port_city"
+    },
+    {
+      "name": "Tallahassee, FL",
+      "state": "Florida",
+      "category": "major_city"
+    },
+    {
+      "name": "Atlanta, GA",
+      "state": "Georgia",
+      "category": "major_city"
+    },
+    {
+      "name": "Columbus, GA",
+      "state": "Georgia",
+      "category": "major_city"
+    },
+    {
+      "name": "Augusta, GA",
+      "state": "Georgia",
+      "category": "major_city"
+    },
+    {
+      "name": "Savannah, GA",
+      "state": "Georgia",
+      "category": "port_city"
+    },
+    {
+      "name": "Honolulu, HI",
+      "state": "Hawaii",
+      "category": "port_city"
+    },
+    {
+      "name": "Hilo, HI",
+      "state": "Hawaii",
+      "category": "major_city"
+    },
+    {
+      "name": "Boise, ID",
+      "state": "Idaho",
+      "category": "major_city"
+    },
+    {
+      "name": "Meridian, ID",
+      "state": "Idaho",
+      "category": "major_city"
+    },
+    {
+      "name": "Chicago, IL",
+      "state": "Illinois",
+      "category": "major_city"
+    },
+    {
+      "name": "Aurora, IL",
+      "state": "Illinois",
+      "category": "major_city"
+    },
+    {
+      "name": "Rockford, IL",
+      "state": "Illinois",
+      "category": "major_city"
+    },
+    {
+      "name": "Joliet, IL",
+      "state": "Illinois",
+      "category": "major_city"
+    },
+    {
+      "name": "Springfield, IL",
+      "state": "Illinois",
+      "category": "major_city"
+    },
+    {
+      "name": "Indianapolis, IN",
+      "state": "Indiana",
+      "category": "major_city"
+    },
+    {
+      "name": "Fort Wayne, IN",
+      "state": "Indiana",
+      "category": "major_city"
+    },
+    {
+      "name": "Evansville, IN",
+      "state": "Indiana",
+      "category": "major_city"
+    },
+    {
+      "name": "Des Moines, IA",
+      "state": "Iowa",
+      "category": "major_city"
+    },
+    {
+      "name": "Cedar Rapids, IA",
+      "state": "Iowa",
+      "category": "major_city"
+    },
+    {
+      "name": "Wichita, KS",
+      "state": "Kansas",
+      "category": "major_city"
+    },
+    {
+      "name": "Overland Park, KS",
+      "state": "Kansas",
+      "category": "major_city"
+    },
+    {
+      "name": "Kansas City, KS",
+      "state": "Kansas",
+      "category": "major_city"
+    },
+    {
+      "name": "Topeka, KS",
+      "state": "Kansas",
+      "category": "major_city"
+    },
+    {
+      "name": "Olathe, KS",
+      "state": "Kansas",
+      "category": "major_city"
+    },
+    {
+      "name": "Lawrence, KS",
+      "state": "Kansas",
+      "category": "major_city"
+    },
+    {
+      "name": "Shawnee, KS",
+      "state": "Kansas",
+      "category": "major_city"
+    },
+    {
+      "name": "Manhattan, KS",
+      "state": "Kansas",
+      "category": "major_city"
+    },
+    {
+      "name": "Lenexa, KS",
+      "state": "Kansas",
+      "category": "major_city"
+    },
+    {
+      "name": "Salina, KS",
+      "state": "Kansas",
+      "category": "major_city"
+    },
+    {
+      "name": "Hutchinson, KS",
+      "state": "Kansas",
+      "category": "major_city"
+    },
+    {
+      "name": "Leavenworth, KS",
+      "state": "Kansas",
+      "category": "major_city"
+    },
+    {
+      "name": "Leawood, KS",
+      "state": "Kansas",
+      "category": "major_city"
+    },
+    {
+      "name": "Dodge City, KS",
+      "state": "Kansas",
+      "category": "major_city"
+    },
+    {
+      "name": "Garden City, KS",
+      "state": "Kansas",
+      "category": "major_city"
+    },
+    {
+      "name": "Emporia, KS",
+      "state": "Kansas",
+      "category": "major_city"
+    },
+    {
+      "name": "Junction City, KS",
+      "state": "Kansas",
+      "category": "major_city"
+    },
+    {
+      "name": "Derby, KS",
+      "state": "Kansas",
+      "category": "major_city"
+    },
+    {
+      "name": "Prairie Village, KS",
+      "state": "Kansas",
+      "category": "major_city"
+    },
+    {
+      "name": "Hays, KS",
+      "state": "Kansas",
+      "category": "major_city"
+    },
+    {
+      "name": "Liberal, KS",
+      "state": "Kansas",
+      "category": "major_city"
+    },
+    {
+      "name": "Louisville, KY",
+      "state": "Kentucky",
+      "category": "major_city"
+    },
+    {
+      "name": "Lexington, KY",
+      "state": "Kentucky",
+      "category": "major_city"
+    },
+    {
+      "name": "New Orleans, LA",
+      "state": "Louisiana",
+      "category": "port_city"
+    },
+    {
+      "name": "Baton Rouge, LA",
+      "state": "Louisiana",
+      "category": "port_city"
+    },
+    {
+      "name": "Shreveport, LA",
+      "state": "Louisiana",
+      "category": "major_city"
+    },
+    {
+      "name": "Lafayette, LA",
+      "state": "Louisiana",
+      "category": "major_city"
+    },
+    {
+      "name": "Portland, ME",
+      "state": "Maine",
+      "category": "port_city"
+    },
+    {
+      "name": "Lewiston, ME",
+      "state": "Maine",
+      "category": "major_city"
+    },
+    {
+      "name": "Baltimore, MD",
+      "state": "Maryland",
+      "category": "port_city"
+    },
+    {
+      "name": "Frederick, MD",
+      "state": "Maryland",
+      "category": "major_city"
+    },
+    {
+      "name": "Rockville, MD",
+      "state": "Maryland",
+      "category": "major_city"
+    },
+    {
+      "name": "Boston, MA",
+      "state": "Massachusetts",
+      "category": "port_city"
+    },
+    {
+      "name": "Worcester, MA",
+      "state": "Massachusetts",
+      "category": "major_city"
+    },
+    {
+      "name": "Springfield, MA",
+      "state": "Massachusetts",
+      "category": "major_city"
+    },
+    {
+      "name": "Detroit, MI",
+      "state": "Michigan",
+      "category": "major_city"
+    },
+    {
+      "name": "Grand Rapids, MI",
+      "state": "Michigan",
+      "category": "major_city"
+    },
+    {
+      "name": "Warren, MI",
+      "state": "Michigan",
+      "category": "major_city"
+    },
+    {
+      "name": "Minneapolis, MN",
+      "state": "Minnesota",
+      "category": "major_city"
+    },
+    {
+      "name": "St. Paul, MN",
+      "state": "Minnesota",
+      "category": "major_city"
+    },
+    {
+      "name": "Rochester, MN",
+      "state": "Minnesota",
+      "category": "major_city"
+    },
+    {
+      "name": "Bloomington, MN",
+      "state": "Minnesota",
+      "category": "major_city"
+    },
+    {
+      "name": "Duluth, MN",
+      "state": "Minnesota",
+      "category": "port_city"
+    },
+    {
+      "name": "Brooklyn Park, MN",
+      "state": "Minnesota",
+      "category": "major_city"
+    },
+    {
+      "name": "Plymouth, MN",
+      "state": "Minnesota",
+      "category": "major_city"
+    },
+    {
+      "name": "Maple Grove, MN",
+      "state": "Minnesota",
+      "category": "major_city"
+    },
+    {
+      "name": "Woodbury, MN",
+      "state": "Minnesota",
+      "category": "major_city"
+    },
+    {
+      "name": "St. Cloud, MN",
+      "state": "Minnesota",
+      "category": "major_city"
+    },
+    {
+      "name": "Eagan, MN",
+      "state": "Minnesota",
+      "category": "major_city"
+    },
+    {
+      "name": "Burnsville, MN",
+      "state": "Minnesota",
+      "category": "major_city"
+    },
+    {
+      "name": "Eden Prairie, MN",
+      "state": "Minnesota",
+      "category": "major_city"
+    },
+    {
+      "name": "Coon Rapids, MN",
+      "state": "Minnesota",
+      "category": "major_city"
+    },
+    {
+      "name": "Blaine, MN",
+      "state": "Minnesota",
+      "category": "major_city"
+    },
+    {
+      "name": "Lakeville, MN",
+      "state": "Minnesota",
+      "category": "major_city"
+    },
+    {
+      "name": "Jackson, MS",
+      "state": "Mississippi",
+      "category": "major_city"
+    },
+    {
+      "name": "Gulfport, MS",
+      "state": "Mississippi",
+      "category": "port_city"
+    },
+    {
+      "name": "Kansas City, MO",
+      "state": "Missouri",
+      "category": "major_city"
+    },
+    {
+      "name": "St. Louis, MO",
+      "state": "Missouri",
+      "category": "major_city"
+    },
+    {
+      "name": "Springfield, MO",
+      "state": "Missouri",
+      "category": "major_city"
+    },
+    {
+      "name": "Independence, MO",
+      "state": "Missouri",
+      "category": "major_city"
+    },
+    {
+      "name": "Billings, MT",
+      "state": "Montana",
+      "category": "major_city"
+    },
+    {
+      "name": "Missoula, MT",
+      "state": "Montana",
+      "category": "major_city"
+    },
+    {
+      "name": "Great Falls, MT",
+      "state": "Montana",
+      "category": "major_city"
+    },
+    {
+      "name": "Bozeman, MT",
+      "state": "Montana",
+      "category": "major_city"
+    },
+    {
+      "name": "Butte, MT",
+      "state": "Montana",
+      "category": "major_city"
+    },
+    {
+      "name": "Helena, MT",
+      "state": "Montana",
+      "category": "major_city"
+    },
+    {
+      "name": "Kalispell, MT",
+      "state": "Montana",
+      "category": "major_city"
+    },
+    {
+      "name": "Havre, MT",
+      "state": "Montana",
+      "category": "border_city"
+    },
+    {
+      "name": "Omaha, NE",
+      "state": "Nebraska",
+      "category": "major_city"
+    },
+    {
+      "name": "Lincoln, NE",
+      "state": "Nebraska",
+      "category": "major_city"
+    },
+    {
+      "name": "Las Vegas, NV",
+      "state": "Nevada",
+      "category": "major_city"
+    },
+    {
+      "name": "Henderson, NV",
+      "state": "Nevada",
+      "category": "major_city"
+    },
+    {
+      "name": "Reno, NV",
+      "state": "Nevada",
+      "category": "major_city"
+    },
+    {
+      "name": "Manchester, NH",
+      "state": "New Hampshire",
+      "category": "major_city"
+    },
+    {
+      "name": "Nashua, NH",
+      "state": "New Hampshire",
+      "category": "major_city"
+    },
+    {
+      "name": "Newark, NJ",
+      "state": "New Jersey",
+      "category": "port_city"
+    },
+    {
+      "name": "Jersey City, NJ",
+      "state": "New Jersey",
+      "category": "major_city"
+    },
+    {
+      "name": "Paterson, NJ",
+      "state": "New Jersey",
+      "category": "major_city"
+    },
+    {
+      "name": "Elizabeth, NJ",
+      "state": "New Jersey",
+      "category": "major_city"
+    },
+    {
+      "name": "Albuquerque, NM",
+      "state": "New Mexico",
+      "category": "major_city"
+    },
+    {
+      "name": "Las Cruces, NM",
+      "state": "New Mexico",
+      "category": "border_city"
+    },
+    {
+      "name": "Rio Rancho, NM",
+      "state": "New Mexico",
+      "category": "major_city"
+    },
+    {
+      "name": "Santa Fe, NM",
+      "state": "New Mexico",
+      "category": "major_city"
+    },
+    {
+      "name": "New York, NY",
+      "state": "New York",
+      "category": "port_city"
+    },
+    {
+      "name": "Buffalo, NY",
+      "state": "New York",
+      "category": "major_city"
+    },
+    {
+      "name": "Rochester, NY",
+      "state": "New York",
+      "category": "major_city"
+    },
+    {
+      "name": "Yonkers, NY",
+      "state": "New York",
+      "category": "major_city"
+    },
+    {
+      "name": "Syracuse, NY",
+      "state": "New York",
+      "category": "major_city"
+    },
+    {
+      "name": "Albany, NY",
+      "state": "New York",
+      "category": "major_city"
+    },
+    {
+      "name": "Charlotte, NC",
+      "state": "North Carolina",
+      "category": "major_city"
+    },
+    {
+      "name": "Raleigh, NC",
+      "state": "North Carolina",
+      "category": "major_city"
+    },
+    {
+      "name": "Greensboro, NC",
+      "state": "North Carolina",
+      "category": "major_city"
+    },
+    {
+      "name": "Durham, NC",
+      "state": "North Carolina",
+      "category": "major_city"
+    },
+    {
+      "name": "Winston-Salem, NC",
+      "state": "North Carolina",
+      "category": "major_city"
+    },
+    {
+      "name": "Wilmington, NC",
+      "state": "North Carolina",
+      "category": "port_city"
+    },
+    {
+      "name": "Fargo, ND",
+      "state": "North Dakota",
+      "category": "major_city"
+    },
+    {
+      "name": "Bismarck, ND",
+      "state": "North Dakota",
+      "category": "major_city"
+    },
+    {
+      "name": "Grand Forks, ND",
+      "state": "North Dakota",
+      "category": "border_city"
+    },
+    {
+      "name": "Minot, ND",
+      "state": "North Dakota",
+      "category": "major_city"
+    },
+    {
+      "name": "West Fargo, ND",
+      "state": "North Dakota",
+      "category": "major_city"
+    },
+    {
+      "name": "Williston, ND",
+      "state": "North Dakota",
+      "category": "major_city"
+    },
+    {
+      "name": "Dickinson, ND",
+      "state": "North Dakota",
+      "category": "major_city"
+    },
+    {
+      "name": "Mandan, ND",
+      "state": "North Dakota",
+      "category": "major_city"
+    },
+    {
+      "name": "Jamestown, ND",
+      "state": "North Dakota",
+      "category": "major_city"
+    },
+    {
+      "name": "Wahpeton, ND",
+      "state": "North Dakota",
+      "category": "border_city"
+    },
+    {
+      "name": "Devils Lake, ND",
+      "state": "North Dakota",
+      "category": "major_city"
+    },
+    {
+      "name": "Columbus, OH",
+      "state": "Ohio",
+      "category": "major_city"
+    },
+    {
+      "name": "Cleveland, OH",
+      "state": "Ohio",
+      "category": "major_city"
+    },
+    {
+      "name": "Cincinnati, OH",
+      "state": "Ohio",
+      "category": "major_city"
+    },
+    {
+      "name": "Toledo, OH",
+      "state": "Ohio",
+      "category": "major_city"
+    },
+    {
+      "name": "Akron, OH",
+      "state": "Ohio",
+      "category": "major_city"
+    },
+    {
+      "name": "Dayton, OH",
+      "state": "Ohio",
+      "category": "major_city"
+    },
+    {
+      "name": "Oklahoma City, OK",
+      "state": "Oklahoma",
+      "category": "major_city"
+    },
+    {
+      "name": "Tulsa, OK",
+      "state": "Oklahoma",
+      "category": "major_city"
+    },
+    {
+      "name": "Norman, OK",
+      "state": "Oklahoma",
+      "category": "major_city"
+    },
+    {
+      "name": "Broken Arrow, OK",
+      "state": "Oklahoma",
+      "category": "major_city"
+    },
+    {
+      "name": "Lawton, OK",
+      "state": "Oklahoma",
+      "category": "major_city"
+    },
+    {
+      "name": "Edmond, OK",
+      "state": "Oklahoma",
+      "category": "major_city"
+    },
+    {
+      "name": "Moore, OK",
+      "state": "Oklahoma",
+      "category": "major_city"
+    },
+    {
+      "name": "Midwest City, OK",
+      "state": "Oklahoma",
+      "category": "major_city"
+    },
+    {
+      "name": "Enid, OK",
+      "state": "Oklahoma",
+      "category": "major_city"
+    },
+    {
+      "name": "Stillwater, OK",
+      "state": "Oklahoma",
+      "category": "major_city"
+    },
+    {
+      "name": "Muskogee, OK",
+      "state": "Oklahoma",
+      "category": "major_city"
+    },
+    {
+      "name": "Bartlesville, OK",
+      "state": "Oklahoma",
+      "category": "major_city"
+    },
+    {
+      "name": "Owasso, OK",
+      "state": "Oklahoma",
+      "category": "major_city"
+    },
+    {
+      "name": "Shawnee, OK",
+      "state": "Oklahoma",
+      "category": "major_city"
+    },
+    {
+      "name": "Ponca City, OK",
+      "state": "Oklahoma",
+      "category": "major_city"
+    },
+    {
+      "name": "Ardmore, OK",
+      "state": "Oklahoma",
+      "category": "major_city"
+    },
+    {
+      "name": "Duncan, OK",
+      "state": "Oklahoma",
+      "category": "major_city"
+    },
+    {
+      "name": "Ada, OK",
+      "state": "Oklahoma",
+      "category": "major_city"
+    },
+    {
+      "name": "McAlester, OK",
+      "state": "Oklahoma",
+      "category": "major_city"
+    },
+    {
+      "name": "Tahlequah, OK",
+      "state": "Oklahoma",
+      "category": "major_city"
+    },
+    {
+      "name": "Portland, OR",
+      "state": "Oregon",
+      "category": "port_city"
+    },
+    {
+      "name": "Salem, OR",
+      "state": "Oregon",
+      "category": "major_city"
+    },
+    {
+      "name": "Eugene, OR",
+      "state": "Oregon",
+      "category": "major_city"
+    },
+    {
+      "name": "Philadelphia, PA",
+      "state": "Pennsylvania",
+      "category": "port_city"
+    },
+    {
+      "name": "Pittsburgh, PA",
+      "state": "Pennsylvania",
+      "category": "major_city"
+    },
+    {
+      "name": "Allentown, PA",
+      "state": "Pennsylvania",
+      "category": "major_city"
+    },
+    {
+      "name": "Erie, PA",
+      "state": "Pennsylvania",
+      "category": "port_city"
+    },
+    {
+      "name": "Reading, PA",
+      "state": "Pennsylvania",
+      "category": "major_city"
+    },
+    {
+      "name": "Providence, RI",
+      "state": "Rhode Island",
+      "category": "port_city"
+    },
+    {
+      "name": "Warwick, RI",
+      "state": "Rhode Island",
+      "category": "major_city"
+    },
+    {
+      "name": "Charleston, SC",
+      "state": "South Carolina",
+      "category": "port_city"
+    },
+    {
+      "name": "Columbia, SC",
+      "state": "South Carolina",
+      "category": "major_city"
+    },
+    {
+      "name": "North Charleston, SC",
+      "state": "South Carolina",
+      "category": "port_city"
+    },
+    {
+      "name": "Sioux Falls, SD",
+      "state": "South Dakota",
+      "category": "major_city"
+    },
+    {
+      "name": "Rapid City, SD",
+      "state": "South Dakota",
+      "category": "major_city"
+    },
+    {
+      "name": "Nashville, TN",
+      "state": "Tennessee",
+      "category": "major_city"
+    },
+    {
+      "name": "Memphis, TN",
+      "state": "Tennessee",
+      "category": "major_city"
+    },
+    {
+      "name": "Knoxville, TN",
+      "state": "Tennessee",
+      "category": "major_city"
+    },
+    {
+      "name": "Chattanooga, TN",
+      "state": "Tennessee",
+      "category": "major_city"
+    },
+    {
+      "name": "Houston, TX",
+      "state": "Texas",
+      "category": "port_city"
+    },
+    {
+      "name": "San Antonio, TX",
+      "state": "Texas",
+      "category": "major_city"
+    },
+    {
+      "name": "Dallas, TX",
+      "state": "Texas",
+      "category": "major_city"
+    },
+    {
+      "name": "Austin, TX",
+      "state": "Texas",
+      "category": "major_city"
+    },
+    {
+      "name": "Fort Worth, TX",
+      "state": "Texas",
+      "category": "major_city"
+    },
+    {
+      "name": "El Paso, TX",
+      "state": "Texas",
+      "category": "border_city"
+    },
+    {
+      "name": "Arlington, TX",
+      "state": "Texas",
+      "category": "major_city"
+    },
+    {
+      "name": "Corpus Christi, TX",
+      "state": "Texas",
+      "category": "port_city"
+    },
+    {
+      "name": "Plano, TX",
+      "state": "Texas",
+      "category": "major_city"
+    },
+    {
+      "name": "Laredo, TX",
+      "state": "Texas",
+      "category": "border_city"
+    },
+    {
+      "name": "Lubbock, TX",
+      "state": "Texas",
+      "category": "major_city"
+    },
+    {
+      "name": "Garland, TX",
+      "state": "Texas",
+      "category": "major_city"
+    },
+    {
+      "name": "Irving, TX",
+      "state": "Texas",
+      "category": "major_city"
+    },
+    {
+      "name": "Amarillo, TX",
+      "state": "Texas",
+      "category": "major_city"
+    },
+    {
+      "name": "Brownsville, TX",
+      "state": "Texas",
+      "category": "border_city"
+    },
+    {
+      "name": "McAllen, TX",
+      "state": "Texas",
+      "category": "border_city"
+    },
+    {
+      "name": "Galveston, TX",
+      "state": "Texas",
+      "category": "port_city"
+    },
+    {
+      "name": "Beaumont, TX",
+      "state": "Texas",
+      "category": "major_city"
+    },
+    {
+      "name": "Port Arthur, TX",
+      "state": "Texas",
+      "category": "port_city"
+    },
+    {
+      "name": "Tyler, TX",
+      "state": "Texas",
+      "category": "major_city"
+    },
+    {
+      "name": "Waco, TX",
+      "state": "Texas",
+      "category": "major_city"
+    },
+    {
+      "name": "Killeen, TX",
+      "state": "Texas",
+      "category": "major_city"
+    },
+    {
+      "name": "Temple, TX",
+      "state": "Texas",
+      "category": "major_city"
+    },
+    {
+      "name": "College Station, TX",
+      "state": "Texas",
+      "category": "major_city"
+    },
+    {
+      "name": "Bryan, TX",
+      "state": "Texas",
+      "category": "major_city"
+    },
+    {
+      "name": "Longview, TX",
+      "state": "Texas",
+      "category": "major_city"
+    },
+    {
+      "name": "Marshall, TX",
+      "state": "Texas",
+      "category": "major_city"
+    },
+    {
+      "name": "Texarkana, TX",
+      "state": "Texas",
+      "category": "border_city"
+    },
+    {
+      "name": "Victoria, TX",
+      "state": "Texas",
+      "category": "major_city"
+    },
+    {
+      "name": "Midland, TX",
+      "state": "Texas",
+      "category": "major_city"
+    },
+    {
+      "name": "Odessa, TX",
+      "state": "Texas",
+      "category": "major_city"
+    },
+    {
+      "name": "Abilene, TX",
+      "state": "Texas",
+      "category": "major_city"
+    },
+    {
+      "name": "San Angelo, TX",
+      "state": "Texas",
+      "category": "major_city"
+    },
+    {
+      "name": "Denton, TX",
+      "state": "Texas",
+      "category": "major_city"
+    },
+    {
+      "name": "Lewisville, TX",
+      "state": "Texas",
+      "category": "major_city"
+    },
+    {
+      "name": "McKinney, TX",
+      "state": "Texas",
+      "category": "major_city"
+    },
+    {
+      "name": "Frisco, TX",
+      "state": "Texas",
+      "category": "major_city"
+    },
+    {
+      "name": "Round Rock, TX",
+      "state": "Texas",
+      "category": "major_city"
+    },
+    {
+      "name": "Pflugerville, TX",
+      "state": "Texas",
+      "category": "major_city"
+    },
+    {
+      "name": "Cedar Park, TX",
+      "state": "Texas",
+      "category": "major_city"
+    },
+    {
+      "name": "Georgetown, TX",
+      "state": "Texas",
+      "category": "major_city"
+    },
+    {
+      "name": "Conroe, TX",
+      "state": "Texas",
+      "category": "major_city"
+    },
+    {
+      "name": "The Woodlands, TX",
+      "state": "Texas",
+      "category": "major_city"
+    },
+    {
+      "name": "Sugar Land, TX",
+      "state": "Texas",
+      "category": "major_city"
+    },
+    {
+      "name": "Pearland, TX",
+      "state": "Texas",
+      "category": "major_city"
+    },
+    {
+      "name": "League City, TX",
+      "state": "Texas",
+      "category": "major_city"
+    },
+    {
+      "name": "Baytown, TX",
+      "state": "Texas",
+      "category": "major_city"
+    },
+    {
+      "name": "Pasadena, TX",
+      "state": "Texas",
+      "category": "major_city"
+    },
+    {
+      "name": "Mission, TX",
+      "state": "Texas",
+      "category": "border_city"
+    },
+    {
+      "name": "Pharr, TX",
+      "state": "Texas",
+      "category": "border_city"
+    },
+    {
+      "name": "Edinburg, TX",
+      "state": "Texas",
+      "category": "border_city"
+    },
+    {
+      "name": "Harlingen, TX",
+      "state": "Texas",
+      "category": "border_city"
+    },
+    {
+      "name": "Del Rio, TX",
+      "state": "Texas",
+      "category": "border_city"
+    },
+    {
+      "name": "Eagle Pass, TX",
+      "state": "Texas",
+      "category": "border_city"
+    },
+    {
+      "name": "Salt Lake City, UT",
+      "state": "Utah",
+      "category": "major_city"
+    },
+    {
+      "name": "West Valley City, UT",
+      "state": "Utah",
+      "category": "major_city"
+    },
+    {
+      "name": "Provo, UT",
+      "state": "Utah",
+      "category": "major_city"
+    },
+    {
+      "name": "Burlington, VT",
+      "state": "Vermont",
+      "category": "major_city"
+    },
+    {
+      "name": "Virginia Beach, VA",
+      "state": "Virginia",
+      "category": "port_city"
+    },
+    {
+      "name": "Norfolk, VA",
+      "state": "Virginia",
+      "category": "port_city"
+    },
+    {
+      "name": "Chesapeake, VA",
+      "state": "Virginia",
+      "category": "major_city"
+    },
+    {
+      "name": "Richmond, VA",
+      "state": "Virginia",
+      "category": "major_city"
+    },
+    {
+      "name": "Newport News, VA",
+      "state": "Virginia",
+      "category": "port_city"
+    },
+    {
+      "name": "Alexandria, VA",
+      "state": "Virginia",
+      "category": "major_city"
+    },
+    {
+      "name": "Seattle, WA",
+      "state": "Washington",
+      "category": "port_city"
+    },
+    {
+      "name": "Spokane, WA",
+      "state": "Washington",
+      "category": "major_city"
+    },
+    {
+      "name": "Tacoma, WA",
+      "state": "Washington",
+      "category": "port_city"
+    },
+    {
+      "name": "Vancouver, WA",
+      "state": "Washington",
+      "category": "major_city"
+    },
+    {
+      "name": "Bellevue, WA",
+      "state": "Washington",
+      "category": "major_city"
+    },
+    {
+      "name": "Charleston, WV",
+      "state": "West Virginia",
+      "category": "major_city"
+    },
+    {
+      "name": "Huntington, WV",
+      "state": "West Virginia",
+      "category": "major_city"
+    },
+    {
+      "name": "Milwaukee, WI",
+      "state": "Wisconsin",
+      "category": "major_city"
+    },
+    {
+      "name": "Madison, WI",
+      "state": "Wisconsin",
+      "category": "major_city"
+    },
+    {
+      "name": "Green Bay, WI",
+      "state": "Wisconsin",
+      "category": "major_city"
+    },
+    {
+      "name": "Cheyenne, WY",
+      "state": "Wyoming",
+      "category": "major_city"
+    },
+    {
+      "name": "Casper, WY",
+      "state": "Wyoming",
+      "category": "major_city"
+    }
+  ]
+}

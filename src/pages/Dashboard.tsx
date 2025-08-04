@@ -16,6 +16,9 @@ function Dashboard() {
   
   const shipments = shipmentsResponse?.shipments || [];
 
+  console.log(user, organization);
+  
+
   const handleAddTrackingEvent = (shipment: Shipment) => {
     setSelectedShipment(shipment);
     setIsAddEventDrawerOpen(true);
@@ -58,9 +61,9 @@ function Dashboard() {
             <h1 className="text-2xl font-bold leading-tight text-gray-900">
               Dashboard
             </h1>
-            <p className="mt-1 max-w-4xl text-sm text-gray-500">
+            {/* <p className="mt-1 max-w-4xl text-sm text-gray-500">
               Welcome back, {user?.displayName}! Manage your shipments and track logistics for {organization?.name}.
-            </p>
+            </p> */}
           </div>
         </div>
 
