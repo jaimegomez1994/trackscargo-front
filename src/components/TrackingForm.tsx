@@ -34,7 +34,7 @@ export default function TrackingForm({ onTrack, initialValue }: TrackingFormProp
             type="text"
             value={trackingNumber}
             onChange={(e) => setTrackingNumber(e.target.value)}
-            placeholder="Enter tracking number (try: TRK123456789)"
+            placeholder="Enter tracking number (for example: TRK123456789)"
             className="w-full px-4 py-3 border border-neutral-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-neutral-900 placeholder-neutral-500"
             required
           />
