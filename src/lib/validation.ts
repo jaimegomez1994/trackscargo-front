@@ -97,6 +97,28 @@ export const shipmentStatuses = [
   { value: 'returned', label: 'Returned', description: 'Package returned to sender' },
 ];
 
+// Tracking event statuses for detailed tracking
+export const trackingEventStatuses = [
+  'Picked Up',
+  'At Origin Facility',
+  'In Transit to Distribution Center',
+  'At Distribution Center',
+  'Departed Facility',
+  'In Transit',
+  'Arrived at Facility',
+  'Out for Delivery',
+  'Delivered',
+  'Exception',
+  'Delivery Attempted',
+  'Customer Not Available',
+  'Weather Delay',
+  'Mechanical Delay',
+  'Address Correction Required',
+  'Package Damaged',
+  'Returned to Sender',
+  'Held at Location'
+];
+
 // Travel event creation form schema
 export const createTravelEventSchema = z.object({
   status: z
