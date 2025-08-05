@@ -56,10 +56,10 @@ export default function CreateShipmentTab({ form, onFormChange, onSubmit }: Crea
               />
             </div>
 
-            {/* Company */}
+            {/* Shipper */}
             <div>
               <label htmlFor="company" className="block text-sm font-medium text-neutral-700 mb-2">
-                Company
+                Shipper
               </label>
               <input
                 type="text"

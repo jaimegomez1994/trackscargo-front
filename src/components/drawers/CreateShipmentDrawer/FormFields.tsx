@@ -1,6 +1,6 @@
 import type { UseFormReturn } from 'react-hook-form';
 import type { CreateShipmentFormData } from '../../../lib/validation';
-import { commonCarriers, commonLocations } from '../../../lib/validation';
+import { commonLocations } from '../../../lib/validation';
 import { useState } from 'react';
 
 interface FormFieldsProps {
@@ -10,22 +10,15 @@ interface FormFieldsProps {
 function FormFields({ form }: FormFieldsProps) {
   const { register, formState: { errors }, watch, setValue } = form;
   
-  const [showCarrierDropdown, setShowCarrierDropdown] = useState(false);
   const [showOriginDropdown, setShowOriginDropdown] = useState(false);
   const [showDestinationDropdown, setShowDestinationDropdown] = useState(false);
-  const [carrierFilter, setCarrierFilter] = useState('');
   const [originFilter, setOriginFilter] = useState('');
   const [destinationFilter, setDestinationFilter] = useState('');
 
-  const companyValue = watch('company') || '';
   const originValue = watch('origin') || '';
   const destinationValue = watch('destination') || '';
 
   // Filter functions
-  const filteredCarriers = commonCarriers.filter(carrier =>
-    carrier.toLowerCase().includes(carrierFilter.toLowerCase())
-  );
-
   const filteredOriginLocations = commonLocations.filter(location =>
     location.toLowerCase().includes(originFilter.toLowerCase())
   );
@@ -33,19 +26,6 @@ function FormFields({ form }: FormFieldsProps) {
   const filteredDestinationLocations = commonLocations.filter(location =>
     location.toLowerCase().includes(destinationFilter.toLowerCase())
   );
-
-  // Handler functions
-  const handleCarrierSelect = (carrier: string) => {
-    setValue('company', carrier === 'Other' ? '' : carrier);
-    setShowCarrierDropdown(false);
-    setCarrierFilter('');
-  };
-
-  const handleCarrierInputChange = (value: string) => {
-    setValue('company', value);
-    setCarrierFilter(value);
-    setShowCarrierDropdown(value.length > 0);
-  };
 
   const handleOriginSelect = (location: string) => {
     setValue('origin', location);
@@ -93,37 +73,18 @@ function FormFields({ form }: FormFieldsProps) {
           )}
         </div>
 
-        {/* Company - Full Width */}
-        <div className="relative">
+        {/* Shipper - Full Width */}
+        <div>
           <label htmlFor="company" className="block text-sm font-medium text-gray-900 mb-2">
-            Company
+            Shipper
           </label>
-          <div className="relative">
-            <input
-              type="text"
-              id="company"
-              value={companyValue}
-              onChange={(e) => handleCarrierInputChange(e.target.value)}
-              onFocus={() => setShowCarrierDropdown(true)}
-              className="block w-full px-4 py-3 text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-colors"
-              placeholder="ABC Logistics Inc."
-            />
-            
-            {/* Dropdown */}
-            {showCarrierDropdown && filteredCarriers.length > 0 && (
-              <div className="absolute z-10 mt-1 w-full bg-white shadow-lg max-h-60 rounded-lg py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none">
-                {filteredCarriers.map((carrier) => (
-                  <div
-                    key={carrier}
-                    className="cursor-pointer select-none relative py-3 px-4 hover:bg-primary hover:text-white transition-colors"
-                    onClick={() => handleCarrierSelect(carrier)}
-                  >
-                    <span className="block truncate font-normal">{carrier}</span>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
+          <input
+            {...register('company')}
+            type="text"
+            id="company"
+            className="block w-full px-4 py-3 text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-colors"
+            placeholder="ABC Logistics Inc."
+          />
         </div>
 
         {/* Weight and Total Pieces - Same Line */}
@@ -243,11 +204,10 @@ function FormFields({ form }: FormFieldsProps) {
       </div>
 
       {/* Click outside to close dropdowns */}
-      {(showCarrierDropdown || showOriginDropdown || showDestinationDropdown) && (
+      {(showOriginDropdown || showDestinationDropdown) && (
         <div 
           className="fixed inset-0 z-0" 
           onClick={() => {
-            setShowCarrierDropdown(false);
             setShowOriginDropdown(false);
             setShowDestinationDropdown(false);
           }}
