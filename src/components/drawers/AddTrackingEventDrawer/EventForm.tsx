@@ -65,6 +65,7 @@ function EventForm({ form }: EventFormProps) {
               value={statusValue}
               onChange={(e) => handleStatusInputChange(e.target.value)}
               onFocus={() => setShowStatusDropdown(true)}
+              autoComplete="off"
               className={`block w-full px-4 py-3 text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-colors ${
                 errors.status ? 'border-red-300' : ''
               }`}
@@ -103,6 +104,7 @@ function EventForm({ form }: EventFormProps) {
               value={locationValue}
               onChange={(e) => handleLocationInputChange(e.target.value)}
               onFocus={() => setShowLocationDropdown(true)}
+              autoComplete="off"
               className={`block w-full px-4 py-3 text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-colors ${
                 errors.location ? 'border-red-300' : ''
               }`}
