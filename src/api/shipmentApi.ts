@@ -129,7 +129,7 @@ export const useDeleteFile = () => {
 
   return useMutation({
     mutationFn: shipmentApi.deleteFile,
-    onSuccess: (_, fileId) => {
+    onSuccess: () => {
       // Invalidate all event files queries to refresh the UI
       queryClient.invalidateQueries({ queryKey: ['eventFiles'] });
     },
