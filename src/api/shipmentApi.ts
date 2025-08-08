@@ -8,6 +8,28 @@ import type {
   ShipmentsResponse 
 } from '../types/api';
 
+// File types
+export interface EventFile {
+  id: string;
+  originalName: string;
+  size: number;
+  mimeType: string;
+  uploadedAt: string;
+}
+
+export interface EventFilesResponse {
+  eventId: string;
+  files: EventFile[];
+}
+
+export interface FileDownloadResponse {
+  downloadUrl: string;
+  expiresIn: number;
+  originalName: string;
+  size: number;
+  mimeType: string;
+}
+
 // Re-export types for convenience
 export type { 
   Shipment, 
@@ -30,6 +52,16 @@ const shipmentApi = {
 
   trackByNumber: (trackingNumber: string): Promise<Shipment> =>
     apiClient.get(`/track/${trackingNumber}`),
+
+  // File management
+  getEventFiles: (eventId: string): Promise<EventFilesResponse> =>
+    apiClient.get(`/events/${eventId}/files`),
+
+  getFileDownloadUrl: (fileId: string): Promise<FileDownloadResponse> =>
+    apiClient.get(`/files/${fileId}/download`),
+
+  deleteFile: (fileId: string): Promise<{ success: boolean }> =>
+    apiClient.delete(`/files/${fileId}`),
 };
 
 // React Query hooks
@@ -73,5 +105,33 @@ export const useTrackShipment = (trackingNumber: string, enabled = true) => {
     queryFn: () => shipmentApi.trackByNumber(trackingNumber),
     enabled: enabled && !!trackingNumber,
     staleTime: 1000 * 60 * 1, // 1 minute
+  });
+};
+
+// File management hooks
+export const useEventFiles = (eventId: string, enabled = true) => {
+  return useQuery({
+    queryKey: ['eventFiles', eventId],
+    queryFn: () => shipmentApi.getEventFiles(eventId),
+    enabled: enabled && !!eventId,
+    staleTime: 1000 * 60 * 5, // 5 minutes
+  });
+};
+
+export const useFileDownload = () => {
+  return useMutation({
+    mutationFn: shipmentApi.getFileDownloadUrl,
+  });
+};
+
+export const useDeleteFile = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: shipmentApi.deleteFile,
+    onSuccess: (_, fileId) => {
+      // Invalidate all event files queries to refresh the UI
+      queryClient.invalidateQueries({ queryKey: ['eventFiles'] });
+    },
   });
 };

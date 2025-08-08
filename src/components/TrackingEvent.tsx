@@ -1,10 +1,27 @@
 import type { TravelEvent } from "../types/shipment";
+import EventFiles from "./EventFiles";
 
 type TrackingEventProps = {
   event: TravelEvent;
 };
 
 export default function TrackingEvent({ event }: TrackingEventProps) {
+  const formatTimestamp = (timestamp: string) => {
+    try {
+      const date = new Date(timestamp);
+      return date.toLocaleString('en-US', {
+        month: 'short',
+        day: 'numeric', 
+        year: 'numeric',
+        hour: 'numeric',
+        minute: '2-digit',
+        hour12: true
+      });
+    } catch {
+      return timestamp;
+    }
+  };
+
   const getEventIcon = (type: string, status: string) => {
     if (status.toLowerCase() === "delivered") {
       return (
@@ -66,8 +83,10 @@ export default function TrackingEvent({ event }: TrackingEventProps) {
               {event.location}
             </p>
             <p className="text-sm text-neutral-500 mt-1">{event.description}</p>
+            {/* Event Files */}
+            <EventFiles eventId={event.id} allowDelete={false} />
           </div>
-          <p className="text-sm text-neutral-500 whitespace-nowrap">{event.timestamp}</p>
+          <p className="text-sm text-neutral-500 whitespace-nowrap">{formatTimestamp(event.timestamp)}</p>
         </div>
       </div>
     </div>

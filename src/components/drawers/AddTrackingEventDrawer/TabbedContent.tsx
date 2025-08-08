@@ -10,9 +10,11 @@ interface TabbedContentProps {
   shipment: Shipment;
   error?: any;
   onTabChange?: (tab: 'add-status' | 'travel-history') => void;
+  selectedFiles?: File[];
+  onFilesChange?: (files: File[]) => void;
 }
 
-function TabbedContent({ form, shipment, error, onTabChange }: TabbedContentProps) {
+function TabbedContent({ form, shipment, error, onTabChange, selectedFiles, onFilesChange }: TabbedContentProps) {
   const [activeTab, setActiveTab] = useState<'add-status' | 'travel-history'>('add-status');
 
   const handleTabChange = (tab: 'add-status' | 'travel-history') => {
@@ -68,7 +70,11 @@ function TabbedContent({ form, shipment, error, onTabChange }: TabbedContentProp
       <div className="px-4 py-6 sm:px-6">
         {activeTab === 'add-status' && (
           <div>
-            <EventForm form={form} />
+            <EventForm 
+              form={form} 
+              selectedFiles={selectedFiles}
+              onFilesChange={onFilesChange}
+            />
             {error && (
               <div className="mt-6">
                 <div className="rounded-md bg-red-50 p-4">

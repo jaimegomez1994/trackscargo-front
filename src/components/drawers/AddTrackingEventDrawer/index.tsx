@@ -6,6 +6,7 @@ import { createTravelEventSchema } from '../../../lib/validation';
 import type { CreateTravelEventFormData } from '../../../lib/validation';
 import { useAddTravelEvent } from '../../../api/shipmentApi';
 import type { Shipment } from '../../../types/api';
+import { apiClient } from '../../../lib/api';
 import DrawerHeader from './DrawerHeader';
 import TabbedContent from './TabbedContent';
 import DrawerFooter from './DrawerFooter';
@@ -19,6 +20,8 @@ interface AddTrackingEventDrawerProps {
 function AddTrackingEventDrawer({ isOpen, onClose, shipment }: AddTrackingEventDrawerProps) {
   const addTravelEventMutation = useAddTravelEvent();
   const [currentTab, setCurrentTab] = useState<'add-status' | 'travel-history'>('add-status');
+  const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
+  const [isUploadingFiles, setIsUploadingFiles] = useState(false);
 
   const form = useForm<CreateTravelEventFormData>({
     resolver: zodResolver(createTravelEventSchema) as any,
@@ -36,7 +39,8 @@ function AddTrackingEventDrawer({ isOpen, onClose, shipment }: AddTrackingEventD
     if (!shipment) return;
 
     try {
-      await addTravelEventMutation.mutateAsync({
+      // First, create the tracking event
+      const result = await addTravelEventMutation.mutateAsync({
         shipmentId: shipment.id,
         data: {
           status: data.status,
@@ -45,17 +49,52 @@ function AddTrackingEventDrawer({ isOpen, onClose, shipment }: AddTrackingEventD
           description: data.description || undefined,
         },
       });
+
+      // Then upload files if any are selected  
+      if (selectedFiles.length > 0 && result) {
+        setIsUploadingFiles(true);
+        console.log('Uploading files to event:', result.id);
+        console.log('Selected files:', selectedFiles);
+
+        // Upload files sequentially
+        for (const file of selectedFiles) {
+          console.log('Uploading file:', file.name, file.size, file.type);
+          
+          const formData = new FormData();
+          formData.append('file', file);
+
+          const response = await fetch(`${apiClient.baseURL}/events/${result.id}/files`, {
+            method: 'POST',
+            body: formData,
+          });
+
+          console.log('Upload response status:', response.status);
+          
+          if (!response.ok) {
+            const errorText = await response.text();
+            console.error('Failed to upload file:', file.name, 'Error:', errorText);
+          } else {
+            const responseData = await response.json();
+            console.log('File uploaded successfully:', file.name, responseData);
+          }
+        }
+        
+        setIsUploadingFiles(false);
+      }
       
       // Success - close drawer and reset form
       reset();
+      setSelectedFiles([]);
       onClose();
     } catch (error) {
       console.error('Failed to add tracking event:', error);
+      setIsUploadingFiles(false);
     }
   };
 
   const handleClose = () => {
     reset();
+    setSelectedFiles([]);
     setCurrentTab('add-status'); // Reset to Add Status tab
     onClose();
   };
@@ -103,11 +142,17 @@ function AddTrackingEventDrawer({ isOpen, onClose, shipment }: AddTrackingEventD
                       shipment={shipment} 
                       error={addTravelEventMutation.error}
                       onTabChange={setCurrentTab}
+                      selectedFiles={selectedFiles}
+                      onFilesChange={setSelectedFiles}
                     />
 
                     {/* Footer - Only show on Add Status tab */}
                     {currentTab === 'add-status' && (
-                      <DrawerFooter isSubmitting={addTravelEventMutation.isPending} />
+                      <DrawerFooter 
+                        isSubmitting={addTravelEventMutation.isPending} 
+                        isUploadingFiles={isUploadingFiles}
+                        selectedFilesCount={selectedFiles.length}
+                      />
                     )}
                   </form>
                 </Dialog.Panel>

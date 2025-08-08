@@ -1,4 +1,5 @@
 import type { Shipment } from '../../../types/api';
+import EventFiles from '../../EventFiles';
 
 interface TravelHistoryProps {
   shipment: Shipment;
@@ -78,6 +79,8 @@ function TravelHistory({ shipment }: TravelHistoryProps) {
                       {event.description && (
                         <p className="text-sm text-gray-500 mt-1">{event.description}</p>
                       )}
+                      {/* Event Files */}
+                      <EventFiles eventId={event.id} allowDelete={true} />
                     </div>
                     <div className="whitespace-nowrap text-right text-sm text-gray-500">
                       <time dateTime={event.timestamp}>{formatDate(event.timestamp)}</time>
