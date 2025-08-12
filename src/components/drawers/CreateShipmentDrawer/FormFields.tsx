@@ -2,6 +2,9 @@ import type { UseFormReturn } from 'react-hook-form';
 import type { CreateShipmentFormData } from '../../../lib/validation';
 import { commonLocations } from '../../../lib/validation';
 import { useState } from 'react';
+import { useAppSelector } from '../../../store/hooks';
+import { selectAuth } from '../../../store/slices/authSlice';
+import { generateTrackingNumberPreview } from '../../../lib/trackingUtils';
 
 interface FormFieldsProps {
   form: UseFormReturn<CreateShipmentFormData>;
@@ -9,6 +12,7 @@ interface FormFieldsProps {
 
 function FormFields({ form }: FormFieldsProps) {
   const { register, formState: { errors }, watch, setValue } = form;
+  const { organization } = useAppSelector(selectAuth);
   
   const [showOriginDropdown, setShowOriginDropdown] = useState(false);
   const [showDestinationDropdown, setShowDestinationDropdown] = useState(false);
@@ -17,6 +21,12 @@ function FormFields({ form }: FormFieldsProps) {
 
   const originValue = watch('origin') || '';
   const destinationValue = watch('destination') || '';
+  const trackingNumberValue = watch('trackingNumber') || '';
+  
+  // Generate tracking number preview
+  const trackingNumberPreview = organization?.name 
+    ? generateTrackingNumberPreview(organization.name, trackingNumberValue)
+    : trackingNumberValue;
 
   // Filter functions
   const filteredOriginLocations = commonLocations.filter(location =>
@@ -59,15 +69,25 @@ function FormFields({ form }: FormFieldsProps) {
           <label htmlFor="trackingNumber" className="block text-sm font-medium text-gray-900 mb-2">
             Tracking Number <span className="text-red-500">*</span>
           </label>
-          <input
-            {...register('trackingNumber')}
-            type="text"
-            id="trackingNumber"
-            className={`block w-full px-4 py-3 text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-colors ${
-              errors.trackingNumber ? 'border-red-300' : ''
-            }`}
-            placeholder="TRK123456789"
-          />
+          <div className="space-y-2">
+            <input
+              {...register('trackingNumber')}
+              type="text"
+              id="trackingNumber"
+              className={`block w-full px-4 py-3 text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-colors ${
+                errors.trackingNumber ? 'border-red-300' : ''
+              }`}
+              placeholder="TRK123456789"
+            />
+            {trackingNumberPreview && trackingNumberPreview !== trackingNumberValue && (
+              <div className="flex items-center gap-2 text-sm">
+                <span className="text-gray-500">Will be saved as:</span>
+                <span className="font-mono font-medium text-primary bg-primary/5 px-2 py-1 rounded">
+                  {trackingNumberPreview}
+                </span>
+              </div>
+            )}
+          </div>
           {errors.trackingNumber && (
             <p className="mt-2 text-sm text-red-600">{errors.trackingNumber.message}</p>
           )}
