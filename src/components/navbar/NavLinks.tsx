@@ -1,6 +1,6 @@
 import { Link, useLocation } from 'react-router-dom';
 import { useAppSelector } from '../../store/hooks';
-import { selectAuth, selectUser } from '../../store/slices/authSlice';
+import { selectAuth } from '../../store/slices/authSlice';
 import { useLogout } from '../../api/authApi';
 import UserMenu from './UserMenu';
 
@@ -12,7 +12,6 @@ interface NavLinksProps {
 function NavLinks({ isMobile = false, onLinkClick }: NavLinksProps) {
   const location = useLocation();
   const { isAuthenticated } = useAppSelector(selectAuth);
-  const user = useAppSelector(selectUser);
   const logoutMutation = useLogout();
 
   const handleMobileLogout = async () => {
@@ -72,24 +71,6 @@ function NavLinks({ isMobile = false, onLinkClick }: NavLinksProps) {
               >
                 Team Management
               </Link>
-              
-              <Link
-                to="/profile"
-                className={linkClassName("/profile")}
-                onClick={onLinkClick}
-              >
-                Profile Settings
-              </Link>
-              
-              {user?.role === 'owner' && (
-                <Link
-                  to="/organization"
-                  className={linkClassName("/organization")}
-                  onClick={onLinkClick}
-                >
-                  Organization Settings
-                </Link>
-              )}
               
               <button
                 onClick={handleMobileLogout}

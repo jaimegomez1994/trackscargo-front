@@ -45,7 +45,7 @@ function UserMenu() {
         aria-haspopup="true"
       >
         <div className="w-8 h-8 bg-white bg-opacity-20 rounded-full flex items-center justify-center">
-          <span className="text-sm font-medium">
+          <span className="text-sm font-medium text-gray-800">
             {user?.displayName?.charAt(0)?.toUpperCase() || 'U'}
           </span>
         </div>
@@ -86,24 +86,6 @@ function UserMenu() {
           >
             Team Management
           </Link>
-          
-          <Link
-            to="/profile"
-            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 no-underline"
-            onClick={closeMenu}
-          >
-            Profile Settings
-          </Link>
-          
-          {user?.role === 'owner' && (
-            <Link
-              to="/organization"
-              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 no-underline"
-              onClick={closeMenu}
-            >
-              Organization Settings
-            </Link>
-          )}
           
           <div className="border-t border-gray-100"></div>
           
