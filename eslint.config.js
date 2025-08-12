@@ -37,4 +37,11 @@ export default tseslint.config([
       'no-var': 'error',
     },
   },
+  // Allow mixed exports in UI component files (design system pattern)
+  {
+    files: ['src/components/ui/**/*.{ts,tsx}'],
+    rules: {
+      'react-refresh/only-export-components': 'off',
+    },
+  },
 ])

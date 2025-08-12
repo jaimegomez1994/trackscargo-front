@@ -1,4 +1,4 @@
-import LoadingSpinner from '../../LoadingSpinner';
+import { Button } from '../../ui';
 
 interface DrawerFooterProps {
   isSubmitting: boolean;
@@ -9,35 +9,37 @@ interface DrawerFooterProps {
 function DrawerFooter({ isSubmitting, isUploadingFiles, selectedFilesCount }: DrawerFooterProps) {
   return (
     <div className="flex-shrink-0 border-t border-gray-200 px-4 py-4 sm:px-6">
-      <button
+      <Button
         type="submit"
         disabled={isSubmitting || isUploadingFiles}
-        className="w-full inline-flex justify-center items-center rounded-lg bg-blue-600 px-6 py-3 text-base font-semibold text-white shadow-sm hover:bg-blue-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer transition-colors"
-      >
-        {isSubmitting || isUploadingFiles ? (
-          <>
-            <LoadingSpinner size="sm" className="mr-2" />
-            {isUploadingFiles 
-              ? `Uploading Files...` 
-              : selectedFilesCount && selectedFilesCount > 0 
-                ? `Adding Event (${selectedFilesCount} files)...`
-                : 'Adding Event...'
-            }
-          </>
-        ) : (
-          <>
-            <svg className="mr-2 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        loading={isSubmitting || isUploadingFiles}
+        variant="blue"
+        size="lg"
+        fullWidth
+        leftIcon={
+          !isSubmitting && !isUploadingFiles ? (
+            <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
-            Add Tracking Event
-            {selectedFilesCount && selectedFilesCount > 0 && (
-              <span className="ml-2 text-xs bg-blue-500 px-2 py-1 rounded-full">
-                {selectedFilesCount} file{selectedFilesCount > 1 ? 's' : ''}
-              </span>
-            )}
-          </>
-        )}
-      </button>
+          ) : undefined
+        }
+        rightIcon={
+          !isSubmitting && !isUploadingFiles && selectedFilesCount && selectedFilesCount > 0 ? (
+            <span className="text-xs bg-blue-500 px-2 py-1 rounded-full">
+              {selectedFilesCount} file{selectedFilesCount > 1 ? 's' : ''}
+            </span>
+          ) : undefined
+        }
+      >
+        {isSubmitting || isUploadingFiles
+          ? isUploadingFiles 
+            ? `Uploading Files` 
+            : selectedFilesCount && selectedFilesCount > 0 
+              ? `Adding Event (${selectedFilesCount} files)`
+              : 'Adding Event'
+          : 'Add Tracking Event'
+        }
+      </Button>
     </div>
   );
 }

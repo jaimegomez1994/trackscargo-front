@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import type { Shipment } from '../../types/api';
 import LoadingSpinner from '../LoadingSpinner';
+import { Button } from '../ui';
 
 interface ShipmentsListProps {
   shipments: Shipment[];
@@ -148,15 +149,16 @@ function ShipmentsList({ shipments, isLoading, error, onCreateShipment, onAddTra
             </p>
             {(!searchTerm && statusFilter === 'all') && (
               <div className="mt-6">
-                <button
+                <Button
                   onClick={onCreateShipment}
-                  className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
+                  leftIcon={
+                    <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                    </svg>
+                  }
                 >
-                  <svg className="-ml-1 mr-2 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                  </svg>
                   Create Shipment
-                </button>
+                </Button>
               </div>
             )}
           </div>
@@ -221,18 +223,20 @@ function ShipmentsList({ shipments, isLoading, error, onCreateShipment, onAddTra
                         }
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                        <button 
-                          onClick={(e) => {
+                        <Button 
+                          onClick={(e: React.MouseEvent) => {
                             e.stopPropagation();
                             onAddTrackingEvent(shipment);
                           }}
-                          className="inline-flex items-center px-3 py-1.5 border border-transparent shadow-sm text-xs font-medium rounded text-white bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
+                          size="xs"
+                          leftIcon={
+                            <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                          }
                         >
-                          <svg className="-ml-0.5 mr-1 h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                          </svg>
                           Add Event
-                        </button>
+                        </Button>
                       </td>
                     </tr>
                   ))}
@@ -292,18 +296,20 @@ function ShipmentsList({ shipments, isLoading, error, onCreateShipment, onAddTra
 
                   {/* Action Button */}
                   <div className="flex justify-end">
-                    <button 
-                      onClick={(e) => {
+                    <Button 
+                      onClick={(e: React.MouseEvent) => {
                         e.stopPropagation();
                         onAddTrackingEvent(shipment);
                       }}
-                      className="inline-flex items-center px-3 py-1.5 border border-transparent shadow-sm text-xs font-medium rounded text-white bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
+                      size="xs"
+                      leftIcon={
+                        <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                      }
                     >
-                      <svg className="-ml-0.5 mr-1 h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                      </svg>
                       Add Event
-                    </button>
+                    </Button>
                   </div>
                 </div>
               ))}

@@ -1,4 +1,5 @@
 import type { Shipment, StatusForm } from "../types/shipment";
+import { Button } from './ui';
 
 type AddStatusTabProps = {
   shipments: Shipment[];
@@ -114,16 +115,20 @@ export default function AddStatusTab({
 
           {/* Submit Button */}
           <div>
-            <button
+            <Button
               type="submit"
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-md transition-colors flex items-center justify-center gap-2"
+              variant="blue"
+              size="lg"
+              fullWidth
+              leftIcon={
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                  <circle cx="12" cy="10" r="3"/>
+                </svg>
+              }
             >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
-                <circle cx="12" cy="10" r="3"/>
-              </svg>
               Add Status Update
-            </button>
+            </Button>
           </div>
         </form>
       </div>

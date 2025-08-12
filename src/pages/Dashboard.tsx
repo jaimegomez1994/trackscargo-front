@@ -5,6 +5,7 @@ import { useShipments } from '../api/shipmentApi';
 import ShipmentsList from '../components/dashboard/ShipmentsList';
 import CreateShipmentDrawer from '../components/drawers/CreateShipmentDrawer';
 import AddTrackingEventDrawer from '../components/drawers/AddTrackingEventDrawer';
+import { Button } from '../components/ui';
 import type { Shipment } from '../types/api';
 
 function Dashboard() {
@@ -69,25 +70,29 @@ function Dashboard() {
 
         {/* Action Buttons */}
         <div className="px-4 sm:px-0 mt-4 flex gap-3">
-          <button
+          <Button
             onClick={() => setIsCreateDrawerOpen(true)}
-            className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
+            leftIcon={
+              <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+              </svg>
+            }
           >
-            <svg className="-ml-1 mr-2 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-            </svg>
             Create Shipment
-          </button>
+          </Button>
           
-          <a
+          <Button
+            as="a"
             href="/"
-            className="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
+            variant="secondary"
+            leftIcon={
+              <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+            }
           >
-            <svg className="-ml-1 mr-2 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-            </svg>
             Track Shipment
-          </a>
+          </Button>
         </div>
 
         {/* Shipments List */}

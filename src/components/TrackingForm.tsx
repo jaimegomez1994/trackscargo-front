@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Button } from './ui';
 
 type TrackingFormProps = {
   onTrack: (trackingNumber: string) => void;
@@ -39,16 +40,20 @@ export default function TrackingForm({ onTrack, initialValue }: TrackingFormProp
             required
           />
         </div>
-        <button
+        <Button
           type="submit"
-          className="w-full sm:w-auto px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-md transition-colors flex items-center justify-center gap-2"
+          variant="blue"
+          size="lg"
+          className="w-full sm:w-auto"
+          leftIcon={
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <circle cx="11" cy="11" r="8"/>
+              <path d="M21 21l-4.35-4.35"/>
+            </svg>
+          }
         >
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <circle cx="11" cy="11" r="8"/>
-            <path d="M21 21l-4.35-4.35"/>
-          </svg>
           Track
-        </button>
+        </Button>
       </form>
     </div>
   );
