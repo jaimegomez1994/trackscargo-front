@@ -66,6 +66,14 @@ function NavLinks({ isMobile = false, onLinkClick }: NavLinksProps) {
           {isMobile && (
             <>
               <Link
+                to="/users"
+                className={linkClassName("/users")}
+                onClick={onLinkClick}
+              >
+                Team Management
+              </Link>
+              
+              <Link
                 to="/profile"
                 className={linkClassName("/profile")}
                 onClick={onLinkClick}

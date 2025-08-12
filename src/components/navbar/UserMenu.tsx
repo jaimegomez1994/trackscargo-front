@@ -61,11 +61,13 @@ function UserMenu() {
 
       {/* Dropdown Menu */}
       {isOpen && (
-        <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50">
+        <div className="absolute right-0 mt-2 w-64 bg-white rounded-md shadow-lg py-1 z-50">
           {/* User Info */}
           <div className="px-4 py-2 text-sm text-gray-700 border-b border-gray-100">
             <div className="font-medium">{user?.displayName}</div>
-            <div className="text-gray-500 text-xs">{user?.email}</div>
+            <div className="text-gray-500 text-xs">
+              {user?.email}
+            </div>
           </div>
           
           {/* Menu Items */}
@@ -75,6 +77,14 @@ function UserMenu() {
             onClick={closeMenu}
           >
             Dashboard
+          </Link>
+          
+          <Link
+            to="/users"
+            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 no-underline"
+            onClick={closeMenu}
+          >
+            Team Management
           </Link>
           
           <Link

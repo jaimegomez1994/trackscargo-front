@@ -6,6 +6,8 @@ import Admin from "./pages/Admin";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Dashboard from "./pages/Dashboard";
+import Users from "./pages/Users";
+import AcceptInvitation from "./pages/AcceptInvitation";
 import Navbar from "./components/Navbar";
 import ProtectedRoute from "./components/ProtectedRoute";
 import GuestRoute from "./components/GuestRoute";
@@ -29,6 +31,7 @@ function App() {
         <Routes>
           {/* Public Routes */}
           <Route path="/" element={<Home />} />
+          <Route path="/invite/:token" element={<AcceptInvitation />} />
           
           {/* Guest Only Routes (redirect to dashboard if logged in) */}
           <Route 
@@ -62,6 +65,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <Admin />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/users" 
+            element={
+              <ProtectedRoute>
+                <Users />
               </ProtectedRoute>
             } 
           />
