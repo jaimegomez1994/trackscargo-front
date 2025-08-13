@@ -4,7 +4,7 @@ import { commonLocations } from '../../../lib/validation';
 import { useState } from 'react';
 import { useAppSelector } from '../../../store/hooks';
 import { selectAuth } from '../../../store/slices/authSlice';
-import { generateTrackingNumberPreview } from '../../../lib/trackingUtils';
+import { generateOrgInitials } from '../../../lib/trackingUtils';
 
 interface FormFieldsProps {
   form: UseFormReturn<CreateShipmentFormData>;
@@ -21,12 +21,9 @@ function FormFields({ form }: FormFieldsProps) {
 
   const originValue = watch('origin') || '';
   const destinationValue = watch('destination') || '';
-  const trackingNumberValue = watch('trackingNumber') || '';
   
-  // Generate tracking number preview
-  const trackingNumberPreview = organization?.name 
-    ? generateTrackingNumberPreview(organization.name, trackingNumberValue)
-    : trackingNumberValue;
+  // Generate organization initials for prefix display
+  const orgInitials = organization?.name ? generateOrgInitials(organization.name) : '';
 
   // Filter functions
   const filteredOriginLocations = commonLocations.filter(location =>
@@ -70,23 +67,25 @@ function FormFields({ form }: FormFieldsProps) {
             Tracking Number <span className="text-red-500">*</span>
           </label>
           <div className="space-y-2">
-            <input
-              {...register('trackingNumber')}
-              type="text"
-              id="trackingNumber"
-              className={`block w-full px-4 py-3 text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-colors ${
-                errors.trackingNumber ? 'border-red-300' : ''
-              }`}
-              placeholder="TRK123456789"
-            />
-            {trackingNumberPreview && trackingNumberPreview !== trackingNumberValue && (
-              <div className="flex items-center gap-2 text-sm">
-                <span className="text-gray-500">Will be saved as:</span>
-                <span className="font-mono font-medium text-primary bg-primary/5 px-2 py-1 rounded">
-                  {trackingNumberPreview}
-                </span>
-              </div>
-            )}
+            <div className="relative">
+              {orgInitials && (
+                <div className="absolute left-4 top-0 h-full flex items-center text-gray-400 font-mono text-base pointer-events-none z-10">
+                  {orgInitials}-
+                </div>
+              )}
+              <input
+                {...register('trackingNumber')}
+                type="text"
+                id="trackingNumber"
+                className={`block w-full py-3 text-base font-mono border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-colors ${
+                  errors.trackingNumber ? 'border-red-300' : ''
+                } pr-4`}
+                placeholder={orgInitials ? "123" : "TRK123456789"}
+                style={{
+                  paddingLeft: orgInitials ? `${(orgInitials.length + 2) * 8 + 16}px` : '16px'
+                }}
+              />
+            </div>
           </div>
           {errors.trackingNumber && (
             <p className="mt-2 text-sm text-red-600">{errors.trackingNumber.message}</p>

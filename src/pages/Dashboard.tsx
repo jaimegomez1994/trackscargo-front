@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useAppSelector } from '../store/hooks';
 import { selectAuth } from '../store/slices/authSlice';
 import { useShipments } from '../api/shipmentApi';
+import { useProfile } from '../api/authApi';
 import ShipmentsList from '../components/dashboard/ShipmentsList';
 import CreateShipmentDrawer from '../components/drawers/CreateShipmentDrawer';
 import AddTrackingEventDrawer from '../components/drawers/AddTrackingEventDrawer';
@@ -14,6 +15,9 @@ function Dashboard() {
   const [isCreateDrawerOpen, setIsCreateDrawerOpen] = useState(false);
   const [isAddEventDrawerOpen, setIsAddEventDrawerOpen] = useState(false);
   const [selectedShipment, setSelectedShipment] = useState<Shipment | null>(null);
+  
+  // Ensure user profile is loaded on page refresh
+  useProfile();
   
   const shipments = shipmentsResponse?.shipments || [];
 

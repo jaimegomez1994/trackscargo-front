@@ -6,7 +6,7 @@ export const createShipmentSchema = z.object({
   // Basic Info (Step 1)
   trackingNumber: z
     .string()
-    .min(3, 'Tracking number must be at least 3 characters')
+    .min(1, 'Tracking number is required')
     .max(50, 'Tracking number is too long')
     .regex(/^[A-Za-z0-9-_]+$/, 'Only letters, numbers, hyphens, and underscores allowed'),
   

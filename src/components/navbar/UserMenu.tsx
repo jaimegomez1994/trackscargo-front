@@ -2,11 +2,14 @@ import { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useAppSelector } from '../../store/hooks';
 import { selectUser } from '../../store/slices/authSlice';
-import { useLogout } from '../../api/authApi';
+import { useLogout, useProfile } from '../../api/authApi';
 
 function UserMenu() {
   const user = useAppSelector(selectUser);
   const logoutMutation = useLogout();
+  
+  // Ensure user profile is loaded
+  useProfile();
   
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
@@ -45,9 +48,13 @@ function UserMenu() {
         aria-haspopup="true"
       >
         <div className="w-8 h-8 bg-white bg-opacity-20 rounded-full flex items-center justify-center">
-          <span className="text-sm font-medium text-gray-800">
-            {user?.displayName?.charAt(0)?.toUpperCase() || 'U'}
-          </span>
+          {user?.displayName ? (
+            <span className="text-sm font-medium text-gray-800">
+              {user.displayName.charAt(0).toUpperCase()}
+            </span>
+          ) : (
+            <div className="w-3 h-3 bg-gray-400 rounded-full animate-pulse"></div>
+          )}
         </div>
         <svg 
           className={`w-4 h-4 transition-transform ${isOpen ? 'rotate-180' : ''}`} 
