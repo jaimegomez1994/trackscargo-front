@@ -10,7 +10,7 @@ export default function TrackingResults({ shipment }: TrackingResultsProps) {
   return (
     <div className="space-y-6">
       <PackageDetails shipment={shipment} />
-      <TravelHistory events={shipment.travelHistory || []} />
+      <TravelHistory events={shipment.travelHistory || []} allowEditing={false} />
     </div>
   );
 }

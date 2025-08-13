@@ -32,6 +32,11 @@ export const apiClient = {
       throw new Error(error.error || `HTTP ${response.status}`);
     }
 
+    // Handle 204 No Content responses
+    if (response.status === 204) {
+      return null as T;
+    }
+
     return response.json();
   },
 

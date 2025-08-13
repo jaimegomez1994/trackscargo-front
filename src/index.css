@@ -6,6 +6,10 @@
   --color-primary: #181D27;
   --color-primary-dark: #0F1419;
   --color-primary-light: #2A3441;
+  
+  /* State Colors */
+  --color-danger: #dc2626;
+  --color-success: #16a34a;
 }
 
 /* Tailwind custom utilities */
@@ -48,5 +52,37 @@
   
   .hover\:text-primary-dark:hover {
     color: var(--color-primary-dark);
+  }
+  
+  .bg-danger {
+    background-color: var(--color-danger);
+  }
+  
+  .bg-success {
+    background-color: var(--color-success);
+  }
+  
+  .text-danger {
+    color: var(--color-danger);
+  }
+  
+  .text-success {
+    color: var(--color-success);
+  }
+  
+  .ring-danger {
+    --tw-ring-color: var(--color-danger);
+  }
+  
+  .ring-success {
+    --tw-ring-color: var(--color-success);
+  }
+  
+  .focus\:ring-danger:focus {
+    --tw-ring-color: var(--color-danger);
+  }
+  
+  .focus\:ring-success:focus {
+    --tw-ring-color: var(--color-success);
   }
 }

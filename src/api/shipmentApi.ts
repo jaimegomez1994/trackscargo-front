@@ -5,6 +5,7 @@ import type {
   TravelEvent, 
   CreateShipmentRequest, 
   CreateTravelEventRequest, 
+  UpdateTravelEventRequest,
   ShipmentsResponse 
 } from '../types/api';
 
@@ -36,6 +37,7 @@ export type {
   TravelEvent, 
   CreateShipmentRequest, 
   CreateTravelEventRequest, 
+  UpdateTravelEventRequest,
   ShipmentsResponse 
 };
 
@@ -52,6 +54,12 @@ const shipmentApi = {
 
   trackByNumber: (trackingNumber: string): Promise<Shipment> =>
     apiClient.get(`/track/${trackingNumber}`),
+
+  updateTravelEvent: (eventId: string, data: UpdateTravelEventRequest): Promise<TravelEvent> =>
+    apiClient.put(`/events/${eventId}`, data),
+
+  deleteTravelEvent: (eventId: string): Promise<void> =>
+    apiClient.delete(`/events/${eventId}`),
 
   // File management
   getEventFiles: (eventId: string): Promise<EventFilesResponse> =>
@@ -132,6 +140,40 @@ export const useDeleteFile = () => {
     onSuccess: () => {
       // Invalidate all event files queries to refresh the UI
       queryClient.invalidateQueries({ queryKey: ['eventFiles'] });
+    },
+  });
+};
+
+// Event management hooks
+export const useUpdateTravelEvent = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({ eventId, data }: { eventId: string; data: UpdateTravelEventRequest }) =>
+      shipmentApi.updateTravelEvent(eventId, data),
+    onSuccess: () => {
+      // Invalidate and refetch queries to refresh the UI immediately
+      queryClient.invalidateQueries({ queryKey: ['shipments'] });
+      queryClient.invalidateQueries({ queryKey: ['track'] });
+      
+      // Force refetch to ensure immediate UI update
+      queryClient.refetchQueries({ queryKey: ['shipments'] });
+    },
+  });
+};
+
+export const useDeleteTravelEvent = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: shipmentApi.deleteTravelEvent,
+    onSuccess: () => {
+      // Invalidate and refetch queries to refresh the UI immediately
+      queryClient.invalidateQueries({ queryKey: ['shipments'] });
+      queryClient.invalidateQueries({ queryKey: ['track'] });
+      
+      // Force refetch to ensure immediate UI update
+      queryClient.refetchQueries({ queryKey: ['shipments'] });
     },
   });
 };

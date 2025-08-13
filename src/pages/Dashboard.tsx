@@ -57,6 +57,16 @@ function Dashboard() {
     }
   }, [shipments]); // Depend on shipments so it runs when data loads
 
+  // Update selectedShipment when shipments data changes (for real-time updates)
+  useEffect(() => {
+    if (selectedShipment && shipments.length > 0) {
+      const updatedShipment = shipments.find(s => s.id === selectedShipment.id);
+      if (updatedShipment) {
+        setSelectedShipment(updatedShipment);
+      }
+    }
+  }, [shipments, selectedShipment?.id]);
+
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
