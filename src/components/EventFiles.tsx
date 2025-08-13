@@ -54,8 +54,17 @@ function EventFiles({ eventId, allowDelete = false }: EventFilesProps) {
       setDownloadingFileId(file.id);
       const response = await downloadMutation.mutateAsync(file.id);
       
-      // Open download URL in new tab
-      window.open(response.downloadUrl, '_blank');
+      // Create a temporary anchor element for download
+      // This works better on mobile browsers
+      const link = document.createElement('a');
+      link.href = response.downloadUrl;
+      link.download = file.originalName;
+      link.target = '_blank';
+      
+      // Append to body, click, and remove
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
     } catch (error) {
       console.error('Download failed:', error);
     } finally {
