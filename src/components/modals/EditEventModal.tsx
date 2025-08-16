@@ -65,7 +65,7 @@ export default function EditEventModal({
   });
 
   const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
-  const datePickerTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const datePickerTimeoutRef = useRef<number | null>(null);
   
   const statusValue = watch('status') || '';
 
@@ -96,7 +96,7 @@ export default function EditEventModal({
 
   const handleFormSubmit = (data: EditEventFormData) => {
     // Map status to a valid eventType for backend validation
-    const getEventType = (status: string) => {
+    const getEventType = (status: string): 'picked-up' | 'in-transit' | 'delivered' | 'exception' | 'out-for-delivery' | 'attempted-delivery' | 'at-facility' | 'customs-clearance' | 'returned' => {
       const statusLower = status.toLowerCase();
       if (statusLower.includes('picked') || statusLower.includes('pickup')) return 'picked-up';
       if (statusLower.includes('delivered')) return 'delivered';
