@@ -26,6 +26,17 @@ export function StatusDropdown({
     label: status
   }));
 
+  // Custom filter function for status - shows all options on focus
+  const statusFilter = (options: DropdownOption[], filter: string) => {
+    // If no filter text, show all options (on focus)
+    if (filter.length === 0) return options;
+    
+    // Otherwise filter normally
+    return options.filter(option =>
+      option.label.toLowerCase().includes(filter.toLowerCase())
+    );
+  };
+
   return (
     <Dropdown
       value={value}
@@ -35,8 +46,10 @@ export function StatusDropdown({
       disabled={disabled}
       error={error}
       allowCustomInput={allowCustomStatus}
+      filterFunction={statusFilter}
       className={className}
       maxOptions={10} // Limit to 10 visible options for better UX
+      openOnFocus={true} // Open immediately on focus for status selection
     />
   );
 }

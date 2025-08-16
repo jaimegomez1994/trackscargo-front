@@ -1,10 +1,10 @@
 import type { UseFormReturn } from 'react-hook-form';
 import type { CreateShipmentFormData } from '../../../lib/validation';
-import { commonLocations } from '../../../lib/validation';
-import { useState } from 'react';
 import { useAppSelector } from '../../../store/hooks';
 import { selectAuth } from '../../../store/slices/authSlice';
 import { generateOrgInitials } from '../../../lib/trackingUtils';
+import { OriginDropdown } from '../../ui/OriginDropdown';
+import { DestinationDropdown } from '../../ui/DestinationDropdown';
 
 interface FormFieldsProps {
   form: UseFormReturn<CreateShipmentFormData>;
@@ -14,49 +14,11 @@ function FormFields({ form }: FormFieldsProps) {
   const { register, formState: { errors }, watch, setValue } = form;
   const { organization } = useAppSelector(selectAuth);
   
-  const [showOriginDropdown, setShowOriginDropdown] = useState(false);
-  const [showDestinationDropdown, setShowDestinationDropdown] = useState(false);
-  const [originFilter, setOriginFilter] = useState('');
-  const [destinationFilter, setDestinationFilter] = useState('');
-
   const originValue = watch('origin') || '';
   const destinationValue = watch('destination') || '';
   
   // Generate organization initials for prefix display
   const orgInitials = organization?.name ? generateOrgInitials(organization.name) : '';
-
-  // Filter functions
-  const filteredOriginLocations = commonLocations.filter(location =>
-    location.toLowerCase().includes(originFilter.toLowerCase())
-  );
-
-  const filteredDestinationLocations = commonLocations.filter(location =>
-    location.toLowerCase().includes(destinationFilter.toLowerCase())
-  );
-
-  const handleOriginSelect = (location: string) => {
-    setValue('origin', location);
-    setShowOriginDropdown(false);
-    setOriginFilter('');
-  };
-
-  const handleOriginInputChange = (value: string) => {
-    setValue('origin', value);
-    setOriginFilter(value);
-    setShowOriginDropdown(value.length > 0);
-  };
-
-  const handleDestinationSelect = (location: string) => {
-    setValue('destination', location);  
-    setShowDestinationDropdown(false);
-    setDestinationFilter('');
-  };
-
-  const handleDestinationInputChange = (value: string) => {
-    setValue('destination', value);
-    setDestinationFilter(value);
-    setShowDestinationDropdown(value.length > 0);
-  };
 
   return (
     <>
@@ -113,8 +75,14 @@ function FormFields({ form }: FormFieldsProps) {
               Total Pieces <span className="text-red-500">*</span>
             </label>
             <input
-              {...register('pieces', { valueAsNumber: true })}
-              type="text"
+              {...register('pieces', { 
+                setValueAs: (value) => {
+                  if (value === '' || value == null) return '';
+                  const num = Number(value);
+                  return isNaN(num) ? value : num;
+                }
+              })}
+              type="number"
               id="pieces"
               className={`block w-full px-4 py-3 text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-colors ${
                 errors.pieces ? 'border-red-300' : ''
@@ -131,8 +99,14 @@ function FormFields({ form }: FormFieldsProps) {
               Weight
             </label>
             <input
-              {...register('weight', { valueAsNumber: true })}
-              type="text"
+              {...register('weight', { 
+                setValueAs: (value) => {
+                  if (value === '' || value == null) return '';
+                  const num = Number(value);
+                  return isNaN(num) ? value : num;
+                }
+              })}
+              type="number"
               id="weight"
               className={`block w-full px-4 py-3 text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-colors ${
                 errors.weight ? 'border-red-300' : ''
@@ -146,92 +120,30 @@ function FormFields({ form }: FormFieldsProps) {
         </div>
 
         {/* Origin - Full Width */}
-        <div className="relative">
+        <div>
           <label htmlFor="origin" className="block text-sm font-medium text-gray-900 mb-2">
             Origin <span className="text-red-500">*</span>
           </label>
-          <div className="relative">
-            <input
-              type="text"
-              id="origin"
-              value={originValue}
-              onChange={(e) => handleOriginInputChange(e.target.value)}
-              onFocus={() => setShowOriginDropdown(true)}
-              className={`block w-full px-4 py-3 text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-colors ${
-                errors.origin ? 'border-red-300' : ''
-              }`}
-              placeholder="New York, NY"
-            />
-            
-            {/* Origin Dropdown */}
-            {showOriginDropdown && filteredOriginLocations.length > 0 && (
-              <div className="absolute z-10 mt-1 w-full bg-white shadow-lg max-h-60 rounded-lg py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none">
-                {filteredOriginLocations.slice(0, 10).map((location) => (
-                  <div
-                    key={location}
-                    className="cursor-pointer select-none relative py-3 px-4 hover:bg-primary hover:text-white transition-colors"
-                    onClick={() => handleOriginSelect(location)}
-                  >
-                    <span className="block truncate font-normal">{location}</span>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-          {errors.origin && (
-            <p className="mt-2 text-sm text-red-600">{errors.origin.message}</p>
-          )}
+          <OriginDropdown
+            value={originValue}
+            onChange={(value) => setValue('origin', value)}
+            error={errors.origin?.message}
+          />
         </div>
 
         {/* Destination - Full Width */}
-        <div className="relative">
+        <div>
           <label htmlFor="destination" className="block text-sm font-medium text-gray-900 mb-2">
             Destination <span className="text-red-500">*</span>
           </label>
-          <div className="relative">
-            <input
-              type="text"
-              id="destination"
-              value={destinationValue}
-              onChange={(e) => handleDestinationInputChange(e.target.value)}
-              onFocus={() => setShowDestinationDropdown(true)}
-              className={`block w-full px-4 py-3 text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-colors ${
-                errors.destination ? 'border-red-300' : ''
-              }`}
-              placeholder="Los Angeles, CA"
-            />
-            
-            {/* Destination Dropdown */}
-            {showDestinationDropdown && filteredDestinationLocations.length > 0 && (
-              <div className="absolute z-10 mt-1 w-full bg-white shadow-lg max-h-60 rounded-lg py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none">
-                {filteredDestinationLocations.slice(0, 10).map((location) => (
-                  <div
-                    key={location}
-                    className="cursor-pointer select-none relative py-3 px-4 hover:bg-primary hover:text-white transition-colors"
-                    onClick={() => handleDestinationSelect(location)}
-                  >
-                    <span className="block truncate font-normal">{location}</span>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-          {errors.destination && (
-            <p className="mt-2 text-sm text-red-600">{errors.destination.message}</p>
-          )}
+          <DestinationDropdown
+            value={destinationValue}
+            onChange={(value) => setValue('destination', value)}
+            error={errors.destination?.message}
+          />
         </div>
       </div>
 
-      {/* Click outside to close dropdowns */}
-      {(showOriginDropdown || showDestinationDropdown) && (
-        <div 
-          className="fixed inset-0 z-0" 
-          onClick={() => {
-            setShowOriginDropdown(false);
-            setShowDestinationDropdown(false);
-          }}
-        />
-      )}
     </>
   );
 }

@@ -17,15 +17,30 @@ export const createShipmentSchema = z.object({
     .transform(val => val || undefined),
   
   weight: z
-    .number()
-    .min(0.1, 'Weight must be greater than 0')
-    .max(1000000, 'Weight is too large'),
+    .union([z.string(), z.number()])
+    .transform((val) => {
+      if (val === '' || val == null) return undefined;
+      const num = typeof val === 'string' ? Number(val) : val;
+      return isNaN(num) ? undefined : num;
+    })
+    .optional()
+    .refine((val) => val === undefined || (val >= 0.1 && val <= 1000000), {
+      message: 'Weight must be between 0.1 and 1,000,000'
+    }),
   
   pieces: z
-    .number()
-    .int()
-    .min(1, 'Must have at least 1 piece')
-    .max(999, 'Too many pieces'),
+    .union([z.string(), z.number()])
+    .transform((val) => {
+      if (val === '' || val == null) return undefined;
+      const num = typeof val === 'string' ? Number(val) : val;
+      return isNaN(num) ? undefined : num;
+    })
+    .refine((val) => val !== undefined, {
+      message: 'Total pieces is required'
+    })
+    .refine((val) => val === undefined || (Number.isInteger(val) && val >= 1 && val <= 999999999), {
+      message: 'Must be a whole number between 1 and 999,999,999'
+    }),
 
   // Route Details (Step 2)
   origin: z

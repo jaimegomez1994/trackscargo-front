@@ -19,6 +19,7 @@ interface DropdownProps {
   dropdownClassName?: string;
   maxHeight?: string;
   maxOptions?: number;
+  openOnFocus?: boolean; // New prop to control focus behavior
 }
 
 export function Dropdown({
@@ -33,7 +34,8 @@ export function Dropdown({
   className = '',
   dropdownClassName = '',
   maxHeight = 'max-h-60',
-  maxOptions
+  maxOptions,
+  openOnFocus = false
 }: DropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [filter, setFilter] = useState('');
@@ -57,7 +59,14 @@ export function Dropdown({
   const handleInputChange = (inputValue: string) => {
     onChange(inputValue);
     setFilter(inputValue);
-    setIsOpen(inputValue.length > 0 || !allowCustomInput);
+    
+    if (openOnFocus) {
+      // For status dropdowns: open on any input or if not allowing custom input
+      setIsOpen(inputValue.length > 0 || !allowCustomInput);
+    } else {
+      // Mobile-friendly: require 2+ characters for filtering (location dropdowns)
+      setIsOpen(inputValue.length > 1 || !allowCustomInput);
+    }
   };
 
   const handleOptionSelect = (option: DropdownOption) => {
@@ -73,9 +82,19 @@ export function Dropdown({
   };
 
   const handleInputFocus = () => {
-    setIsOpen(true);
-    if (!allowCustomInput) {
-      setFilter('');
+    if (openOnFocus) {
+      // Always open on focus (for status dropdowns)
+      setIsOpen(true);
+      if (!allowCustomInput) {
+        setFilter('');
+      }
+    } else {
+      // For mobile-friendly behavior, only open if there's already content (for location dropdowns)
+      const shouldOpen = value.length > 1 || !allowCustomInput;
+      setIsOpen(shouldOpen);
+      if (!allowCustomInput) {
+        setFilter('');
+      }
     }
   };
 
