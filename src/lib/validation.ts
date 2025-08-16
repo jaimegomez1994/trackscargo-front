@@ -40,7 +40,8 @@ export const createShipmentSchema = z.object({
     })
     .refine((val) => val === undefined || (Number.isInteger(val) && val >= 1 && val <= 999999999), {
       message: 'Must be a whole number between 1 and 999,999,999'
-    }),
+    })
+    .transform((val) => val as number), // Ensure return type is number after validation
 
   // Route Details (Step 2)
   origin: z

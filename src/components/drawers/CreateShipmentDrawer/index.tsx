@@ -40,8 +40,8 @@ function CreateShipmentDrawer({ isOpen, onClose }: CreateShipmentDrawerProps) {
       await createShipmentMutation.mutateAsync({
         trackingNumber: data.trackingNumber,
         company: data.company || undefined,
-        weight: data.weight,
-        pieces: data.pieces,
+        weight: data.weight || undefined,
+        pieces: data.pieces!, // pieces is required by validation, so we know it exists
         origin: data.origin,
         destination: data.destination,
         status: data.status,
