@@ -152,12 +152,9 @@ export const useUpdateTravelEvent = () => {
     mutationFn: ({ eventId, data }: { eventId: string; data: UpdateTravelEventRequest }) =>
       shipmentApi.updateTravelEvent(eventId, data),
     onSuccess: () => {
-      // Invalidate and refetch queries to refresh the UI immediately
+      // Only invalidate queries to refresh data, avoid aggressive refetching
       queryClient.invalidateQueries({ queryKey: ['shipments'] });
       queryClient.invalidateQueries({ queryKey: ['track'] });
-      
-      // Force refetch to ensure immediate UI update
-      queryClient.refetchQueries({ queryKey: ['shipments'] });
     },
   });
 };

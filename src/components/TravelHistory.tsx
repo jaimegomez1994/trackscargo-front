@@ -28,6 +28,7 @@ export default function TravelHistory({ events, allowEditing = false }: TravelHi
   const handleUpdateSubmit = (data: UpdateTravelEventRequest) => {
     if (!editingEvent) return;
     
+    
     updateEventMutation.mutate(
       { eventId: editingEvent.id, data },
       {

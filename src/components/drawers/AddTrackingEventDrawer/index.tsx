@@ -40,13 +40,27 @@ function AddTrackingEventDrawer({ isOpen, onClose, shipment }: AddTrackingEventD
 
     try {
       // First, create the tracking event
+      // Map status to a valid eventType for backend validation
+      const getEventType = (status: string) => {
+        const statusLower = status.toLowerCase();
+        if (statusLower.includes('picked') || statusLower.includes('pickup')) return 'picked-up';
+        if (statusLower.includes('delivered')) return 'delivered';
+        if (statusLower.includes('exception') || statusLower.includes('error') || statusLower.includes('failed')) return 'exception';
+        if (statusLower.includes('out for delivery')) return 'out-for-delivery';
+        if (statusLower.includes('attempted')) return 'attempted-delivery';
+        if (statusLower.includes('facility') || statusLower.includes('warehouse')) return 'at-facility';
+        if (statusLower.includes('customs')) return 'customs-clearance';
+        if (statusLower.includes('returned')) return 'returned';
+        return 'in-transit'; // default for any custom status
+      };
+
       const result = await addTravelEventMutation.mutateAsync({
         shipmentId: shipment.id,
         data: {
           status: data.status,
           location: data.location,
-          eventType: 'in-transit', // Default event type
           description: data.description || undefined,
+          eventType: getEventType(data.status),
         },
       });
 

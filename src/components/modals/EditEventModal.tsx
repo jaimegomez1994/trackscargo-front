@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
+import { createPortal } from 'react-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -6,23 +7,14 @@ import type { TravelEvent, UpdateTravelEventRequest } from '../../types/api';
 import { Button } from '../ui/primitives/Button';
 import { Input } from '../ui/primitives/Input';
 import { FormField } from '../ui/primitives/FormField';
+import { StatusDropdown } from '../ui/StatusDropdown';
 
 // Validation schema
 const editEventSchema = z.object({
   status: z.string().min(1, 'Status is required'),
   location: z.string().min(1, 'Location is required'),
   description: z.string().optional(),
-  eventType: z.enum([
-    'picked-up',
-    'in-transit', 
-    'delivered',
-    'exception',
-    'out-for-delivery',
-    'attempted-delivery',
-    'at-facility',
-    'customs-clearance',
-    'returned'
-  ])
+  timestamp: z.string().min(1, 'Date and time is required'),
 });
 
 type EditEventFormData = z.infer<typeof editEventSchema>;
@@ -44,20 +36,38 @@ export default function EditEventModal({
 }: EditEventModalProps) {
   const [isVisible, setIsVisible] = useState(false);
 
+  // Helper function to format timestamp for datetime-local input
+  const formatTimestampForInput = (timestamp: string) => {
+    try {
+      const date = new Date(timestamp);
+      // datetime-local format: YYYY-MM-DDTHH:mm
+      return date.toISOString().slice(0, 16);
+    } catch {
+      return new Date().toISOString().slice(0, 16);
+    }
+  };
+
   const {
     register,
     handleSubmit,
     formState: { errors },
-    reset
+    reset,
+    setValue,
+    watch
   } = useForm<EditEventFormData>({
     resolver: zodResolver(editEventSchema),
     defaultValues: {
       status: event.status,
       location: event.location,
       description: event.description || '',
-      eventType: event.type
+      timestamp: formatTimestampForInput(event.timestamp)
     }
   });
+
+  const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
+  const datePickerTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  
+  const statusValue = watch('status') || '';
 
   useEffect(() => {
     if (isOpen) {
@@ -67,15 +77,45 @@ export default function EditEventModal({
         status: event.status,
         location: event.location,
         description: event.description || '',
-        eventType: event.type
+        timestamp: formatTimestampForInput(event.timestamp)
       });
     } else {
       setIsVisible(false);
     }
   }, [isOpen, event, reset]);
 
+  // Cleanup timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (datePickerTimeoutRef.current) {
+        clearTimeout(datePickerTimeoutRef.current);
+      }
+    };
+  }, []);
+
+
   const handleFormSubmit = (data: EditEventFormData) => {
-    onSubmit(data);
+    // Map status to a valid eventType for backend validation
+    const getEventType = (status: string) => {
+      const statusLower = status.toLowerCase();
+      if (statusLower.includes('picked') || statusLower.includes('pickup')) return 'picked-up';
+      if (statusLower.includes('delivered')) return 'delivered';
+      if (statusLower.includes('exception') || statusLower.includes('error') || statusLower.includes('failed')) return 'exception';
+      if (statusLower.includes('out for delivery')) return 'out-for-delivery';
+      if (statusLower.includes('attempted')) return 'attempted-delivery';
+      if (statusLower.includes('facility') || statusLower.includes('warehouse')) return 'at-facility';
+      if (statusLower.includes('customs')) return 'customs-clearance';
+      if (statusLower.includes('returned')) return 'returned';
+      return 'in-transit'; // default for any custom status
+    };
+
+    // Convert datetime-local back to ISO timestamp
+    const formattedData = {
+      ...data,
+      timestamp: new Date(data.timestamp).toISOString(),
+      eventType: getEventType(data.status)
+    };
+    onSubmit(formattedData);
   };
 
   const handleClose = () => {
@@ -84,14 +124,37 @@ export default function EditEventModal({
     }
   };
 
+  const handleBackdropClick = () => {
+    // Don't close modal if date picker is open
+    if (isDatePickerOpen) {
+      setIsDatePickerOpen(false); // Just close the date picker
+      return;
+    }
+    handleClose();
+  };
+
+  const handleDatePickerFocus = () => {
+    if (datePickerTimeoutRef.current) {
+      clearTimeout(datePickerTimeoutRef.current);
+    }
+    setIsDatePickerOpen(true);
+  };
+
+  const handleDatePickerBlur = () => {
+    // Use a small delay to allow the backdrop click to check the state
+    datePickerTimeoutRef.current = setTimeout(() => {
+      setIsDatePickerOpen(false);
+    }, 100);
+  };
+
   if (!isOpen) return null;
 
-  return (
+  return createPortal(
     <div className="fixed inset-0 z-50 flex items-center justify-center">
       {/* Backdrop */}
       <div 
         className="absolute inset-0 backdrop-blur-sm bg-white/10 transition-opacity duration-200"
-        onClick={handleClose}
+        onClick={handleBackdropClick}
       />
       
       {/* Modal */}
@@ -115,10 +178,11 @@ export default function EditEventModal({
         {/* Form */}
         <form onSubmit={handleSubmit(handleFormSubmit)} className="p-6 space-y-4">
           <FormField label="Status" error={errors.status?.message} required>
-            <Input
-              {...register('status')}
-              placeholder="e.g., Delivered, In Transit, Exception"
+            <StatusDropdown
+              value={statusValue}
+              onChange={(value) => setValue('status', value)}
               disabled={isLoading}
+              error={errors.status?.message}
             />
           </FormField>
 
@@ -130,30 +194,23 @@ export default function EditEventModal({
             />
           </FormField>
 
+          <FormField label="Date & Time" error={errors.timestamp?.message} required>
+            <input
+              type="datetime-local"
+              {...register('timestamp')}
+              disabled={isLoading}
+              onFocus={handleDatePickerFocus}
+              onBlur={handleDatePickerBlur}
+              className="block w-full px-4 py-3 text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            />
+          </FormField>
+
           <FormField label="Description" error={errors.description?.message}>
             <Input
               {...register('description')}
               placeholder="Optional additional details"
               disabled={isLoading}
             />
-          </FormField>
-
-          <FormField label="Event Type" error={errors.eventType?.message} required>
-            <select
-              {...register('eventType')}
-              disabled={isLoading}
-              className="block w-full px-4 py-3 text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              <option value="picked-up">Picked Up</option>
-              <option value="in-transit">In Transit</option>
-              <option value="at-facility">At Facility</option>
-              <option value="out-for-delivery">Out for Delivery</option>
-              <option value="delivered">Delivered</option>
-              <option value="attempted-delivery">Attempted Delivery</option>
-              <option value="exception">Exception</option>
-              <option value="customs-clearance">Customs Clearance</option>
-              <option value="returned">Returned</option>
-            </select>
           </FormField>
 
           {/* Actions */}
@@ -178,6 +235,8 @@ export default function EditEventModal({
           </div>
         </form>
       </div>
-    </div>
+
+    </div>,
+    document.body
   );
 }

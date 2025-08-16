@@ -1,6 +1,7 @@
 import type { UseFormReturn } from 'react-hook-form';
 import type { CreateTravelEventFormData } from '../../../lib/validation';
-import { commonLocations, trackingEventStatuses } from '../../../lib/validation';
+import { commonLocations } from '../../../lib/validation';
+import { StatusDropdown } from '../../ui/StatusDropdown';
 import { useState, useRef } from 'react';
 
 interface EventFormProps {
@@ -12,9 +13,7 @@ interface EventFormProps {
 function EventForm({ form, selectedFiles: externalFiles, onFilesChange }: EventFormProps) {
   const { register, formState: { errors }, watch, setValue } = form;
   
-  const [showStatusDropdown, setShowStatusDropdown] = useState(false);
   const [showLocationDropdown, setShowLocationDropdown] = useState(false);
-  const [statusFilter, setStatusFilter] = useState('');
   const [locationFilter, setLocationFilter] = useState('');
   const [selectedFiles, setSelectedFiles] = useState<File[]>(externalFiles || []);
   const [isDragOver, setIsDragOver] = useState(false);
@@ -23,25 +22,10 @@ function EventForm({ form, selectedFiles: externalFiles, onFilesChange }: EventF
   const statusValue = watch('status') || '';
   const locationValue = watch('location') || '';
 
-  const filteredStatuses = trackingEventStatuses.filter(status =>
-    status.toLowerCase().includes(statusFilter.toLowerCase())
-  );
-
   const filteredLocations = commonLocations.filter(location =>
     location.toLowerCase().includes(locationFilter.toLowerCase())
   );
 
-  const handleStatusSelect = (status: string) => {
-    setValue('status', status);
-    setShowStatusDropdown(false);
-    setStatusFilter('');
-  };
-
-  const handleStatusInputChange = (value: string) => {
-    setValue('status', value);
-    setStatusFilter(value);
-    setShowStatusDropdown(value.length > 0);
-  };
 
   const handleLocationSelect = (location: string) => {
     setValue('location', location);
@@ -106,42 +90,15 @@ function EventForm({ form, selectedFiles: externalFiles, onFilesChange }: EventF
     <>
       <div className="space-y-6">
         {/* Status */}
-        <div className="relative">
+        <div>
           <label htmlFor="status" className="block text-sm font-medium text-gray-900 mb-2">
             Status <span className="text-red-500">*</span>
           </label>
-          <div className="relative">
-            <input
-              type="text"
-              id="status"
-              value={statusValue}
-              onChange={(e) => handleStatusInputChange(e.target.value)}
-              onFocus={() => setShowStatusDropdown(true)}
-              autoComplete="off"
-              className={`block w-full px-4 py-3 text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-colors ${
-                errors.status ? 'border-red-300' : ''
-              }`}
-              placeholder="In Transit"
-            />
-            
-            {/* Status Dropdown */}
-            {showStatusDropdown && filteredStatuses.length > 0 && (
-              <div className="absolute z-10 mt-1 w-full bg-white shadow-lg max-h-60 rounded-lg py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none">
-                {filteredStatuses.map((status) => (
-                  <div
-                    key={status}
-                    className="cursor-pointer select-none relative py-3 px-4 hover:bg-primary hover:text-white transition-colors"
-                    onClick={() => handleStatusSelect(status)}
-                  >
-                    <span className="block truncate font-normal">{status}</span>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-          {errors.status && (
-            <p className="mt-2 text-sm text-red-600">{errors.status.message}</p>
-          )}
+          <StatusDropdown
+            value={statusValue}
+            onChange={(value) => setValue('status', value)}
+            error={errors.status?.message}
+          />
         </div>
 
         {/* Location */}
@@ -169,7 +126,7 @@ function EventForm({ form, selectedFiles: externalFiles, onFilesChange }: EventF
                 {filteredLocations.slice(0, 10).map((location) => (
                   <div
                     key={location}
-                    className="cursor-pointer select-none relative py-3 px-4 hover:bg-primary hover:text-white transition-colors"
+                    className="cursor-pointer select-none relative py-3 px-4 hover:bg-blue-600 hover:text-white transition-colors"
                     onClick={() => handleLocationSelect(location)}
                   >
                     <span className="block truncate font-normal">{location}</span>
@@ -318,11 +275,10 @@ function EventForm({ form, selectedFiles: externalFiles, onFilesChange }: EventF
       </div>
 
       {/* Click outside to close dropdowns */}
-      {(showStatusDropdown || showLocationDropdown) && (
+      {showLocationDropdown && (
         <div 
           className="fixed inset-0 z-0" 
           onClick={() => {
-            setShowStatusDropdown(false);
             setShowLocationDropdown(false);
           }}
         />

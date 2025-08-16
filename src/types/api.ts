@@ -17,7 +17,6 @@ export interface TravelEvent {
   location: string;
   description?: string;
   timestamp: string;
-  type: 'picked-up' | 'in-transit' | 'delivered' | 'exception' | 'out-for-delivery' | 'attempted-delivery' | 'at-facility' | 'customs-clearance' | 'returned';
 }
 
 export interface CreateShipmentRequest {
@@ -42,6 +41,7 @@ export interface UpdateTravelEventRequest {
   status?: string;
   location?: string;
   description?: string;
+  timestamp?: string;
   eventType?: 'picked-up' | 'in-transit' | 'delivered' | 'exception' | 'out-for-delivery' | 'attempted-delivery' | 'at-facility' | 'customs-clearance' | 'returned';
 }
 

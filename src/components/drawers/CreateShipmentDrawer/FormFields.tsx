@@ -106,26 +106,8 @@ function FormFields({ form }: FormFieldsProps) {
           />
         </div>
 
-        {/* Weight and Total Pieces - Same Line */}
+        {/* Total Pieces and Weight - Same Line */}
         <div className="grid grid-cols-2 gap-4">
-          <div>
-            <label htmlFor="weight" className="block text-sm font-medium text-gray-900 mb-2">
-              Weight
-            </label>
-            <input
-              {...register('weight', { valueAsNumber: true })}
-              type="text"
-              id="weight"
-              className={`block w-full px-4 py-3 text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-colors ${
-                errors.weight ? 'border-red-300' : ''
-              }`}
-              placeholder="2.5 lbs"
-            />
-            {errors.weight && (
-              <p className="mt-2 text-sm text-red-600">{errors.weight.message}</p>
-            )}
-          </div>
-
           <div>
             <label htmlFor="pieces" className="block text-sm font-medium text-gray-900 mb-2">
               Total Pieces <span className="text-red-500">*</span>
@@ -141,6 +123,24 @@ function FormFields({ form }: FormFieldsProps) {
             />
             {errors.pieces && (
               <p className="mt-2 text-sm text-red-600">{errors.pieces.message}</p>
+            )}
+          </div>
+
+          <div>
+            <label htmlFor="weight" className="block text-sm font-medium text-gray-900 mb-2">
+              Weight
+            </label>
+            <input
+              {...register('weight', { valueAsNumber: true })}
+              type="text"
+              id="weight"
+              className={`block w-full px-4 py-3 text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-colors ${
+                errors.weight ? 'border-red-300' : ''
+              }`}
+              placeholder="2.5 lbs"
+            />
+            {errors.weight && (
+              <p className="mt-2 text-sm text-red-600">{errors.weight.message}</p>
             )}
           </div>
         </div>

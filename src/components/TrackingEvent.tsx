@@ -27,8 +27,10 @@ export default function TrackingEvent({ event, onEdit, onDelete }: TrackingEvent
     }
   };
 
-  const getEventIcon = (type: string, status: string) => {
-    if (status.toLowerCase() === "delivered") {
+  const getEventIcon = (status: string) => {
+    const statusLower = status.toLowerCase();
+    
+    if (statusLower.includes("delivered")) {
       return (
         <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" className="text-green-600">
@@ -38,7 +40,7 @@ export default function TrackingEvent({ event, onEdit, onDelete }: TrackingEvent
       );
     }
     
-    if (type === "picked-up") {
+    if (statusLower.includes("picked") || statusLower.includes("pickup")) {
       return (
         <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" className="text-blue-600">
@@ -48,7 +50,7 @@ export default function TrackingEvent({ event, onEdit, onDelete }: TrackingEvent
       );
     }
 
-    if (status.toLowerCase().includes("exception")) {
+    if (statusLower.includes("exception") || statusLower.includes("error") || statusLower.includes("failed")) {
       return (
         <div className="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" className="text-red-600">
@@ -73,7 +75,7 @@ export default function TrackingEvent({ event, onEdit, onDelete }: TrackingEvent
   return (
     <div className="flex items-start gap-4">
       <div className="flex-shrink-0 mt-1">
-        {getEventIcon(event.type, event.status)}
+        {getEventIcon(event.status)}
       </div>
       
       <div className="flex-1 min-w-0">

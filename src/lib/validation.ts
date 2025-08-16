@@ -19,7 +19,7 @@ export const createShipmentSchema = z.object({
   weight: z
     .number()
     .min(0.1, 'Weight must be greater than 0')
-    .max(10000, 'Weight is too large'),
+    .max(1000000, 'Weight is too large'),
   
   pieces: z
     .number()

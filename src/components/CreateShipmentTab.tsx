@@ -41,18 +41,20 @@ export default function CreateShipmentTab({ form, onFormChange, onSubmit }: Crea
               />
             </div>
 
-            {/* Weight */}
+            {/* Total Pieces */}
             <div>
-              <label htmlFor="weight" className="block text-sm font-medium text-neutral-700 mb-2">
-                Weight
+              <label htmlFor="totalPieces" className="block text-sm font-medium text-neutral-700 mb-2">
+                Total Pieces <span className="text-red-500">*</span>
               </label>
               <input
-                type="text"
-                id="weight"
-                value={form.weight}
-                onChange={(e) => onFormChange("weight", e.target.value)}
-                placeholder="2.5 lbs"
+                type="number"
+                id="totalPieces"
+                value={form.totalPieces}
+                onChange={(e) => onFormChange("totalPieces", e.target.value)}
+                placeholder="1"
+                min="1"
                 className="w-full px-3 py-2 border border-neutral-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                required
               />
             </div>
 
@@ -71,20 +73,18 @@ export default function CreateShipmentTab({ form, onFormChange, onSubmit }: Crea
               />
             </div>
 
-            {/* Total Pieces */}
+            {/* Weight */}
             <div>
-              <label htmlFor="totalPieces" className="block text-sm font-medium text-neutral-700 mb-2">
-                Total Pieces <span className="text-red-500">*</span>
+              <label htmlFor="weight" className="block text-sm font-medium text-neutral-700 mb-2">
+                Weight
               </label>
               <input
-                type="number"
-                id="totalPieces"
-                value={form.totalPieces}
-                onChange={(e) => onFormChange("totalPieces", e.target.value)}
-                placeholder="1"
-                min="1"
+                type="text"
+                id="weight"
+                value={form.weight}
+                onChange={(e) => onFormChange("weight", e.target.value)}
+                placeholder="2.5 lbs"
                 className="w-full px-3 py-2 border border-neutral-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-                required
               />
             </div>
 
