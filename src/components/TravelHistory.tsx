@@ -1,7 +1,7 @@
 import { useState } from "react";
 import type { TravelEvent as ApiTravelEvent, UpdateTravelEventRequest } from "../types/api";
 import TrackingEvent from "./TrackingEvent";
-import EditEventModal from "./modals/EditEventModal";
+import EditEventSlideIn from "./slide-ins/EditEventSlideIn";
 import ConfirmDeleteModal from "./modals/ConfirmDeleteModal";
 import { useUpdateTravelEvent, useDeleteTravelEvent } from "../api/shipmentApi";
 
@@ -81,16 +81,14 @@ export default function TravelHistory({ events, allowEditing = false }: TravelHi
         ))}
       </div>
 
-      {/* Edit Event Modal */}
-      {editingEvent && (
-        <EditEventModal
-          event={editingEvent}
-          isOpen={!!editingEvent}
-          onClose={() => setEditingEvent(null)}
-          onSubmit={handleUpdateSubmit}
-          isLoading={updateEventMutation.isPending}
-        />
-      )}
+      {/* Edit Event Slide-in */}
+      <EditEventSlideIn
+        event={editingEvent}
+        isOpen={!!editingEvent}
+        onClose={() => setEditingEvent(null)}
+        onSubmit={handleUpdateSubmit}
+        isLoading={updateEventMutation.isPending}
+      />
 
       {/* Delete Confirmation Modal */}
       <ConfirmDeleteModal

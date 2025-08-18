@@ -1,5 +1,3 @@
-import { Dialog } from '@headlessui/react';
-
 interface DrawerHeaderProps {
   onClose: () => void;
 }
@@ -12,9 +10,9 @@ function DrawerHeader({ onClose }: DrawerHeaderProps) {
           <svg className="h-6 w-6 text-gray-400 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
           </svg>
-          <Dialog.Title className="text-lg font-medium leading-6 text-gray-900">
+          <h2 className="text-lg font-medium leading-6 text-gray-900">
             Create New Shipment
-          </Dialog.Title>
+          </h2>
         </div>
         <div className="ml-3 flex h-7 items-center">
           <button

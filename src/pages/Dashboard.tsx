@@ -5,7 +5,7 @@ import { useShipments } from '../api/shipmentApi';
 import { useProfile } from '../api/authApi';
 import ShipmentsList from '../components/dashboard/ShipmentsList';
 import CreateShipmentDrawer from '../components/drawers/CreateShipmentDrawer';
-import AddTrackingEventDrawer from '../components/drawers/AddTrackingEventDrawer';
+import AddTrackingEventSlideIn from '../components/slide-ins/AddTrackingEventSlideIn';
 import { Button } from '../components/ui';
 import type { Shipment } from '../types/api';
 
@@ -127,8 +127,8 @@ function Dashboard() {
         onClose={() => setIsCreateDrawerOpen(false)}
       />
 
-      {/* Add Tracking Event Drawer */}
-      <AddTrackingEventDrawer 
+      {/* Add Tracking Event Slide-in */}
+      <AddTrackingEventSlideIn 
         isOpen={isAddEventDrawerOpen}
         onClose={handleCloseAddEventDrawer}
         shipment={selectedShipment}
