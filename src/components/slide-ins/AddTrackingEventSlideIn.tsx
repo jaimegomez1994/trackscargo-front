@@ -75,17 +75,29 @@ export function AddTrackingEventSlideIn({
       if (selectedFiles.length > 0 && newEvent) {
         setIsUploadingFiles(true);
         
-        const uploadPromises = selectedFiles.map(file => {
+        // Upload files sequentially
+        for (const file of selectedFiles) {
+          console.log('Uploading file:', file.name, file.size, file.type);
+          
           const formData = new FormData();
           formData.append('file', file);
-          return apiClient.post(`/attachments/travel-events/${newEvent.id}/upload`, formData, {
-            headers: {
-              'Content-Type': 'multipart/form-data',
-            },
-          });
-        });
 
-        await Promise.all(uploadPromises);
+          const response = await fetch(`${apiClient.baseURL}/events/${newEvent.id}/files`, {
+            method: 'POST',
+            body: formData,
+          });
+
+          console.log('Upload response status:', response.status);
+          
+          if (!response.ok) {
+            const errorText = await response.text();
+            console.error('Failed to upload file:', file.name, 'Error:', errorText);
+          } else {
+            const responseData = await response.json();
+            console.log('File uploaded successfully:', file.name, responseData);
+          }
+        }
+        
         setIsUploadingFiles(false);
       }
 
