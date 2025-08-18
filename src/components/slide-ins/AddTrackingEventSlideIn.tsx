@@ -3,11 +3,14 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { createTravelEventSchema } from '../../lib/validation';
 import type { CreateTravelEventFormData } from '../../lib/validation';
-import { useAddTravelEvent } from '../../api/shipmentApi';
+import { useAddTravelEvent, useUpdateShipment } from '../../api/shipmentApi';
 import type { Shipment } from '../../types/api';
 import { apiClient } from '../../lib/api';
 import { ResponsiveDrawer } from '../ui/ResponsiveDrawer';
 import TabbedContent from '../drawers/AddTrackingEventDrawer/TabbedContent';
+import EditShipmentSlideIn from './EditShipmentSlideIn';
+import { EditButton } from '../ui/EditButton';
+import { CopyButton } from '../ui/CopyButton';
 
 interface AddTrackingEventSlideInProps {
   isOpen: boolean;
@@ -21,10 +24,12 @@ export function AddTrackingEventSlideIn({
   shipment
 }: AddTrackingEventSlideInProps) {
   const addTravelEventMutation = useAddTravelEvent();
+  const updateShipmentMutation = useUpdateShipment();
   const [currentTab, setCurrentTab] = useState<'add-status' | 'travel-history'>('add-status');
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const [isUploadingFiles, setIsUploadingFiles] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [isEditingShipment, setIsEditingShipment] = useState(false);
 
   const form = useForm<CreateTravelEventFormData>({
     resolver: zodResolver(createTravelEventSchema) as any,
@@ -117,6 +122,34 @@ export function AddTrackingEventSlideIn({
     }
   };
 
+  const handleEditShipment = () => {
+    setIsEditingShipment(true);
+  };
+
+  const handleCloseEditShipment = () => {
+    setIsEditingShipment(false);
+  };
+
+  const handleUpdateShipment = async (data: any) => {
+    if (!shipment) return;
+    
+    try {
+      await updateShipmentMutation.mutateAsync({
+        shipmentId: shipment.id,
+        data: {
+          company: data.company || undefined,
+          pieces: data.pieces,
+          weight: data.weight || undefined,
+          origin: data.origin,
+          destination: data.destination,
+        }
+      });
+      setIsEditingShipment(false);
+    } catch (error) {
+      console.error('Failed to update shipment:', error);
+    }
+  };
+
   const isSubmitting = addTravelEventMutation.isPending || isUploadingFiles;
 
   return (
@@ -165,27 +198,10 @@ export function AddTrackingEventSlideIn({
             <div className="mt-4 pt-4 border-t border-gray-100">
               <div className="flex items-center justify-between mb-3">
                 <h4 className="text-sm font-medium text-gray-900">Shipment Details</h4>
-                <button
-                  type="button"
-                  onClick={handleCopyLink}
-                  className="inline-flex items-center px-2.5 py-1.5 border border-gray-300 shadow-sm text-xs font-medium rounded text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
-                >
-                  {copied ? (
-                    <>
-                      <svg className="-ml-0.5 mr-1 h-3 w-3 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                      </svg>
-                      Copied!
-                    </>
-                  ) : (
-                    <>
-                      <svg className="-ml-0.5 mr-1 h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                      </svg>
-                      Copy Link
-                    </>
-                  )}
-                </button>
+                <div className="flex items-center space-x-2">
+                  <EditButton onClick={handleEditShipment} />
+                  <CopyButton onClick={handleCopyLink} copied={copied} />
+                </div>
               </div>
               
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 text-sm">
@@ -234,6 +250,15 @@ export function AddTrackingEventSlideIn({
           </div>
         )}
       </form>
+
+      {/* Edit Shipment Slide-in */}
+      <EditShipmentSlideIn
+        shipment={shipment}
+        isOpen={isEditingShipment}
+        onClose={handleCloseEditShipment}
+        onSubmit={handleUpdateShipment}
+        isLoading={updateShipmentMutation.isPending}
+      />
     </ResponsiveDrawer>
   );
 }

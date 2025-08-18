@@ -6,6 +6,7 @@ import type {
   CreateShipmentRequest, 
   CreateTravelEventRequest, 
   UpdateTravelEventRequest,
+  UpdateShipmentRequest,
   ShipmentsResponse 
 } from '../types/api';
 
@@ -38,6 +39,7 @@ export type {
   CreateShipmentRequest, 
   CreateTravelEventRequest, 
   UpdateTravelEventRequest,
+  UpdateShipmentRequest,
   ShipmentsResponse 
 };
 
@@ -57,6 +59,9 @@ const shipmentApi = {
 
   updateTravelEvent: (eventId: string, data: UpdateTravelEventRequest): Promise<TravelEvent> =>
     apiClient.put(`/events/${eventId}`, data),
+
+  updateShipment: (shipmentId: string, data: UpdateShipmentRequest): Promise<Shipment> =>
+    apiClient.put(`/shipments/${shipmentId}`, data),
 
   deleteTravelEvent: (eventId: string): Promise<void> =>
     apiClient.delete(`/events/${eventId}`),
@@ -171,6 +176,20 @@ export const useDeleteTravelEvent = () => {
       
       // Force refetch to ensure immediate UI update
       queryClient.refetchQueries({ queryKey: ['shipments'] });
+    },
+  });
+};
+
+export const useUpdateShipment = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({ shipmentId, data }: { shipmentId: string; data: UpdateShipmentRequest }) =>
+      shipmentApi.updateShipment(shipmentId, data),
+    onSuccess: () => {
+      // Invalidate queries to refresh data
+      queryClient.invalidateQueries({ queryKey: ['shipments'] });
+      queryClient.invalidateQueries({ queryKey: ['track'] });
     },
   });
 };

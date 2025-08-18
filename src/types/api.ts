@@ -45,6 +45,14 @@ export interface UpdateTravelEventRequest {
   eventType?: 'picked-up' | 'in-transit' | 'delivered' | 'exception' | 'out-for-delivery' | 'attempted-delivery' | 'at-facility' | 'customs-clearance' | 'returned';
 }
 
+export interface UpdateShipmentRequest {
+  origin?: string;
+  destination?: string;
+  weight?: number;
+  pieces?: number;
+  company?: string;
+}
+
 export interface ShipmentsResponse {
   shipments: Shipment[];
 }

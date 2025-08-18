@@ -19,3 +19,8 @@ export {
 export { Badge, badgeVariants, type BadgeProps } from './primitives/Badge';
 
 export { LoadingSpinner, spinnerVariants, type LoadingSpinnerProps } from './primitives/LoadingSpinner';
+
+// Icon Buttons
+export { IconButton } from './IconButton';
+export { EditButton } from './EditButton';
+export { CopyButton } from './CopyButton';
