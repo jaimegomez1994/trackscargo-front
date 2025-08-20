@@ -42,6 +42,21 @@ export interface UserListResponse {
   isOwner: boolean;
 }
 
+export interface PendingInvitationResponse {
+  id: string;
+  email: string;
+  role: string;
+  invitedAt: string;
+  expiresAt: string;
+  invitedByName: string;
+  isExpired: boolean;
+}
+
+export interface TeamMembersResponse {
+  users: UserListResponse[];
+  pendingInvitations: PendingInvitationResponse[];
+}
+
 // API functions
 const userApi = {
   createInvitation: (data: CreateInvitationRequest): Promise<{ message: string; invitation: InvitationResponse }> =>
@@ -49,6 +64,15 @@ const userApi = {
 
   getUsers: (): Promise<{ users: UserListResponse[] }> =>
     apiClient.get('/users'),
+
+  getTeamMembers: (): Promise<TeamMembersResponse> =>
+    apiClient.get('/users/team-members'),
+
+  resendInvitation: (invitationId: string): Promise<InvitationResponse & { emailSent?: boolean; emailError?: string }> =>
+    apiClient.post(`/invitations/${invitationId}/resend`),
+
+  cancelInvitation: (invitationId: string): Promise<{ message: string }> =>
+    apiClient.delete(`/invitations/${invitationId}`),
 
   removeUser: (userId: string): Promise<{ message: string }> =>
     apiClient.delete(`/users/${userId}`),
@@ -69,6 +93,7 @@ export const useCreateInvitation = () => {
     onSuccess: () => {
       // Invalidate users list to refresh it
       queryClient.invalidateQueries({ queryKey: ['users'] });
+      queryClient.invalidateQueries({ queryKey: ['team-members'] });
     },
   });
 };
@@ -80,6 +105,35 @@ export const useUsers = () => {
   });
 };
 
+export const useTeamMembers = () => {
+  return useQuery({
+    queryKey: ['team-members'],
+    queryFn: userApi.getTeamMembers,
+  });
+};
+
+export const useResendInvitation = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: userApi.resendInvitation,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['team-members'] });
+    },
+  });
+};
+
+export const useCancelInvitation = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: userApi.cancelInvitation,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['team-members'] });
+    },
+  });
+};
+
 export const useRemoveUser = () => {
   const queryClient = useQueryClient();
 
@@ -88,6 +142,7 @@ export const useRemoveUser = () => {
     onSuccess: () => {
       // Invalidate users list to refresh it
       queryClient.invalidateQueries({ queryKey: ['users'] });
+      queryClient.invalidateQueries({ queryKey: ['team-members'] });
     },
   });
 };

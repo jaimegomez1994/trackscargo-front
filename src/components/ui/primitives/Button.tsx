@@ -17,10 +17,10 @@ const buttonVariants = cva(
       },
       size: {
         xs: 'px-2 py-1 text-xs rounded',
-        sm: 'px-3 py-1.5 text-sm rounded',
-        md: 'px-4 py-2 text-sm rounded-md',
-        lg: 'px-6 py-3 text-base rounded-md',
-        xl: 'px-8 py-4 text-lg rounded-lg',
+        sm: 'px-3 py-2 text-sm rounded min-h-[36px]', // Better mobile touch target
+        md: 'px-4 py-2 text-sm rounded-md min-h-[40px]',
+        lg: 'px-6 py-3 text-base rounded-md min-h-[44px]',
+        xl: 'px-8 py-4 text-lg rounded-lg min-h-[48px]',
       },
       fullWidth: {
         true: 'w-full',

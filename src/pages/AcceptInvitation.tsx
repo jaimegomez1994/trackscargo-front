@@ -4,6 +4,7 @@ import { useInvitationDetails, useAcceptInvitation } from '../api/userApi';
 import { Button } from '../components/ui/primitives/Button';
 import { Card } from '../components/ui/primitives/Card';
 import { LoadingSpinner } from '../components/ui/primitives/LoadingSpinner';
+import { PasswordInput } from '../components/ui/primitives/PasswordInput';
 
 function AcceptInvitation() {
   const { token } = useParams<{ token: string }>();
@@ -35,6 +36,16 @@ function AcceptInvitation() {
       [name]: value
     }));
   };
+
+  const handlePasswordChange = (field: 'password' | 'confirmPassword') => (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData(prev => ({
+      ...prev,
+      [field]: e.target.value
+    }));
+  };
+
+  const passwordsMatch = formData.password === formData.confirmPassword;
+  const showPasswordMismatch = Boolean(formData.confirmPassword && !passwordsMatch);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -154,34 +165,41 @@ function AcceptInvitation() {
             <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
               Password
             </label>
-            <input
-              type="password"
+            <PasswordInput
               id="password"
               name="password"
               value={formData.password}
-              onChange={handleInputChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+              onChange={handlePasswordChange('password')}
               placeholder="Create a password"
               required
               minLength={6}
+              className="w-full"
             />
+            <p className="mt-1 text-xs text-gray-500">
+              Must be at least 6 characters long
+            </p>
           </div>
 
           <div>
             <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 mb-1">
               Confirm Password
             </label>
-            <input
-              type="password"
+            <PasswordInput
               id="confirmPassword"
               name="confirmPassword"
               value={formData.confirmPassword}
-              onChange={handleInputChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+              onChange={handlePasswordChange('confirmPassword')}
               placeholder="Confirm your password"
               required
               minLength={6}
+              className="w-full"
+              hasError={showPasswordMismatch}
             />
+            {showPasswordMismatch && (
+              <p className="mt-1 text-xs text-red-600">
+                Passwords do not match
+              </p>
+            )}
           </div>
 
           <Button 
