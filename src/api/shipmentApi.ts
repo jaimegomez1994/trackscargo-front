@@ -1,13 +1,14 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import toast from 'react-hot-toast';
 import { apiClient } from '../lib/api';
-import type { 
-  Shipment, 
-  TravelEvent, 
-  CreateShipmentRequest, 
-  CreateTravelEventRequest, 
+import type {
+  Shipment,
+  TravelEvent,
+  CreateShipmentRequest,
+  CreateTravelEventRequest,
   UpdateTravelEventRequest,
   UpdateShipmentRequest,
-  ShipmentsResponse 
+  ShipmentsResponse
 } from '../types/api';
 
 // File types
@@ -94,6 +95,10 @@ export const useCreateShipment = () => {
     onSuccess: () => {
       // Invalidate shipments list to refetch
       queryClient.invalidateQueries({ queryKey: ['shipments'] });
+      toast.success('Shipment created successfully!');
+    },
+    onError: (error: Error) => {
+      toast.error(error.message || 'Failed to create shipment');
     },
   });
 };
@@ -108,6 +113,10 @@ export const useAddTravelEvent = () => {
       // Invalidate both shipments list and individual tracking
       queryClient.invalidateQueries({ queryKey: ['shipments'] });
       queryClient.invalidateQueries({ queryKey: ['track'] });
+      toast.success('Tracking event added successfully!');
+    },
+    onError: (error: Error) => {
+      toast.error(error.message || 'Failed to add tracking event');
     },
   });
 };
@@ -145,6 +154,10 @@ export const useDeleteFile = () => {
     onSuccess: () => {
       // Invalidate all event files queries to refresh the UI
       queryClient.invalidateQueries({ queryKey: ['eventFiles'] });
+      toast.success('File deleted successfully');
+    },
+    onError: (error: Error) => {
+      toast.error(error.message || 'Failed to delete file');
     },
   });
 };
@@ -160,6 +173,10 @@ export const useUpdateTravelEvent = () => {
       // Only invalidate queries to refresh data, avoid aggressive refetching
       queryClient.invalidateQueries({ queryKey: ['shipments'] });
       queryClient.invalidateQueries({ queryKey: ['track'] });
+      toast.success('Tracking event updated successfully');
+    },
+    onError: (error: Error) => {
+      toast.error(error.message || 'Failed to update tracking event');
     },
   });
 };
@@ -173,9 +190,13 @@ export const useDeleteTravelEvent = () => {
       // Invalidate and refetch queries to refresh the UI immediately
       queryClient.invalidateQueries({ queryKey: ['shipments'] });
       queryClient.invalidateQueries({ queryKey: ['track'] });
-      
+
       // Force refetch to ensure immediate UI update
       queryClient.refetchQueries({ queryKey: ['shipments'] });
+      toast.success('Tracking event deleted successfully');
+    },
+    onError: (error: Error) => {
+      toast.error(error.message || 'Failed to delete tracking event');
     },
   });
 };
@@ -190,6 +211,10 @@ export const useUpdateShipment = () => {
       // Invalidate queries to refresh data
       queryClient.invalidateQueries({ queryKey: ['shipments'] });
       queryClient.invalidateQueries({ queryKey: ['track'] });
+      toast.success('Shipment updated successfully');
+    },
+    onError: (error: Error) => {
+      toast.error(error.message || 'Failed to update shipment');
     },
   });
 };

@@ -1,4 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import toast from 'react-hot-toast';
 import { apiClient } from '../lib/api';
 
 // Types
@@ -90,10 +91,14 @@ export const useCreateInvitation = () => {
 
   return useMutation({
     mutationFn: userApi.createInvitation,
-    onSuccess: () => {
+    onSuccess: (data) => {
       // Invalidate users list to refresh it
       queryClient.invalidateQueries({ queryKey: ['users'] });
       queryClient.invalidateQueries({ queryKey: ['team-members'] });
+      toast.success(`Invitation sent to ${data.invitation.email}`);
+    },
+    onError: (error: Error) => {
+      toast.error(error.message || 'Failed to send invitation');
     },
   });
 };
@@ -119,6 +124,10 @@ export const useResendInvitation = () => {
     mutationFn: userApi.resendInvitation,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['team-members'] });
+      toast.success('Invitation resent successfully');
+    },
+    onError: (error: Error) => {
+      toast.error(error.message || 'Failed to resend invitation');
     },
   });
 };
@@ -130,6 +139,10 @@ export const useCancelInvitation = () => {
     mutationFn: userApi.cancelInvitation,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['team-members'] });
+      toast.success('Invitation cancelled successfully');
+    },
+    onError: (error: Error) => {
+      toast.error(error.message || 'Failed to cancel invitation');
     },
   });
 };
@@ -143,6 +156,10 @@ export const useRemoveUser = () => {
       // Invalidate users list to refresh it
       queryClient.invalidateQueries({ queryKey: ['users'] });
       queryClient.invalidateQueries({ queryKey: ['team-members'] });
+      toast.success('User removed successfully');
+    },
+    onError: (error: Error) => {
+      toast.error(error.message || 'Failed to remove user');
     },
   });
 };
