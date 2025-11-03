@@ -38,10 +38,10 @@ export function AddTrackingEventSlideIn({
       location: '',
       description: '',
     },
-    mode: 'onChange',
+    mode: 'onSubmit', // Only validate on submit, not on every change
   });
 
-  const { handleSubmit, reset } = form;
+  const { handleSubmit, reset, clearErrors } = form;
 
   const onSubmit = async (data: CreateTravelEventFormData) => {
     if (!shipment) return;
@@ -109,6 +109,12 @@ export function AddTrackingEventSlideIn({
       console.error('Failed to add travel event:', error);
       setIsUploadingFiles(false);
     }
+  };
+
+  const handleTabChange = (tab: 'add-status' | 'travel-history') => {
+    // Clear any validation errors when switching tabs
+    clearErrors();
+    setCurrentTab(tab);
   };
 
   const handleClose = () => {
@@ -240,7 +246,7 @@ export function AddTrackingEventSlideIn({
             form={form}
             shipment={shipment}
             error={addTravelEventMutation.error}
-            onTabChange={setCurrentTab}
+            onTabChange={handleTabChange}
             selectedFiles={selectedFiles}
             onFilesChange={setSelectedFiles}
           />
