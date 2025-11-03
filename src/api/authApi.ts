@@ -51,6 +51,23 @@ export interface UserProfileResponse {
   };
 }
 
+export interface ForgotPasswordRequest {
+  email: string;
+}
+
+export interface ForgotPasswordResponse {
+  message: string;
+}
+
+export interface ResetPasswordRequest {
+  token: string;
+  password: string;
+}
+
+export interface ResetPasswordResponse {
+  message: string;
+}
+
 // API functions
 const authApi = {
   signup: (data: SignupRequest): Promise<AuthResponse> =>
@@ -61,6 +78,12 @@ const authApi = {
 
   getProfile: (): Promise<UserProfileResponse> =>
     apiClient.get('/auth/me'),
+
+  forgotPassword: (data: ForgotPasswordRequest): Promise<ForgotPasswordResponse> =>
+    apiClient.post('/auth/forgot-password', data),
+
+  resetPassword: (data: ResetPasswordRequest): Promise<ResetPasswordResponse> =>
+    apiClient.post(`/auth/reset-password/${data.token}`, { password: data.password }),
 };
 
 // React Query hooks
@@ -135,5 +158,17 @@ export const useLogout = () => {
       // Clear all cached data
       queryClient.clear();
     },
+  });
+};
+
+export const useForgotPassword = () => {
+  return useMutation({
+    mutationFn: authApi.forgotPassword,
+  });
+};
+
+export const useResetPassword = () => {
+  return useMutation({
+    mutationFn: authApi.resetPassword,
   });
 };

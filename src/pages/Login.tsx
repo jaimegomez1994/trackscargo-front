@@ -165,6 +165,16 @@ function Login() {
               </div>
             </div>
 
+            {/* Forgot Password Link */}
+            <div className="flex items-center justify-end">
+              <Link
+                to="/forgot-password"
+                className="text-sm text-primary hover:text-primary-dark no-underline"
+              >
+                Forgot password?
+              </Link>
+            </div>
+
             {/* Submit Button */}
             <Button
               type="submit"
