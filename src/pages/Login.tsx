@@ -84,7 +84,8 @@ function Login() {
         <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
           Sign in to your account
         </h2>
-        <p className="mt-2 text-center text-sm text-gray-600">
+        {/* Hidden for now - Signup link */}
+        {/* <p className="mt-2 text-center text-sm text-gray-600">
           Or{' '}
           <Link
             to="/signup"
@@ -92,11 +93,11 @@ function Login() {
           >
             create a new organization
           </Link>
-        </p>
+        </p> */}
       </div>
 
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-        <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+        <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10 mb-32">
           <form className="space-y-6" onSubmit={handleSubmit}>
             {/* Error Message */}
             {(error || loginMutation.error) && (
@@ -175,8 +176,8 @@ function Login() {
             </Button>
           </form>
 
-          {/* Footer Links */}
-          <div className="mt-6">
+          {/* Hidden for now - Signup footer */}
+          {/* <div className="mt-6">
             <div className="relative">
               <div className="absolute inset-0 flex items-center">
                 <div className="w-full border-t border-gray-300" />
@@ -199,7 +200,7 @@ function Login() {
                 Create new organization
               </Button>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

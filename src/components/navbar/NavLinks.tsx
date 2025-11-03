@@ -92,17 +92,18 @@ function NavLinks({ isMobile = false, onLinkClick }: NavLinksProps) {
           >
             Sign In
           </Link>
-          
-          <Link
+
+          {/* Hidden for now - Get Started button */}
+          {/* <Link
             to="/signup"
-            className={isMobile 
+            className={isMobile
               ? linkClassName("/signup")
               : "bg-white text-primary px-4 py-2 rounded-md no-underline hover:bg-gray-100 transition-colors font-medium"
             }
             onClick={onLinkClick}
           >
             Get Started
-          </Link>
+          </Link> */}
         </>
       )}
     </div>
