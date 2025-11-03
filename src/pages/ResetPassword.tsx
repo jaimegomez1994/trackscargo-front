@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import type { FormEvent } from 'react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 import { Button } from '../components/ui';
 import { useResetPassword } from '../api/authApi';
 
@@ -37,10 +38,14 @@ function ResetPassword() {
 
     try {
       await resetPasswordMutation.mutateAsync({ token, password });
-      // Redirect to login with success message
-      navigate('/login', {
-        state: { message: 'Password reset successfully. Please sign in with your new password.' }
-      });
+
+      // Show success toast
+      toast.success('Password reset successfully!');
+
+      // Wait 1.5 seconds before redirecting to login
+      setTimeout(() => {
+        navigate('/login');
+      }, 1500);
     } catch (error) {
       console.error('Reset password error:', error);
     }
