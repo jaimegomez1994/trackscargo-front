@@ -26,7 +26,7 @@ function CreateShipmentDrawer({ isOpen, onClose }: CreateShipmentDrawerProps) {
       pieces: 1,
       origin: '',
       destination: '',
-      status: 'picked-up',
+      status: 'created',
       description: '',
     },
     mode: 'onChange',
