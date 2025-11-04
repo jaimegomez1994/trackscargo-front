@@ -19,6 +19,7 @@ export type Shipment = {
   weight: number;
   pieces: number;
   status: string;
+  gpsTrackingUrl?: string;
   travelHistory?: TravelEvent[];
 };
 
@@ -29,6 +30,7 @@ export type CreateShipmentForm = {
   origin: string;
   destination: string;
   company: string;
+  gpsTrackingUrl?: string;
 };
 
 export type StatusForm = {

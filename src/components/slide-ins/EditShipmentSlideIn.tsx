@@ -14,6 +14,7 @@ const editShipmentSchema = z.object({
   weight: z.number().min(0, 'Weight must be non-negative').optional(),
   origin: z.string().min(1, 'Origin is required'),
   destination: z.string().min(1, 'Destination is required'),
+  gpsTrackingUrl: z.string().url('Must be a valid URL').optional().or(z.literal('')),
 });
 
 type EditShipmentFormData = z.infer<typeof editShipmentSchema>;
@@ -43,6 +44,7 @@ export function EditShipmentSlideIn({
       weight: 0,
       origin: '',
       destination: '',
+      gpsTrackingUrl: '',
     }
   });
 
@@ -65,6 +67,7 @@ export function EditShipmentSlideIn({
         weight: shipment.weight || 0,
         origin: shipment.origin || '',
         destination: shipment.destination || '',
+        gpsTrackingUrl: shipment.gpsTrackingUrl || '',
       });
     }
   }, [shipment, isOpen, reset]);
@@ -219,6 +222,25 @@ export function EditShipmentSlideIn({
                   onChange={(value) => setValue('destination', value)}
                   error={errors.destination?.message}
                 />
+              </div>
+
+              {/* GPS Tracking URL - Full Width */}
+              <div>
+                <label htmlFor="gpsTrackingUrl" className="block text-sm font-medium text-gray-900 mb-2">
+                  GPS Tracking URL
+                </label>
+                <input
+                  {...register('gpsTrackingUrl')}
+                  type="url"
+                  id="gpsTrackingUrl"
+                  className={`block w-full px-4 py-3 text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-colors ${
+                    errors.gpsTrackingUrl ? 'border-red-300' : ''
+                  }`}
+                  placeholder="https://..."
+                />
+                {errors.gpsTrackingUrl && (
+                  <p className="mt-2 text-sm text-red-600">{errors.gpsTrackingUrl.message}</p>
+                )}
               </div>
             </div>
           </div>

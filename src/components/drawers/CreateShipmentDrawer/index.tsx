@@ -6,7 +6,6 @@ import { useCreateShipment } from '../../../api/shipmentApi';
 import { ResponsiveDrawer } from '../../ui/ResponsiveDrawer';
 import DrawerHeader from './DrawerHeader';
 import FormFields from './FormFields';
-import ErrorDisplay from './ErrorDisplay';
 import DrawerFooter from './DrawerFooter';
 
 interface CreateShipmentDrawerProps {
@@ -28,6 +27,7 @@ function CreateShipmentDrawer({ isOpen, onClose }: CreateShipmentDrawerProps) {
       destination: '',
       status: 'created',
       description: '',
+      gpsTrackingUrl: '',
     },
     mode: 'onChange',
   });
@@ -45,8 +45,9 @@ function CreateShipmentDrawer({ isOpen, onClose }: CreateShipmentDrawerProps) {
         destination: data.destination,
         status: data.status,
         description: data.description || undefined,
+        gpsTrackingUrl: data.gpsTrackingUrl || undefined,
       });
-      
+
       // Success - close drawer and reset form
       reset();
       onClose();
@@ -74,9 +75,6 @@ function CreateShipmentDrawer({ isOpen, onClose }: CreateShipmentDrawerProps) {
         <div className="flex-1 overflow-y-auto">
           <div className="px-4 py-6 sm:px-6">
             <FormFields form={form} />
-            <div className="mt-6">
-              <ErrorDisplay error={createShipmentMutation.error} />
-            </div>
           </div>
         </div>
 

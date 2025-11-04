@@ -66,6 +66,13 @@ export const createShipmentSchema = z.object({
     .optional()
     .or(z.literal(''))
     .transform(val => val || undefined),
+
+  gpsTrackingUrl: z
+    .string()
+    .url('Must be a valid URL')
+    .optional()
+    .or(z.literal(''))
+    .transform(val => val || undefined),
 });
 
 export type CreateShipmentFormData = z.infer<typeof createShipmentSchema>;

@@ -8,6 +8,7 @@ export interface Shipment {
   pieces: number;
   status: string;
   company?: string;
+  gpsTrackingUrl?: string;
   travelHistory: TravelEvent[];
 }
 
@@ -27,6 +28,7 @@ export interface CreateShipmentRequest {
   pieces: number;
   status: string;
   company?: string;
+  gpsTrackingUrl?: string;
   description?: string;
 }
 
@@ -51,6 +53,7 @@ export interface UpdateShipmentRequest {
   weight?: number;
   pieces?: number;
   company?: string;
+  gpsTrackingUrl?: string;
 }
 
 export interface ShipmentsResponse {

@@ -77,6 +77,22 @@ export default function PackageDetails({ shipment }: PackageDetailsProps) {
           </label>
           <p className="text-neutral-900 font-semibold">{shipment.destination}</p>
         </div>
+
+        {shipment.gpsTrackingUrl && (
+          <div className="md:col-span-2">
+            <label className="block text-sm font-medium text-neutral-600 mb-1">
+              GPS Tracking
+            </label>
+            <a
+              href={shipment.gpsTrackingUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-600 hover:text-blue-700 underline break-all font-semibold"
+            >
+              {shipment.gpsTrackingUrl}
+            </a>
+          </div>
+        )}
       </div>
     </div>
   );
