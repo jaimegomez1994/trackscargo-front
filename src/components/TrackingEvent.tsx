@@ -5,9 +5,10 @@ type TrackingEventProps = {
   event: TravelEvent;
   onEdit?: (event: TravelEvent) => void;
   onDelete?: (eventId: string) => void;
+  allowFileDelete?: boolean;
 };
 
-export default function TrackingEvent({ event, onEdit, onDelete }: TrackingEventProps) {
+export default function TrackingEvent({ event, onEdit, onDelete, allowFileDelete = false }: TrackingEventProps) {
   const formatTimestamp = (timestamp: string) => {
     try {
       const date = new Date(timestamp);
@@ -88,7 +89,7 @@ export default function TrackingEvent({ event, onEdit, onDelete }: TrackingEvent
             </p>
             <p className="text-sm text-neutral-500 mt-1">{event.description}</p>
             {/* Event Files */}
-            <EventFiles eventId={event.id} allowDelete={false} />
+            <EventFiles eventId={event.id} allowDelete={allowFileDelete} />
           </div>
           <div className="flex items-center gap-2">
             <p className="text-sm text-neutral-500 whitespace-nowrap">{formatTimestamp(event.timestamp)}</p>

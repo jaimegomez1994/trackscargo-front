@@ -72,11 +72,12 @@ export default function TravelHistory({ events, allowEditing = false }: TravelHi
       
       <div className="space-y-6">
         {events.map((event) => (
-          <TrackingEvent 
-            key={event.id} 
+          <TrackingEvent
+            key={event.id}
             event={event}
             onEdit={allowEditing ? handleEditEvent : undefined}
             onDelete={allowEditing ? handleDeleteEvent : undefined}
+            allowFileDelete={allowEditing}
           />
         ))}
       </div>
