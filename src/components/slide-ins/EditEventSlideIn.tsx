@@ -2,9 +2,13 @@ import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
+import { useQueryClient } from '@tanstack/react-query';
 import { ResponsiveDrawer } from '../ui/ResponsiveDrawer';
 import { StatusDropdown } from '../ui/StatusDropdown';
 import { OriginDropdown } from '../ui/OriginDropdown';
+import { FileUploadZone } from '../ui/FileUploadZone';
+import EventFiles from '../EventFiles';
+import { apiClient } from '../../lib/api';
 import type { TravelEvent, UpdateTravelEventRequest } from '../../types/api';
 
 // Form validation schema for editing events
@@ -32,7 +36,10 @@ export function EditEventSlideIn({
   onSubmit,
   isLoading = false
 }: EditEventSlideInProps) {
+  const queryClient = useQueryClient();
   const [isVisible, setIsVisible] = useState(false);
+  const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
+  const [isUploadingFiles, setIsUploadingFiles] = useState(false);
 
   const form = useForm<EditEventFormData>({
     resolver: zodResolver(editEventSchema),
@@ -74,32 +81,68 @@ export function EditEventSlideIn({
 
   const statusValue = watch('status') || '';
 
-  const handleFormSubmit = (data: EditEventFormData) => {
-    // Map status to a valid eventType for backend validation
-    const getEventType = (status: string): 'picked-up' | 'in-transit' | 'delivered' | 'exception' | 'out-for-delivery' | 'attempted-delivery' | 'at-facility' | 'customs-clearance' | 'returned' => {
-      const statusLower = status.toLowerCase();
-      if (statusLower.includes('picked') || statusLower.includes('pickup')) return 'picked-up';
-      if (statusLower.includes('delivered')) return 'delivered';
-      if (statusLower.includes('exception') || statusLower.includes('error') || statusLower.includes('failed')) return 'exception';
-      if (statusLower.includes('out for delivery')) return 'out-for-delivery';
-      if (statusLower.includes('attempted')) return 'attempted-delivery';
-      if (statusLower.includes('facility') || statusLower.includes('warehouse')) return 'at-facility';
-      if (statusLower.includes('customs')) return 'customs-clearance';
-      if (statusLower.includes('returned')) return 'returned';
-      return 'in-transit'; // default for any custom status
-    };
+  const handleFormSubmit = async (data: EditEventFormData) => {
+    if (!event) return;
 
-    // Convert datetime-local back to ISO timestamp
-    const formattedData = {
-      ...data,
-      timestamp: new Date(data.timestamp).toISOString(),
-      eventType: getEventType(data.status)
-    };
-    onSubmit(formattedData);
+    try {
+      // Map status to a valid eventType for backend validation
+      const getEventType = (status: string): 'picked-up' | 'in-transit' | 'delivered' | 'exception' | 'out-for-delivery' | 'attempted-delivery' | 'at-facility' | 'customs-clearance' | 'returned' => {
+        const statusLower = status.toLowerCase();
+        if (statusLower.includes('picked') || statusLower.includes('pickup')) return 'picked-up';
+        if (statusLower.includes('delivered')) return 'delivered';
+        if (statusLower.includes('exception') || statusLower.includes('error') || statusLower.includes('failed')) return 'exception';
+        if (statusLower.includes('out for delivery')) return 'out-for-delivery';
+        if (statusLower.includes('attempted')) return 'attempted-delivery';
+        if (statusLower.includes('facility') || statusLower.includes('warehouse')) return 'at-facility';
+        if (statusLower.includes('customs')) return 'customs-clearance';
+        if (statusLower.includes('returned')) return 'returned';
+        return 'in-transit'; // default for any custom status
+      };
+
+      // Convert datetime-local back to ISO timestamp
+      const formattedData = {
+        ...data,
+        timestamp: new Date(data.timestamp).toISOString(),
+        eventType: getEventType(data.status)
+      };
+
+      // First update the event
+      onSubmit(formattedData);
+
+      // Then upload files if any are selected
+      if (selectedFiles.length > 0) {
+        setIsUploadingFiles(true);
+
+        // Upload files sequentially
+        for (const file of selectedFiles) {
+          const formData = new FormData();
+          formData.append('file', file);
+
+          const response = await fetch(`${apiClient.baseURL}/events/${event.id}/files`, {
+            method: 'POST',
+            body: formData,
+          });
+
+          if (!response.ok) {
+            console.error('Failed to upload file:', file.name);
+          }
+        }
+
+        // Invalidate the event files cache to refresh the UI
+        queryClient.invalidateQueries({ queryKey: ['eventFiles', event.id] });
+
+        setIsUploadingFiles(false);
+        setSelectedFiles([]);
+      }
+    } catch (error) {
+      console.error('Failed to update event:', error);
+      setIsUploadingFiles(false);
+    }
   };
 
   const handleClose = () => {
-    if (!isLoading) {
+    if (!isLoading && !isUploadingFiles) {
+      setSelectedFiles([]);
       onClose();
     }
   };
@@ -205,6 +248,18 @@ export function EditEventSlideIn({
                 <p className="mt-2 text-sm text-red-600">{errors.description.message}</p>
               )}
             </div>
+
+            {/* Existing Files */}
+            <div>
+              <h3 className="block text-sm font-medium text-gray-700 mb-2">Current Attachments</h3>
+              <EventFiles eventId={event.id} allowDelete={true} />
+            </div>
+
+            {/* Upload New Files */}
+            <FileUploadZone
+              selectedFiles={selectedFiles}
+              onFilesChange={setSelectedFiles}
+            />
           </div>
         </div>
 
@@ -221,10 +276,10 @@ export function EditEventSlideIn({
             </button>
             <button
               type="submit"
-              disabled={isLoading}
+              disabled={isLoading || isUploadingFiles}
               className="inline-flex justify-center rounded-md bg-primary py-2 px-3 text-sm font-semibold text-white shadow-sm hover:bg-primary-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary disabled:opacity-50"
             >
-              {isLoading ? 'Saving...' : 'Save Changes'}
+              {isUploadingFiles ? 'Uploading Files...' : isLoading ? 'Saving...' : 'Save Changes'}
             </button>
           </div>
         </div>

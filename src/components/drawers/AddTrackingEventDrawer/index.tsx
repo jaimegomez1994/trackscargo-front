@@ -2,6 +2,7 @@ import { Fragment, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useQueryClient } from '@tanstack/react-query';
 import { createTravelEventSchema } from '../../../lib/validation';
 import type { CreateTravelEventFormData } from '../../../lib/validation';
 import { useAddTravelEvent } from '../../../api/shipmentApi';
@@ -18,6 +19,7 @@ interface AddTrackingEventDrawerProps {
 }
 
 function AddTrackingEventDrawer({ isOpen, onClose, shipment }: AddTrackingEventDrawerProps) {
+  const queryClient = useQueryClient();
   const addTravelEventMutation = useAddTravelEvent();
   const [currentTab, setCurrentTab] = useState<'add-status' | 'travel-history'>('add-status');
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
@@ -73,7 +75,7 @@ function AddTrackingEventDrawer({ isOpen, onClose, shipment }: AddTrackingEventD
         // Upload files sequentially
         for (const file of selectedFiles) {
           console.log('Uploading file:', file.name, file.size, file.type);
-          
+
           const formData = new FormData();
           formData.append('file', file);
 
@@ -83,7 +85,7 @@ function AddTrackingEventDrawer({ isOpen, onClose, shipment }: AddTrackingEventD
           });
 
           console.log('Upload response status:', response.status);
-          
+
           if (!response.ok) {
             const errorText = await response.text();
             console.error('Failed to upload file:', file.name, 'Error:', errorText);
@@ -92,7 +94,10 @@ function AddTrackingEventDrawer({ isOpen, onClose, shipment }: AddTrackingEventD
             console.log('File uploaded successfully:', file.name, responseData);
           }
         }
-        
+
+        // Invalidate the event files cache to refresh the UI
+        queryClient.invalidateQueries({ queryKey: ['eventFiles', result.id] });
+
         setIsUploadingFiles(false);
       }
       
