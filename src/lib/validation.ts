@@ -38,8 +38,8 @@ export const createShipmentSchema = z.object({
     .refine((val) => val !== undefined, {
       message: 'Total pieces is required'
     })
-    .refine((val) => val === undefined || (Number.isInteger(val) && val >= 1 && val <= 999999999), {
-      message: 'Must be a whole number between 1 and 999,999,999'
+    .refine((val) => val === undefined || (val >= 0.1 && val <= 999999999), {
+      message: 'Must be a number between 0.1 and 999,999,999'
     })
     .transform((val) => val as number), // Ensure return type is number after validation
 

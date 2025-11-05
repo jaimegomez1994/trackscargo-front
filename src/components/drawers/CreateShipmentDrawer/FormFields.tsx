@@ -99,7 +99,7 @@ function FormFields({ form }: FormFieldsProps) {
               Weight
             </label>
             <input
-              {...register('weight', { 
+              {...register('weight', {
                 setValueAs: (value) => {
                   if (value === '' || value == null) return '';
                   const num = Number(value);
@@ -107,6 +107,7 @@ function FormFields({ form }: FormFieldsProps) {
                 }
               })}
               type="number"
+              step="any"
               id="weight"
               className={`block w-full px-4 py-3 text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-colors ${
                 errors.weight ? 'border-red-300' : ''
