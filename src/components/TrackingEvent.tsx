@@ -1,7 +1,5 @@
 import type { TravelEvent } from "../types/api";
 import EventFiles from "./EventFiles";
-import { useAppSelector } from "../store/hooks";
-import { selectIsOwner } from "../store/slices/authSlice";
 
 type TrackingEventProps = {
   event: TravelEvent;
@@ -10,7 +8,6 @@ type TrackingEventProps = {
 };
 
 export default function TrackingEvent({ event, onEdit, onDelete }: TrackingEventProps) {
-  const isOwner = useAppSelector(selectIsOwner);
   const formatTimestamp = (timestamp: string) => {
     try {
       const date = new Date(timestamp);
@@ -96,8 +93,8 @@ export default function TrackingEvent({ event, onEdit, onDelete }: TrackingEvent
           <div className="flex items-center gap-2">
             <p className="text-sm text-neutral-500 whitespace-nowrap">{formatTimestamp(event.timestamp)}</p>
             
-            {/* Edit/Delete Actions - Only show for owners */}
-            {isOwner && (onEdit || onDelete) && (
+            {/* Edit/Delete Actions */}
+            {(onEdit || onDelete) && (
               <div className="flex items-center gap-1">
                 {onEdit && (
                   <button
