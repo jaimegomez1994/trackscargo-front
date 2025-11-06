@@ -29,7 +29,7 @@ function App() {
     <Router>
       <div className="min-h-screen">
         <Toaster
-          position="top-right"
+          position="top-left"
           toastOptions={{
             // Default options
             duration: 4000,
