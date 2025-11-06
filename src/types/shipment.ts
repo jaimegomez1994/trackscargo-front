@@ -17,6 +17,7 @@ export type Shipment = {
   origin: string;
   destination: string;
   weight: number;
+  weightUnit: string;
   pieces: number;
   status: string;
   gpsTrackingUrl?: string;
@@ -26,6 +27,7 @@ export type Shipment = {
 export type CreateShipmentForm = {
   trackingNumber: string;
   weight: string;
+  weightUnit: string;
   totalPieces: string;
   origin: string;
   destination: string;

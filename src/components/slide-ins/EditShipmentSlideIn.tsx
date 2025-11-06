@@ -12,6 +12,7 @@ const editShipmentSchema = z.object({
   company: z.string().optional(),
   pieces: z.number().int().min(1, 'Total pieces must be at least 1'),
   weight: z.number().min(0, 'Weight must be non-negative').optional(),
+  weightUnit: z.enum(['kg', 'lbs']).default('kg'),
   origin: z.string().min(1, 'Origin is required'),
   destination: z.string().min(1, 'Destination is required'),
   gpsTrackingUrl: z.string().url('Must be a valid URL').optional().or(z.literal('')),
@@ -42,6 +43,7 @@ export function EditShipmentSlideIn({
       company: '',
       pieces: 1,
       weight: 0,
+      weightUnit: 'kg' as const,
       origin: '',
       destination: '',
       gpsTrackingUrl: '',
@@ -65,6 +67,7 @@ export function EditShipmentSlideIn({
         company: shipment.company || '',
         pieces: shipment.pieces || 1,
         weight: shipment.weight || 0,
+        weightUnit: (shipment.weightUnit || 'kg') as 'kg' | 'lbs',
         origin: shipment.origin || '',
         destination: shipment.destination || '',
         gpsTrackingUrl: shipment.gpsTrackingUrl || '',
@@ -179,22 +182,31 @@ export function EditShipmentSlideIn({
                   <label htmlFor="weight" className="block text-sm font-medium text-gray-900 mb-2">
                     Weight
                   </label>
-                  <input
-                    {...register('weight', {
-                      setValueAs: (value) => {
-                        if (value === '' || value == null) return '';
-                        const num = Number(value);
-                        return isNaN(num) ? value : num;
-                      }
-                    })}
-                    type="number"
-                    step="any"
-                    id="weight"
-                    className={`block w-full px-4 py-3 text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-colors ${
-                      errors.weight ? 'border-red-300' : ''
-                    }`}
-                    placeholder="2.5 lbs"
-                  />
+                  <div className="flex gap-2">
+                    <input
+                      {...register('weight', {
+                        setValueAs: (value) => {
+                          if (value === '' || value == null) return '';
+                          const num = Number(value);
+                          return isNaN(num) ? value : num;
+                        }
+                      })}
+                      type="number"
+                      step="any"
+                      id="weight"
+                      className={`block w-full px-4 py-3 text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-colors ${
+                        errors.weight ? 'border-red-300' : ''
+                      }`}
+                      placeholder="2.5"
+                    />
+                    <select
+                      {...register('weightUnit')}
+                      className="px-4 py-3 text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-colors bg-white"
+                    >
+                      <option value="kg">kg</option>
+                      <option value="lbs">lbs</option>
+                    </select>
+                  </div>
                   {errors.weight && (
                     <p className="mt-2 text-sm text-red-600">{errors.weight.message}</p>
                   )}

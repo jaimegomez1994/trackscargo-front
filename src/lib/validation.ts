@@ -27,6 +27,10 @@ export const createShipmentSchema = z.object({
     .refine((val) => val === undefined || (val >= 0.1 && val <= 1000000), {
       message: 'Weight must be between 0.1 and 1,000,000'
     }),
+
+  weightUnit: z
+    .enum(['kg', 'lbs'])
+    .default('kg'),
   
   pieces: z
     .union([z.string(), z.number()])

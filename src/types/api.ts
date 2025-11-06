@@ -5,6 +5,7 @@ export interface Shipment {
   origin: string;
   destination: string;
   weight: number;
+  weightUnit: string;
   pieces: number;
   status: string;
   company?: string;
@@ -25,6 +26,7 @@ export interface CreateShipmentRequest {
   origin: string;
   destination: string;
   weight?: number;
+  weightUnit?: string;
   pieces: number;
   status: string;
   company?: string;

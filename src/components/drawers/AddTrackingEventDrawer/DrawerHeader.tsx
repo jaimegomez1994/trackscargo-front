@@ -9,7 +9,6 @@ interface DrawerHeaderProps {
 
 function DrawerHeader({ onClose, shipment }: DrawerHeaderProps) {
   const [copied, setCopied] = useState(false);
-
   const handleCopyLink = async () => {
     const trackingUrl = `${window.location.origin}/?trackid=${shipment.trackingNumber}`;
     
@@ -92,7 +91,7 @@ function DrawerHeader({ onClose, shipment }: DrawerHeaderProps) {
           </div>
           <div className="sm:col-span-1 col-span-2">
             <span className="text-gray-500">Details:</span>
-            <p className="font-medium text-gray-900">{shipment.weight} lbs • {shipment.pieces} pieces</p>
+            <p className="font-medium text-gray-900">{shipment.weight} {shipment.weightUnit || 'kg'} • {shipment.pieces} piece{shipment.pieces !== 1 ? 's' : ''}</p>
           </div>
         </div>
       </div>

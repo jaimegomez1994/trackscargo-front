@@ -52,7 +52,19 @@ export default function ShipmentDetailsModal({ shipment, onClose }: ShipmentDeta
               </div>
               <div>
                 <label className="block text-sm font-medium text-neutral-600 mb-1">Weight</label>
-                <p className="text-neutral-900">{shipment.weight} lbs / {(shipment.weight * 0.453592).toFixed(2)} kgs</p>
+                <p className="text-neutral-900">
+                  {shipment.weight} {shipment.weightUnit || 'kg'}
+                  {shipment.weightUnit === 'lbs' && (
+                    <span className="text-neutral-600 font-normal text-sm ml-2">
+                      ({(shipment.weight * 0.453592).toFixed(2)} kg)
+                    </span>
+                  )}
+                  {shipment.weightUnit === 'kg' && (
+                    <span className="text-neutral-600 font-normal text-sm ml-2">
+                      ({(shipment.weight * 2.20462).toFixed(2)} lbs)
+                    </span>
+                  )}
+                </p>
               </div>
               <div>
                 <label className="block text-sm font-medium text-neutral-600 mb-1">Total Pieces</label>

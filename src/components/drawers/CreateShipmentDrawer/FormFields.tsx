@@ -98,22 +98,31 @@ function FormFields({ form }: FormFieldsProps) {
             <label htmlFor="weight" className="block text-sm font-medium text-gray-900 mb-2">
               Weight
             </label>
-            <input
-              {...register('weight', {
-                setValueAs: (value) => {
-                  if (value === '' || value == null) return '';
-                  const num = Number(value);
-                  return isNaN(num) ? value : num;
-                }
-              })}
-              type="number"
-              step="any"
-              id="weight"
-              className={`block w-full px-4 py-3 text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-colors ${
-                errors.weight ? 'border-red-300' : ''
-              }`}
-              placeholder="2.5 lbs"
-            />
+            <div className="flex gap-2">
+              <input
+                {...register('weight', {
+                  setValueAs: (value) => {
+                    if (value === '' || value == null) return '';
+                    const num = Number(value);
+                    return isNaN(num) ? value : num;
+                  }
+                })}
+                type="number"
+                step="any"
+                id="weight"
+                className={`block w-full px-4 py-3 text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-colors ${
+                  errors.weight ? 'border-red-300' : ''
+                }`}
+                placeholder="2.5"
+              />
+              <select
+                {...register('weightUnit')}
+                className="px-4 py-3 text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-colors bg-white"
+              >
+                <option value="kg">kg</option>
+                <option value="lbs">lbs</option>
+              </select>
+            </div>
             {errors.weight && (
               <p className="mt-2 text-sm text-red-600">{errors.weight.message}</p>
             )}

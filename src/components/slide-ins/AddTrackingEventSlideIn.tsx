@@ -233,7 +233,7 @@ export function AddTrackingEventSlideIn({
                 </div>
                 <div className="sm:col-span-1 col-span-2">
                   <span className="text-gray-500">Details:</span>
-                  <p className="font-medium text-gray-900">{shipment.weight > 0 ? `${shipment.weight} lbs` : 'Weight not specified'} • {shipment.pieces} piece{shipment.pieces !== 1 ? 's' : ''}</p>
+                  <p className="font-medium text-gray-900">{shipment.weight > 0 ? `${shipment.weight} ${shipment.weightUnit || 'kg'}` : 'Weight not specified'} • {shipment.pieces} piece{shipment.pieces !== 1 ? 's' : ''}</p>
                 </div>
               </div>
             </div>
