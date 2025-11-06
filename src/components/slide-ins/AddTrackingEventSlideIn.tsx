@@ -158,6 +158,7 @@ export function AddTrackingEventSlideIn({
           company: data.company || undefined,
           pieces: data.pieces,
           weight: data.weight || undefined,
+          weightUnit: data.weightUnit,
           origin: data.origin,
           destination: data.destination,
         }

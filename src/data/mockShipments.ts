@@ -7,6 +7,7 @@ export const mockShipments: Shipment[] = [
     origin: "Saint Louis, MO",
     destination: "Laredo, TX",
     weight: 1690,
+    weightUnit: "kg",
     pieces: 8,
     status: "Delivered",
     travelHistory: [
@@ -37,11 +38,12 @@ export const mockShipments: Shipment[] = [
     ]
   },
   {
-    id: "2", 
+    id: "2",
     trackingNumber: "TRK987654321",
     origin: "Houston, TX",
     destination: "Miami, FL",
     weight: 2450,
+    weightUnit: "kg",
     pieces: 12,
     status: "In Transit",
     travelHistory: [
@@ -77,6 +79,7 @@ export const mockShipments: Shipment[] = [
     origin: "Los Angeles, CA",
     destination: "Seattle, WA",
     weight: 850,
+    weightUnit: "kg",
     pieces: 3,
     status: "Out for Delivery",
     travelHistory: [
@@ -112,6 +115,7 @@ export const mockShipments: Shipment[] = [
     origin: "Chicago, IL",
     destination: "Boston, MA",
     weight: 3200,
+    weightUnit: "kg",
     pieces: 15,
     status: "Exception",
     travelHistory: [
@@ -147,6 +151,7 @@ export const mockShipments: Shipment[] = [
     origin: "Phoenix, AZ",
     destination: "Denver, CO",
     weight: 1250,
+    weightUnit: "kg",
     pieces: 6,
     status: "Delivered",
     travelHistory: [
@@ -190,6 +195,7 @@ export const mockShipments: Shipment[] = [
     origin: "Atlanta, GA",
     destination: "Nashville, TN",
     weight: 675,
+    weightUnit: "kg",
     pieces: 2,
     status: "In Transit",
     travelHistory: [
@@ -217,6 +223,7 @@ export const mockShipments: Shipment[] = [
     origin: "New York, NY",
     destination: "Washington, DC",
     weight: 420,
+    weightUnit: "kg",
     pieces: 1,
     status: "Delivered",
     travelHistory: [

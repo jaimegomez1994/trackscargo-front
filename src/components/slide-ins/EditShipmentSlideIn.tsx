@@ -38,12 +38,12 @@ export function EditShipmentSlideIn({
   const [isVisible, setIsVisible] = useState(false);
 
   const form = useForm<EditShipmentFormData>({
-    resolver: zodResolver(editShipmentSchema),
+    resolver: zodResolver(editShipmentSchema) as any,
     defaultValues: {
       company: '',
       pieces: 1,
       weight: 0,
-      weightUnit: 'kg' as const,
+      weightUnit: 'kg',
       origin: '',
       destination: '',
       gpsTrackingUrl: '',

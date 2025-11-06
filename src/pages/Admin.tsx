@@ -25,6 +25,7 @@ function Admin() {
   const [createForm, setCreateForm] = useState<CreateShipmentForm>({
     trackingNumber: "",
     weight: "",
+    weightUnit: "kg",
     totalPieces: "",
     origin: "",
     destination: "",
@@ -123,6 +124,7 @@ function Admin() {
       setCreateForm({
         trackingNumber: "",
         weight: "",
+        weightUnit: "kg",
         totalPieces: "",
         origin: "",
         destination: "",

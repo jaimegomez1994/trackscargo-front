@@ -22,6 +22,7 @@ function CreateShipmentDrawer({ isOpen, onClose }: CreateShipmentDrawerProps) {
       trackingNumber: '',
       company: '',
       weight: 1,
+      weightUnit: 'kg',
       pieces: 1,
       origin: '',
       destination: '',
@@ -40,6 +41,7 @@ function CreateShipmentDrawer({ isOpen, onClose }: CreateShipmentDrawerProps) {
         trackingNumber: data.trackingNumber,
         company: data.company || undefined,
         weight: data.weight || undefined,
+        weightUnit: data.weightUnit,
         pieces: data.pieces!, // pieces is required by validation, so we know it exists
         origin: data.origin,
         destination: data.destination,

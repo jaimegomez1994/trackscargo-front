@@ -53,6 +53,7 @@ export interface UpdateShipmentRequest {
   origin?: string;
   destination?: string;
   weight?: number;
+  weightUnit?: 'kg' | 'lbs';
   pieces?: number;
   company?: string;
   gpsTrackingUrl?: string;
