@@ -49,18 +49,28 @@ function EventFiles({ eventId, allowDelete = false }: EventFilesProps) {
     }
   };
 
+  const isSafariMobile = () => {
+    const ua = navigator.userAgent.toLowerCase();
+    return ua.includes('safari') && !ua.includes('chrome') &&
+           (ua.includes('iphone') || ua.includes('ipad') || ua.includes('ipod'));
+  };
+
   const handleDownload = async (file: EventFile) => {
     try {
       setDownloadingFileId(file.id);
       const response = await downloadMutation.mutateAsync(file.id);
-      
+
       // Create a temporary anchor element for download
-      // This works better on mobile browsers
       const link = document.createElement('a');
       link.href = response.downloadUrl;
       link.download = file.originalName;
-      link.target = '_blank';
-      
+
+      // Safari iOS ignores the download attribute when target="_blank" is present
+      // For all other browsers (including Safari desktop), use target="_blank"
+      if (!isSafariMobile()) {
+        link.target = '_blank';
+      }
+
       // Append to body, click, and remove
       document.body.appendChild(link);
       link.click();
