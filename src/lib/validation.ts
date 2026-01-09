@@ -77,6 +77,24 @@ export const createShipmentSchema = z.object({
     .optional()
     .or(z.literal(''))
     .transform(val => val || undefined),
+
+  trailer: z
+    .string()
+    .optional()
+    .or(z.literal(''))
+    .transform(val => val || undefined),
+
+  pickupDate: z
+    .string()
+    .optional()
+    .or(z.literal(''))
+    .transform(val => val || undefined),
+
+  deliveryDate: z
+    .string()
+    .optional()
+    .or(z.literal(''))
+    .transform(val => val || undefined),
 });
 
 export type CreateShipmentFormData = z.infer<typeof createShipmentSchema>;

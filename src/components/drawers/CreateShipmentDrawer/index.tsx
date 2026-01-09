@@ -29,6 +29,9 @@ function CreateShipmentDrawer({ isOpen, onClose }: CreateShipmentDrawerProps) {
       status: 'created',
       description: '',
       gpsTrackingUrl: '',
+      trailer: '',
+      pickupDate: '',
+      deliveryDate: '',
     },
     mode: 'onChange',
   });
@@ -48,6 +51,9 @@ function CreateShipmentDrawer({ isOpen, onClose }: CreateShipmentDrawerProps) {
         status: data.status,
         description: data.description || undefined,
         gpsTrackingUrl: data.gpsTrackingUrl || undefined,
+        trailer: data.trailer || undefined,
+        pickupDate: data.pickupDate || undefined,
+        deliveryDate: data.deliveryDate || undefined,
       });
 
       // Success - close drawer and reset form

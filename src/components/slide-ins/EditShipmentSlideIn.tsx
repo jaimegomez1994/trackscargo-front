@@ -16,6 +16,9 @@ const editShipmentSchema = z.object({
   origin: z.string().min(1, 'Origin is required'),
   destination: z.string().min(1, 'Destination is required'),
   gpsTrackingUrl: z.string().url('Must be a valid URL').optional().or(z.literal('')),
+  trailer: z.string().optional().or(z.literal('')),
+  pickupDate: z.string().optional().or(z.literal('')),
+  deliveryDate: z.string().optional().or(z.literal('')),
 });
 
 type EditShipmentFormData = z.infer<typeof editShipmentSchema>;
@@ -47,6 +50,9 @@ export function EditShipmentSlideIn({
       origin: '',
       destination: '',
       gpsTrackingUrl: '',
+      trailer: '',
+      pickupDate: '',
+      deliveryDate: '',
     }
   });
 
@@ -63,6 +69,12 @@ export function EditShipmentSlideIn({
 
   useEffect(() => {
     if (shipment && isOpen) {
+      // Convert ISO dates to YYYY-MM-DD format for date inputs
+      const formatDateForInput = (isoDate: string | undefined | null): string => {
+        if (!isoDate) return '';
+        return isoDate.split('T')[0];
+      };
+
       reset({
         company: shipment.company || '',
         pieces: shipment.pieces || 1,
@@ -71,6 +83,9 @@ export function EditShipmentSlideIn({
         origin: shipment.origin || '',
         destination: shipment.destination || '',
         gpsTrackingUrl: shipment.gpsTrackingUrl || '',
+        trailer: shipment.trailer || '',
+        pickupDate: formatDateForInput(shipment.pickupDate),
+        deliveryDate: formatDateForInput(shipment.deliveryDate),
       });
     }
   }, [shipment, isOpen, reset]);
@@ -150,6 +165,20 @@ export function EditShipmentSlideIn({
                 {errors.company && (
                   <p className="mt-2 text-sm text-red-600">{errors.company.message}</p>
                 )}
+              </div>
+
+              {/* Trailer - Full Width */}
+              <div>
+                <label htmlFor="trailer" className="block text-sm font-medium text-gray-900 mb-2">
+                  Trailer
+                </label>
+                <input
+                  {...register('trailer')}
+                  type="text"
+                  id="trailer"
+                  className="block w-full px-4 py-3 text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-colors"
+                  placeholder="T-12345"
+                />
               </div>
 
               {/* Total Pieces and Weight - Same Line */}
@@ -235,6 +264,33 @@ export function EditShipmentSlideIn({
                   onChange={(value) => setValue('destination', value)}
                   error={errors.destination?.message}
                 />
+              </div>
+
+              {/* Pickup Date and Delivery Date - Same Line */}
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label htmlFor="pickupDate" className="block text-sm font-medium text-gray-900 mb-2">
+                    Pickup Date
+                  </label>
+                  <input
+                    {...register('pickupDate')}
+                    type="date"
+                    id="pickupDate"
+                    className="block w-full px-4 py-3 text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-colors"
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="deliveryDate" className="block text-sm font-medium text-gray-900 mb-2">
+                    Delivery Date
+                  </label>
+                  <input
+                    {...register('deliveryDate')}
+                    type="date"
+                    id="deliveryDate"
+                    className="block w-full px-4 py-3 text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-colors"
+                  />
+                </div>
               </div>
 
               {/* GPS Tracking URL - Full Width */}

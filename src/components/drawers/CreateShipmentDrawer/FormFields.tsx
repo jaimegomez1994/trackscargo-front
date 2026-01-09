@@ -68,6 +68,20 @@ function FormFields({ form }: FormFieldsProps) {
           />
         </div>
 
+        {/* Trailer - Full Width */}
+        <div>
+          <label htmlFor="trailer" className="block text-sm font-medium text-gray-900 mb-2">
+            Trailer
+          </label>
+          <input
+            {...register('trailer')}
+            type="text"
+            id="trailer"
+            className="block w-full px-4 py-3 text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-colors"
+            placeholder="T-12345"
+          />
+        </div>
+
         {/* Total Pieces and Weight - Same Line */}
         <div className="grid grid-cols-2 gap-4">
           <div>
@@ -151,6 +165,33 @@ function FormFields({ form }: FormFieldsProps) {
             onChange={(value) => setValue('destination', value)}
             error={errors.destination?.message}
           />
+        </div>
+
+        {/* Pickup Date and Delivery Date - Same Line */}
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <label htmlFor="pickupDate" className="block text-sm font-medium text-gray-900 mb-2">
+              Pickup Date
+            </label>
+            <input
+              {...register('pickupDate')}
+              type="date"
+              id="pickupDate"
+              className="block w-full px-4 py-3 text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-colors"
+            />
+          </div>
+
+          <div>
+            <label htmlFor="deliveryDate" className="block text-sm font-medium text-gray-900 mb-2">
+              Delivery Date
+            </label>
+            <input
+              {...register('deliveryDate')}
+              type="date"
+              id="deliveryDate"
+              className="block w-full px-4 py-3 text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-colors"
+            />
+          </div>
         </div>
 
         {/* GPS Tracking URL - Full Width */}

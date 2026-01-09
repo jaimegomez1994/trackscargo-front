@@ -12,6 +12,14 @@ import EditShipmentSlideIn from './EditShipmentSlideIn';
 import { EditButton } from '../ui/EditButton';
 import { CopyButton } from '../ui/CopyButton';
 
+// Format date without timezone conversion (treats date as local)
+const formatDate = (isoDate: string | undefined): string => {
+  if (!isoDate) return '';
+  const datePart = isoDate.split('T')[0];
+  const [year, month, day] = datePart.split('-');
+  return `${parseInt(month)}/${parseInt(day)}/${year}`;
+};
+
 interface AddTrackingEventSlideInProps {
   isOpen: boolean;
   onClose: () => void;
@@ -150,7 +158,7 @@ export function AddTrackingEventSlideIn({
 
   const handleUpdateShipment = async (data: any) => {
     if (!shipment) return;
-    
+
     try {
       await updateShipmentMutation.mutateAsync({
         shipmentId: shipment.id,
@@ -161,6 +169,10 @@ export function AddTrackingEventSlideIn({
           weightUnit: data.weightUnit,
           origin: data.origin,
           destination: data.destination,
+          gpsTrackingUrl: data.gpsTrackingUrl || undefined,
+          trailer: data.trailer || undefined,
+          pickupDate: data.pickupDate || undefined,
+          deliveryDate: data.deliveryDate || undefined,
         }
       });
       setIsEditingShipment(false);
@@ -236,6 +248,24 @@ export function AddTrackingEventSlideIn({
                   <span className="text-gray-500">Details:</span>
                   <p className="font-medium text-gray-900">{shipment.weight > 0 ? `${shipment.weight} ${shipment.weightUnit || 'kg'}` : 'Weight not specified'} • {shipment.pieces} piece{shipment.pieces !== 1 ? 's' : ''}</p>
                 </div>
+                {shipment.trailer && (
+                  <div>
+                    <span className="text-gray-500">Trailer:</span>
+                    <p className="font-medium text-gray-900 truncate">{shipment.trailer}</p>
+                  </div>
+                )}
+                {shipment.pickupDate && (
+                  <div>
+                    <span className="text-gray-500">Pickup Date:</span>
+                    <p className="font-medium text-gray-900">{formatDate(shipment.pickupDate)}</p>
+                  </div>
+                )}
+                {shipment.deliveryDate && (
+                  <div>
+                    <span className="text-gray-500">Delivery Date:</span>
+                    <p className="font-medium text-gray-900">{formatDate(shipment.deliveryDate)}</p>
+                  </div>
+                )}
               </div>
             </div>
           )}

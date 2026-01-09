@@ -4,6 +4,15 @@ type PackageDetailsProps = {
   shipment: Shipment;
 };
 
+// Format date without timezone conversion (treats date as local)
+const formatDate = (isoDate: string | undefined): string => {
+  if (!isoDate) return '—';
+  // Extract just the date part (YYYY-MM-DD) and format it
+  const datePart = isoDate.split('T')[0];
+  const [year, month, day] = datePart.split('-');
+  return `${parseInt(month)}/${parseInt(day)}/${year}`;
+};
+
 export default function PackageDetails({ shipment }: PackageDetailsProps) {
   const getStatusColor = (status: string) => {
     switch (status.toLowerCase()) {
@@ -32,37 +41,12 @@ export default function PackageDetails({ shipment }: PackageDetailsProps) {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {/* Row 1: Tracking Number | Current Status */}
         <div>
           <label className="block text-sm font-medium text-neutral-600 mb-1">
             Tracking Number
           </label>
           <p className="text-neutral-900 font-semibold">{shipment.trackingNumber}</p>
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium text-neutral-600 mb-1">
-            Weight
-          </label>
-          <p className="text-neutral-900 font-semibold">
-            {shipment.weight} {shipment.weightUnit || 'kg'}
-            {shipment.weightUnit === 'lbs' && (
-              <span className="text-neutral-600 font-normal text-sm ml-2">
-                ({(shipment.weight * 0.453592).toFixed(2)} kg)
-              </span>
-            )}
-            {shipment.weightUnit === 'kg' && (
-              <span className="text-neutral-600 font-normal text-sm ml-2">
-                ({(shipment.weight * 2.20462).toFixed(2)} lbs)
-              </span>
-            )}
-          </p>
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium text-neutral-600 mb-1">
-            Total Pieces
-          </label>
-          <p className="text-neutral-900 font-semibold">{shipment.pieces}</p>
         </div>
 
         <div>
@@ -74,6 +58,36 @@ export default function PackageDetails({ shipment }: PackageDetailsProps) {
           </span>
         </div>
 
+        {/* Row 2: Weight + Total Pieces | Trailer */}
+        <div>
+          <label className="block text-sm font-medium text-neutral-600 mb-1">
+            Weight / Total Pieces
+          </label>
+          <p className="text-neutral-900 font-semibold">
+            {shipment.weight} {shipment.weightUnit || 'kg'}
+            {shipment.weightUnit === 'lbs' && (
+              <span className="text-neutral-600 font-normal text-sm ml-1">
+                ({(shipment.weight * 0.453592).toFixed(2)} kg)
+              </span>
+            )}
+            {shipment.weightUnit === 'kg' && (
+              <span className="text-neutral-600 font-normal text-sm ml-1">
+                ({(shipment.weight * 2.20462).toFixed(2)} lbs)
+              </span>
+            )}
+            <span className="mx-2">•</span>
+            {shipment.pieces} piece{shipment.pieces !== 1 ? 's' : ''}
+          </p>
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-neutral-600 mb-1">
+            Trailer
+          </label>
+          <p className="text-neutral-900 font-semibold">{shipment.trailer || '—'}</p>
+        </div>
+
+        {/* Row 3: Origin | Destination */}
         <div>
           <label className="block text-sm font-medium text-neutral-600 mb-1">
             Origin
@@ -88,6 +102,26 @@ export default function PackageDetails({ shipment }: PackageDetailsProps) {
           <p className="text-neutral-900 font-semibold">{shipment.destination}</p>
         </div>
 
+        {/* Row 4: Pickup Date | Delivery Date */}
+        <div>
+          <label className="block text-sm font-medium text-neutral-600 mb-1">
+            Pickup Date
+          </label>
+          <p className="text-neutral-900 font-semibold">
+            {formatDate(shipment.pickupDate)}
+          </p>
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-neutral-600 mb-1">
+            Delivery Date
+          </label>
+          <p className="text-neutral-900 font-semibold">
+            {formatDate(shipment.deliveryDate)}
+          </p>
+        </div>
+
+        {/* GPS Tracking URL - Full Width */}
         {shipment.gpsTrackingUrl && (
           <div className="md:col-span-2">
             <label className="block text-sm font-medium text-neutral-600 mb-1">

@@ -21,6 +21,9 @@ export type Shipment = {
   pieces: number;
   status: string;
   gpsTrackingUrl?: string;
+  trailer?: string;
+  pickupDate?: string;
+  deliveryDate?: string;
   travelHistory?: TravelEvent[];
 };
 
