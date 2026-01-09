@@ -236,15 +236,15 @@ export function AddTrackingEventSlideIn({
               </div>
               
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 text-sm">
-                <div>
+                <div className="col-span-2 sm:col-span-1">
                   <span className="text-gray-500">Route:</span>
-                  <p className="font-medium text-gray-900 truncate">{shipment.origin} → {shipment.destination}</p>
+                  <p className="font-medium text-gray-900">{shipment.origin} → {shipment.destination}</p>
                 </div>
                 <div>
                   <span className="text-gray-500">Company:</span>
                   <p className="font-medium text-gray-900 truncate">{shipment.company || 'N/A'}</p>
                 </div>
-                <div className="sm:col-span-1 col-span-2">
+                <div>
                   <span className="text-gray-500">Details:</span>
                   <p className="font-medium text-gray-900">{shipment.weight > 0 ? `${shipment.weight} ${shipment.weightUnit || 'kg'}` : 'Weight not specified'} • {shipment.pieces} piece{shipment.pieces !== 1 ? 's' : ''}</p>
                 </div>
