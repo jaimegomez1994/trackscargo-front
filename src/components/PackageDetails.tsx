@@ -1,4 +1,6 @@
+import { useState } from "react";
 import type { Shipment } from "../types/shipment";
+import { CopyButton } from "./ui/CopyButton";
 
 type PackageDetailsProps = {
   shipment: Shipment;
@@ -14,6 +16,18 @@ const formatDate = (isoDate: string | undefined): string => {
 };
 
 export default function PackageDetails({ shipment }: PackageDetailsProps) {
+  const [copiedTrackingId, setCopiedTrackingId] = useState(false);
+
+  const handleCopyTrackingId = async () => {
+    if (!shipment.gpsTrackingId) return;
+    try {
+      await navigator.clipboard.writeText(shipment.gpsTrackingId);
+      setCopiedTrackingId(true);
+      setTimeout(() => setCopiedTrackingId(false), 2000);
+    } catch (err) {
+      console.error('Failed to copy tracking ID:', err);
+    }
+  };
   const getStatusColor = (status: string) => {
     switch (status.toLowerCase()) {
       case "delivered":
@@ -121,9 +135,9 @@ export default function PackageDetails({ shipment }: PackageDetailsProps) {
           </p>
         </div>
 
-        {/* GPS Tracking URL - Full Width */}
+        {/* GPS Tracking URL and Tracking ID */}
         {shipment.gpsTrackingUrl && (
-          <div className="md:col-span-2">
+          <div className={shipment.gpsTrackingId ? '' : 'md:col-span-2'}>
             <label className="block text-sm font-medium text-neutral-600 mb-1">
               GPS Tracking
             </label>
@@ -135,6 +149,23 @@ export default function PackageDetails({ shipment }: PackageDetailsProps) {
             >
               {shipment.gpsTrackingUrl}
             </a>
+          </div>
+        )}
+
+        {shipment.gpsTrackingId && (
+          <div className={shipment.gpsTrackingUrl ? '' : 'md:col-span-2'}>
+            <label className="block text-sm font-medium text-neutral-600 mb-1">
+              GPS Tracking ID
+            </label>
+            <div className="flex items-center gap-2">
+              <p className="text-neutral-900 font-semibold">{shipment.gpsTrackingId}</p>
+              <CopyButton
+                onClick={handleCopyTrackingId}
+                copied={copiedTrackingId}
+                label="Copy ID"
+                size="sm"
+              />
+            </div>
           </div>
         )}
       </div>

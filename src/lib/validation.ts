@@ -78,6 +78,13 @@ export const createShipmentSchema = z.object({
     .or(z.literal(''))
     .transform(val => val || undefined),
 
+  gpsTrackingId: z
+    .string()
+    .max(100, 'Tracking ID is too long')
+    .optional()
+    .or(z.literal(''))
+    .transform(val => val || undefined),
+
   trailer: z
     .string()
     .optional()

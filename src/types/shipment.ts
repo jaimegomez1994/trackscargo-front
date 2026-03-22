@@ -21,6 +21,7 @@ export type Shipment = {
   pieces: number;
   status: string;
   gpsTrackingUrl?: string;
+  gpsTrackingId?: string;
   trailer?: string;
   pickupDate?: string;
   deliveryDate?: string;
@@ -36,6 +37,7 @@ export type CreateShipmentForm = {
   destination: string;
   company: string;
   gpsTrackingUrl?: string;
+  gpsTrackingId?: string;
 };
 
 export type StatusForm = {

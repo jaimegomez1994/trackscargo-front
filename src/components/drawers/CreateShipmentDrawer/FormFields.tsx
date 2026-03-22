@@ -212,6 +212,20 @@ function FormFields({ form }: FormFieldsProps) {
             <p className="mt-2 text-sm text-red-600">{errors.gpsTrackingUrl.message}</p>
           )}
         </div>
+
+        {/* GPS Tracking ID - Full Width */}
+        <div>
+          <label htmlFor="gpsTrackingId" className="block text-sm font-medium text-gray-900 mb-2">
+            GPS Tracking ID <span className="text-gray-400 font-normal">(optional)</span>
+          </label>
+          <input
+            {...register('gpsTrackingId')}
+            type="text"
+            id="gpsTrackingId"
+            className="block w-full px-4 py-3 text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-colors"
+            placeholder="123MDO1"
+          />
+        </div>
       </div>
 
     </>

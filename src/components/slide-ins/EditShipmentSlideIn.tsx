@@ -16,6 +16,7 @@ const editShipmentSchema = z.object({
   origin: z.string().min(1, 'Origin is required'),
   destination: z.string().min(1, 'Destination is required'),
   gpsTrackingUrl: z.string().url('Must be a valid URL').optional().or(z.literal('')),
+  gpsTrackingId: z.string().max(100, 'Tracking ID is too long').optional().or(z.literal('')),
   trailer: z.string().optional().or(z.literal('')),
   pickupDate: z.string().optional().or(z.literal('')),
   deliveryDate: z.string().optional().or(z.literal('')),
@@ -50,6 +51,7 @@ export function EditShipmentSlideIn({
       origin: '',
       destination: '',
       gpsTrackingUrl: '',
+      gpsTrackingId: '',
       trailer: '',
       pickupDate: '',
       deliveryDate: '',
@@ -83,6 +85,7 @@ export function EditShipmentSlideIn({
         origin: shipment.origin || '',
         destination: shipment.destination || '',
         gpsTrackingUrl: shipment.gpsTrackingUrl || '',
+        gpsTrackingId: shipment.gpsTrackingId || '',
         trailer: shipment.trailer || '',
         pickupDate: formatDateForInput(shipment.pickupDate),
         deliveryDate: formatDateForInput(shipment.deliveryDate),
@@ -310,6 +313,20 @@ export function EditShipmentSlideIn({
                 {errors.gpsTrackingUrl && (
                   <p className="mt-2 text-sm text-red-600">{errors.gpsTrackingUrl.message}</p>
                 )}
+              </div>
+
+              {/* GPS Tracking ID - Full Width */}
+              <div>
+                <label htmlFor="gpsTrackingId" className="block text-sm font-medium text-gray-900 mb-2">
+                  GPS Tracking ID <span className="text-gray-400 font-normal">(optional)</span>
+                </label>
+                <input
+                  {...register('gpsTrackingId')}
+                  type="text"
+                  id="gpsTrackingId"
+                  className="block w-full px-4 py-3 text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-colors"
+                  placeholder="123MDO1"
+                />
               </div>
             </div>
           </div>

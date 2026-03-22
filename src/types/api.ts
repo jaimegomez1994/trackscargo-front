@@ -10,6 +10,7 @@ export interface Shipment {
   status: string;
   company?: string;
   gpsTrackingUrl?: string;
+  gpsTrackingId?: string;
   trailer?: string;
   pickupDate?: string;
   deliveryDate?: string;
@@ -34,6 +35,7 @@ export interface CreateShipmentRequest {
   status: string;
   company?: string;
   gpsTrackingUrl?: string;
+  gpsTrackingId?: string;
   description?: string;
   trailer?: string;
   pickupDate?: string;
@@ -63,6 +65,7 @@ export interface UpdateShipmentRequest {
   pieces?: number;
   company?: string;
   gpsTrackingUrl?: string;
+  gpsTrackingId?: string;
   trailer?: string;
   pickupDate?: string;
   deliveryDate?: string;
