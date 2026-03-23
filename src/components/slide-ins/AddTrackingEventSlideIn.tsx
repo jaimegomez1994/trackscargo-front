@@ -170,6 +170,7 @@ export function AddTrackingEventSlideIn({
           origin: data.origin,
           destination: data.destination,
           gpsTrackingUrl: data.gpsTrackingUrl || undefined,
+          gpsTrackingId: data.gpsTrackingId || undefined,
           trailer: data.trailer || undefined,
           pickupDate: data.pickupDate || undefined,
           deliveryDate: data.deliveryDate || undefined,
